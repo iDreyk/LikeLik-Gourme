@@ -24,7 +24,7 @@
     
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
     
-    UIViewController * mainViewController = [storyboard instantiateViewControllerWithIdentifier:@"MainViewController"];
+    UIViewController * mainViewController = [storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
     UIViewController * leftViewController = [storyboard instantiateViewControllerWithIdentifier:@"LeftViewController"];
     UIViewController * rightViewController = [storyboard instantiateViewControllerWithIdentifier:@"RightViewController"];
     

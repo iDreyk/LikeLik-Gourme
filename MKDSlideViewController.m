@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         _mainStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
         _leftStatusBarStyle = UIStatusBarStyleBlackOpaque;
         _rightStatusBarStyle = UIStatusBarStyleBlackOpaque;
-        _slideSpeed = 0.3f;
+        _slideSpeed = 0.35;
         _overlapWidth = 52.0f;
     }
     return self;
@@ -410,7 +410,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 - (void)showLeftViewControllerAnimated:(BOOL)animated
 {
     self.slidePosition = MKDSlideViewControllerPositionLeft;
-    
+    int offset = 30;
     if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
         [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.leftViewController];
     
@@ -421,11 +421,17 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     
     if( animated )
     {
-        [UIView animateWithDuration:self.slideSpeed animations:^{
+        [UIView animateWithDuration:(self.slideSpeed-2) animations:^{
             CGRect theFrame = self.mainPanelView.frame;
-            theFrame.origin.x = theFrame.size.width - self.overlapWidth;
+            theFrame.origin.x = theFrame.size.width - self.overlapWidth + offset;
             self.mainPanelView.frame = theFrame;
         } completion:^(BOOL finished) {
+            [UIView animateWithDuration:self.slideSpeed animations:^{
+            CGRect theFrame = self.mainPanelView.frame;
+
+            theFrame.origin.x = theFrame.size.width - self.overlapWidth;
+            self.mainPanelView.frame = theFrame;
+            }];
             [self addTapViewOverlay];
             
             if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
@@ -496,7 +502,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 - (void)showMainViewControllerAnimated:(BOOL)animated
 {
     self.slidePosition = MKDSlideViewControllerPositionCenter;
-    
+    CGPoint offset = {-20,.0}; // - for left bounce, + for right
     if( [self isHandlingStatusBarStyleChanges] )
         [[UIApplication sharedApplication] setStatusBarStyle:self.mainStatusBarStyle animated:YES];
     
@@ -507,11 +513,16 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         if( animated )
         {
-            [UIView animateWithDuration:self.slideSpeed animations:^{
+            [UIView animateWithDuration:(self.slideSpeed) animations:^{
                 CGRect theFrame = self.mainPanelView.frame;
-                theFrame.origin = CGPointZero;
+                theFrame.origin = offset;//CGPointZero + offset;
                 self.mainPanelView.frame = theFrame;
             } completion:^(BOOL finished) {
+                [UIView animateWithDuration:(self.slideSpeed) animations:^{
+                    CGRect theFrame = self.mainPanelView.frame;
+                    theFrame.origin = CGPointZero;
+                    self.mainPanelView.frame = theFrame;
+                }];
                 [self removeTapViewOverlay];
                 
                 if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
