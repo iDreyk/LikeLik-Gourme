@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
 		D043067C174A8043003F110F /* thirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043067B174A8043003F110F /* thirdViewController.m */; };
 		D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */ = {isa = PBXBuildFile; fileRef = D0E7E9A3174B6C1500BE51D3 /* contB.png */; };
 		D0E7E9A7174B711100BE51D3 /* fourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9A6174B711100BE51D3 /* fourthViewController.m */; };
@@ -34,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D00782331758C7D800D4612F /* modalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modalViewController.h; path = Resources/modalViewController.h; sourceTree = "<group>"; };
+		D00782341758C7D800D4612F /* modalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = modalViewController.m; path = Resources/modalViewController.m; sourceTree = "<group>"; };
 		D043067A174A8043003F110F /* thirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thirdViewController.h; sourceTree = "<group>"; };
 		D043067B174A8043003F110F /* thirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = thirdViewController.m; sourceTree = "<group>"; };
 		D0E7E9A3174B6C1500BE51D3 /* contB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contB.png; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 				D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */,
 				D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */,
 				D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */,
+				D00782331758C7D800D4612F /* modalViewController.h */,
+				D00782341758C7D800D4612F /* modalViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				D0E7E9A7174B711100BE51D3 /* fourthViewController.m in Sources */,
 				D0E7E9AA174B76AC00BE51D3 /* fifthViewController.m in Sources */,
 				D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */,
+				D00782351758C7D800D4612F /* modalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

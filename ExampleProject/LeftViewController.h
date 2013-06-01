@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LeftViewController : UITableViewController
-
+@property (nonatomic, retain) NSArray *array;
+@property (nonatomic, retain) NSArray *expandArray;
+@property (nonatomic, retain) IBOutlet UITableView *catalogueTableView;
 @end
