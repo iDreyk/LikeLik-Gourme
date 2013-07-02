@@ -226,6 +226,7 @@
     UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
     workTime.textColor = [UIColor whiteColor];
     workTime.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    //added comment
     [workTime setText:@"10:00 - 23:00"];
     [imv addSubview:workTime];
     [workTime release];
