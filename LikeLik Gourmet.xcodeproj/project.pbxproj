@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0041B7C1782E75F00D7AB74 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0041B7B1782E75F00D7AB74 /* MapKit.framework */; };
+		D0041B811782EE7C00D7AB74 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0041B801782EE7C00D7AB74 /* CoreLocation.framework */; };
+		D0041B831783390F00D7AB74 /* testRestPict.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0041B821783390F00D7AB74 /* testRestPict.jpg */; };
+		D0059F8F17732E01002FCC64 /* ll120.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F8E17732E01002FCC64 /* ll120.png */; };
+		D0059F9117732E4A002FCC64 /* ll57.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9017732E4A002FCC64 /* ll57.png */; };
+		D0059F9317732E71002FCC64 /* ll114.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9217732E71002FCC64 /* ll114.png */; };
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
 		D043067C174A8043003F110F /* thirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043067B174A8043003F110F /* thirdViewController.m */; };
 		D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */ = {isa = PBXBuildFile; fileRef = D0E7E9A3174B6C1500BE51D3 /* contB.png */; };
@@ -35,6 +41,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D0041B7B1782E75F00D7AB74 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D0041B801782EE7C00D7AB74 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D0041B821783390F00D7AB74 /* testRestPict.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testRestPict.jpg; sourceTree = "<group>"; };
+		D0059F8E17732E01002FCC64 /* ll120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ll120.png; sourceTree = "<group>"; };
+		D0059F9017732E4A002FCC64 /* ll57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ll57.png; sourceTree = "<group>"; };
+		D0059F9217732E71002FCC64 /* ll114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ll114.png; sourceTree = "<group>"; };
 		D00782331758C7D800D4612F /* modalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modalViewController.h; path = Resources/modalViewController.h; sourceTree = "<group>"; };
 		D00782341758C7D800D4612F /* modalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = modalViewController.m; path = Resources/modalViewController.m; sourceTree = "<group>"; };
 		D043067A174A8043003F110F /* thirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thirdViewController.h; sourceTree = "<group>"; };
@@ -46,13 +58,13 @@
 		D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fifthViewController.m; sourceTree = "<group>"; };
 		D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newMainViewController.h; sourceTree = "<group>"; };
 		D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newMainViewController.m; sourceTree = "<group>"; };
-		DA953C60148AD3700075A1E2 /* MKDSlideViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKDSlideViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA953C60148AD3700075A1E2 /* LikeLik Gourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LikeLik Gourmet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA953C64148AD3700075A1E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA953C66148AD3700075A1E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DA953C68148AD3700075A1E2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		DA953C6C148AD3700075A1E2 /* MKDSlideViewController-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MKDSlideViewController-Info.plist"; sourceTree = "<group>"; };
+		DA953C6C148AD3700075A1E2 /* LikeLik Gourmet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LikeLik Gourmet-Info.plist"; sourceTree = "<group>"; };
 		DA953C70148AD3700075A1E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DA953C72148AD3700075A1E2 /* MKDSlideViewController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKDSlideViewController-Prefix.pch"; sourceTree = "<group>"; };
+		DA953C72148AD3700075A1E2 /* LikeLik Gourmet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LikeLik Gourmet-Prefix.pch"; sourceTree = "<group>"; };
 		DA953C73148AD3700075A1E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DA953C74148AD3700075A1E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DA953C8A148AD61E0075A1E2 /* MKDSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDSlideViewController.h; sourceTree = "<group>"; };
@@ -82,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0041B811782EE7C00D7AB74 /* CoreLocation.framework in Frameworks */,
+				D0041B7C1782E75F00D7AB74 /* MapKit.framework in Frameworks */,
 				DA953C9E148AE7240075A1E2 /* QuartzCore.framework in Frameworks */,
 				DA953C65148AD3700075A1E2 /* UIKit.framework in Frameworks */,
 				DA953C67148AD3700075A1E2 /* Foundation.framework in Frameworks */,
@@ -105,7 +119,7 @@
 		DA953C61148AD3700075A1E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA953C60148AD3700075A1E2 /* MKDSlideViewController.app */,
+				DA953C60148AD3700075A1E2 /* LikeLik Gourmet.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +127,8 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0041B801782EE7C00D7AB74 /* CoreLocation.framework */,
+				D0041B7B1782E75F00D7AB74 /* MapKit.framework */,
 				DA953C9D148AE7240075A1E2 /* QuartzCore.framework */,
 				DA953C64148AD3700075A1E2 /* UIKit.framework */,
 				DA953C66148AD3700075A1E2 /* Foundation.framework */,
@@ -138,9 +154,9 @@
 		DA953C6B148AD3700075A1E2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DA953C6C148AD3700075A1E2 /* MKDSlideViewController-Info.plist */,
+				DA953C6C148AD3700075A1E2 /* LikeLik Gourmet-Info.plist */,
 				DA953C70148AD3700075A1E2 /* main.m */,
-				DA953C72148AD3700075A1E2 /* MKDSlideViewController-Prefix.pch */,
+				DA953C72148AD3700075A1E2 /* LikeLik Gourmet-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -184,7 +200,11 @@
 		DAD0C3D41720872D0031B4E0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D0041B821783390F00D7AB74 /* testRestPict.jpg */,
 				D0E7E9A3174B6C1500BE51D3 /* contB.png */,
+				D0059F9217732E71002FCC64 /* ll114.png */,
+				D0059F9017732E4A002FCC64 /* ll57.png */,
+				D0059F8E17732E01002FCC64 /* ll120.png */,
 				DAD0C3D81720872D0031B4E0 /* Default.png */,
 				DAD0C3D91720872D0031B4E0 /* Default@2x.png */,
 				DAD0C3D71720872D0031B4E0 /* Default-568h@2x.png */,
@@ -198,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA953C5F148AD3700075A1E2 /* MKDSlideViewController */ = {
+		DA953C5F148AD3700075A1E2 /* LikeLik Gourmet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA953C81148AD3700075A1E2 /* Build configuration list for PBXNativeTarget "MKDSlideViewController" */;
+			buildConfigurationList = DA953C81148AD3700075A1E2 /* Build configuration list for PBXNativeTarget "LikeLik Gourmet" */;
 			buildPhases = (
 				DA953C5C148AD3700075A1E2 /* Sources */,
 				DA953C5D148AD3700075A1E2 /* Frameworks */,
@@ -210,9 +230,9 @@
 			);
 			dependencies = (
 			);
-			name = MKDSlideViewController;
+			name = "LikeLik Gourmet";
 			productName = MKDSlideViewController;
-			productReference = DA953C60148AD3700075A1E2 /* MKDSlideViewController.app */;
+			productReference = DA953C60148AD3700075A1E2 /* LikeLik Gourmet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -221,9 +241,9 @@
 		DA953C57148AD36F0075A1E2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
-			buildConfigurationList = DA953C5A148AD36F0075A1E2 /* Build configuration list for PBXProject "MKDSlideViewController" */;
+			buildConfigurationList = DA953C5A148AD36F0075A1E2 /* Build configuration list for PBXProject "LikeLik Gourmet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -235,7 +255,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA953C5F148AD3700075A1E2 /* MKDSlideViewController */,
+				DA953C5F148AD3700075A1E2 /* LikeLik Gourmet */,
 			);
 		};
 /* End PBXProject section */
@@ -246,11 +266,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF5A79D171D45F8007D143C /* Storyboard.storyboard in Resources */,
+				D0059F9117732E4A002FCC64 /* ll57.png in Resources */,
 				DAD0C3DD1720872D0031B4E0 /* ButtonMenu.png in Resources */,
 				DAD0C3DE1720872D0031B4E0 /* ButtonMenu@2x.png in Resources */,
+				D0059F9317732E71002FCC64 /* ll114.png in Resources */,
 				DAD0C3DF1720872D0031B4E0 /* Default-568h@2x.png in Resources */,
+				D0059F8F17732E01002FCC64 /* ll120.png in Resources */,
 				DAD0C3E01720872D0031B4E0 /* Default.png in Resources */,
 				DAD0C3E11720872D0031B4E0 /* Default@2x.png in Resources */,
+				D0041B831783390F00D7AB74 /* testRestPict.jpg in Resources */,
 				DAD0C3E6172088010031B4E0 /* Icon.png in Resources */,
 				D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */,
 			);
@@ -286,8 +310,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -304,9 +329,12 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -316,8 +344,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -327,7 +356,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -342,9 +373,9 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleProject/MKDSlideViewController-Prefix.pch";
-				INFOPLIST_FILE = "ExampleProject/MKDSlideViewController-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
+				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
+				PRODUCT_NAME = "LikeLik Gourmet";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -355,9 +386,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleProject/MKDSlideViewController-Prefix.pch";
-				INFOPLIST_FILE = "ExampleProject/MKDSlideViewController-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
+				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
+				PRODUCT_NAME = "LikeLik Gourmet";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -366,7 +397,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA953C5A148AD36F0075A1E2 /* Build configuration list for PBXProject "MKDSlideViewController" */ = {
+		DA953C5A148AD36F0075A1E2 /* Build configuration list for PBXProject "LikeLik Gourmet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA953C7F148AD3700075A1E2 /* Debug */,
@@ -375,7 +406,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA953C81148AD3700075A1E2 /* Build configuration list for PBXNativeTarget "MKDSlideViewController" */ = {
+		DA953C81148AD3700075A1E2 /* Build configuration list for PBXNativeTarget "LikeLik Gourmet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA953C82148AD3700075A1E2 /* Debug */,

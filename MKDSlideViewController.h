@@ -28,6 +28,9 @@
 @property (nonatomic, assign) CGFloat slideSpeed;  // default: 0.3f
 @property (nonatomic, assign) CGFloat overlapWidth;  // default: 52.0f
 
+// Swipes control
+@property (nonatomic, assign) BOOL leftSwipe;
+@property (nonatomic, assign) BOOL showMain;
 
 - (instancetype)initWithMainViewController:(UIViewController *)mainViewController;
 - (void)setMainViewController:(UIViewController *)mainViewController animated:(BOOL)animated;  // calls - (void)showMainViewControllerAnimated: on completion
@@ -42,6 +45,10 @@
 
 - (void)showMainViewController;
 - (void)showMainViewControllerAnimated:(BOOL)animated;
+
+-(void)callLeftMenu;
+-(void)callRightMenu;
+
 
 @end
 

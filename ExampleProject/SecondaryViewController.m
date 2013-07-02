@@ -15,7 +15,8 @@
 - (IBAction)showMenu:(id)sender
 {
     // Use the UIViewController (MKDSlideViewController) category as a helper
-    [self.navigationController.slideViewController showLeftViewControllerAnimated:YES];
+    [self.navigationController.slideViewController callMenu];
+    //[self.navigationController.slideViewController showLeftViewControllerAnimated:YES];
 }
 
 @end

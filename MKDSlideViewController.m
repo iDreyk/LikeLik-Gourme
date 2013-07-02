@@ -46,12 +46,14 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         // Setup defaults
         _slidePosition = MKDSlideViewControllerPositionCenter;
-        _handleStatusBarStyleChanges = YES;
-        _mainStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
+        _handleStatusBarStyleChanges = NO;
+        _mainStatusBarStyle = UIStatusBarStyleBlackOpaque;//[[UIApplication sharedApplication] statusBarStyle];
         _leftStatusBarStyle = UIStatusBarStyleBlackOpaque;
         _rightStatusBarStyle = UIStatusBarStyleBlackOpaque;
         _slideSpeed = 0.35f;
         _overlapWidth = 52.0f;
+        _leftSwipe = NO;
+        _showMain = NO;
     }
     return self;
 }
@@ -79,21 +81,34 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     view.backgroundColor = [UIColor blackColor];
     
     // Setup Panels
-    _leftPanelView = [[UIView alloc] initWithFrame:view.bounds];
-    _leftPanelView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    _leftPanelView.backgroundColor = [UIColor blackColor];
-    [view addSubview:_leftPanelView];
+    
     
     _rightPanelView = [[UIView alloc] initWithFrame:view.bounds];
     _rightPanelView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _rightPanelView.backgroundColor = [UIColor blackColor];
     [view addSubview:_rightPanelView];
     
+    CGRect p = view.bounds;
+    p.size.width -= 50;
+    p.origin.x -= p.size.width;
+    
+    _leftPanelView = [[UIView alloc] initWithFrame:p];
+    _leftPanelView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _leftPanelView.backgroundColor = [UIColor blackColor];
+    [view addSubview:_leftPanelView];
+    
     _mainPanelView = [[UIView alloc] initWithFrame:view.bounds];
     _mainPanelView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _mainPanelView.backgroundColor = [UIColor blackColor];
     [view addSubview:_mainPanelView];
     [_mainPanelView addGestureRecognizer:self.panGestureRecognizer];
+    //    CGRect p = view.bounds;
+    //    p.origin.x -= 150;
+    
+    
+    //insert LEFT
+    //[_leftPanelView addGestureRecognizer:self.panGestureRecognizer];
+    
     
     // Setup main layer shadow
     CALayer * layer = _mainPanelView.layer;
@@ -104,7 +119,20 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     CGRect rect = CGRectInset(_mainPanelView.bounds, 0.0f, -40.0f); // negative inset for an even shadow
     CGPathRef path = [UIBezierPath bezierPathWithRect:rect].CGPath;
     layer.shadowPath = path;
-    layer.shadowRadius = 20.0f;
+    layer.shadowRadius = 10.0f;
+    
+    
+    // Setup left layer shadow
+        CALayer * layer1 = _leftPanelView.layer;
+        layer1.masksToBounds = NO;
+        layer1.shadowColor = [UIColor blackColor].CGColor;
+        layer1.shadowOffset = CGSizeMake(0.0f, 0.0f);
+        layer1.shadowOpacity = 0.9f;
+        CGRect rect1 = CGRectInset(_leftPanelView.bounds, 0.0f, -40.0f); // negative inset for an even shadow
+        CGPathRef path1 = [UIBezierPath bezierPathWithRect:rect1].CGPath;
+        layer1.shadowPath = path1;
+        layer1.shadowRadius = 10.0f;
+
     
     if( self.mainViewController.view.superview == nil )
     {
@@ -259,72 +287,139 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 - (void)pan:(UIPanGestureRecognizer *)gesture
 {
-    if( gesture.state == UIGestureRecognizerStateBegan )
+    CGFloat xOffset = self.mainPanelView.frame.origin.x;
+    CGFloat snapThreshold = 0.0f;
+    CGFloat dividerPosition = 0.0f;
+//    UIApplication * app = [UIApplication sharedApplication];
+
+//    NSLog(@"LOG: swipe detected. offset:%f, %d",xOffset, self.leftSwipe);
+    if( xOffset > (dividerPosition-snapThreshold) /*&& !self.leftSwipe*/)
     {
-        self.previousLocationInView = CGPointZero;
-        
-        if( [self isHandlingStatusBarStyleChanges] )
-            [[UIApplication sharedApplication] setStatusBarStyle:self.leftStatusBarStyle animated:YES];
-    }
-    else if( gesture.state == UIGestureRecognizerStateChanged )
-    {
-        // Decide, which view controller should be revealed
-        if( self.mainPanelView.frame.origin.x <= 0.0f ) // left
-            [self.view sendSubviewToBack:self.leftPanelView];
-        else
-            [self.view sendSubviewToBack:self.rightPanelView];
-        
-        // Calculate position offset
-        CGPoint locationInView = [gesture translationInView:self.view];
-        CGFloat deltaX = locationInView.x - self.previousLocationInView.x;
-        
-        // Update view frame
+               // snap to right position
+ //       NSLog(@"LOG: swipe from left");
+        self.leftSwipe = YES;
         CGRect newFrame = self.mainPanelView.frame;
-        newFrame.origin.x +=deltaX;
+        newFrame.origin.x = CGPointZero.x + 0.001;
         self.mainPanelView.frame = newFrame;
+//        [self showLeftViewControllerAnimated:YES];
+//        if( [self isHandlingStatusBarStyleChanges] )
+//            [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+        if( gesture.state == UIGestureRecognizerStateBegan )
+        {
+            self.previousLocationInView = CGPointZero;
+            
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [[UIApplication sharedApplication] setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+        }
+        else if( gesture.state == UIGestureRecognizerStateChanged)
+        {
+            [self.view sendSubviewToBack:self.mainPanelView];
+            [self.view sendSubviewToBack:self.rightPanelView];
+
+            // Decide, which view controller should be revealed
+//            if( self.mainPanelView.frame.origin.x <= 0.0f ) // left
+//                [self.view sendSubviewToBack:self.leftPanelView];
+//            else
+//                [self.view sendSubviewToBack:self.rightPanelView];
+//            
+            // Calculate position offset
+            CGPoint locationInView = [gesture translationInView:self.view];
+            CGFloat deltaX = locationInView.x - self.previousLocationInView.x;
+            
+            // Update view frame
+            CGRect newFrame = self.leftPanelView.frame;
+            newFrame.origin.x +=deltaX;
+            self.leftPanelView.frame = newFrame;
+            
+            self.previousLocationInView = locationInView;
+        }
+        else if( (gesture.state == UIGestureRecognizerStateEnded) || (gesture.state == UIGestureRecognizerStateCancelled) )
+        {
+            [self updatePanelsForCurrentPosition];
+        }
+
+
+    }
+    
+    else if(xOffset <= (dividerPosition-snapThreshold)){
+//        NSLog(@"LOG: swipe from right");
+        self.leftSwipe = NO;
         
-        self.previousLocationInView = locationInView;
+        if( gesture.state == UIGestureRecognizerStateBegan )
+        {
+            self.previousLocationInView = CGPointZero;
+            
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [[UIApplication sharedApplication] setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+        }
+        else if( gesture.state == UIGestureRecognizerStateChanged )
+        {
+            // Decide, which view controller should be revealed
+            if( self.mainPanelView.frame.origin.x <= 0.0f ) // left
+                [self.view sendSubviewToBack:self.leftPanelView];
+            else
+                [self.view sendSubviewToBack:self.rightPanelView];
+            
+            // Calculate position offset
+            CGPoint locationInView = [gesture translationInView:self.view];
+            CGFloat deltaX = locationInView.x - self.previousLocationInView.x;
+            
+            // Update view frame
+            CGRect newFrame = self.mainPanelView.frame;
+            newFrame.origin.x +=deltaX;
+            self.mainPanelView.frame = newFrame;
+            
+            self.previousLocationInView = locationInView;
+        }
+        else if( (gesture.state == UIGestureRecognizerStateEnded) || (gesture.state == UIGestureRecognizerStateCancelled) )
+        {
+            [self updatePanelsForCurrentPosition];
+        }
     }
-    else if( (gesture.state == UIGestureRecognizerStateEnded) || (gesture.state == UIGestureRecognizerStateCancelled) )
-    {
-        [self updatePanelsForCurrentPosition];
-    }
+
 }
 
 - (void)updatePanelsForCurrentPosition
 {
-    UIApplication * app = [UIApplication sharedApplication];
+   // UIApplication * app = [UIApplication sharedApplication];
     
     MKDSlideViewControllerPositionType position = self.slidePosition;
     CGFloat xOffset = self.mainPanelView.frame.origin.x;
+    CGFloat leftOffset = self.leftPanelView.frame.origin.x;
     CGFloat snapThreshold = self.overlapWidth;
     
     CGFloat dividerPosition = 0.0f;
     
+    NSLog(@"LOG: update panels called!");
     if( position == MKDSlideViewControllerPositionCenter )
     {
-        if( (xOffset >= (dividerPosition-snapThreshold)) && (xOffset <= (dividerPosition+snapThreshold)) )
+        if( (xOffset >= (dividerPosition-snapThreshold)) && (xOffset <= (dividerPosition+snapThreshold)) && leftOffset == -self.leftPanelView.frame.size.width)
+        //if( xOffset <= (dividerPosition-snapThreshold) )
         {
+            NSLog(@"LOG: point  1");
             // Snap to center position
             [self showMainViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
+           // [self showLeftViewControllerAnimated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
         }
         else if( xOffset < (dividerPosition-snapThreshold) )
         {
+                        NSLog(@"LOG: point  2");
             // snap to right position
             [self showRightViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.rightStatusBarStyle animated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.rightStatusBarStyle animated:YES];
         }
         else
         {
+                        NSLog(@"LOG: point  3");
             // snap to left position
             [self showLeftViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
         }
-
+        
     }
     else if( position == MKDSlideViewControllerPositionLeft )
     {
@@ -332,17 +427,19 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         if( (xOffset >= (dividerPosition-snapThreshold)) && (xOffset <= (dividerPosition+snapThreshold)) )
         {
+                        NSLog(@"LOG: point  4");
             // Snap back to left position
             [self showLeftViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
         }
         else if( xOffset < (dividerPosition-snapThreshold) )
         {
+                        NSLog(@"LOG: point  5");
             // snap to center position
             [self showMainViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
+            //            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
         }
         
     }
@@ -353,17 +450,20 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         if( (rightSideX <= dividerPosition) && (rightSideX < (dividerPosition+snapThreshold)) ) // FIXME: Is a bit buggy.
         {
+            NSLog(@"LOG: point  6");
+
             // snap to right position
             [self showRightViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.rightStatusBarStyle animated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.rightStatusBarStyle animated:YES];
         }
         else
         {
+                        NSLog(@"LOG: point  7");
             // snap to center position
             [self showMainViewControllerAnimated:YES];
-            if( [self isHandlingStatusBarStyleChanges] )
-                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
+//            if( [self isHandlingStatusBarStyleChanges] )
+//                [app setStatusBarStyle:self.mainStatusBarStyle animated:YES];
         }
         
     }
@@ -402,6 +502,26 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 #pragma mark - Slide Actions
 
+-(void)callLeftMenu{
+    NSLog(@"LOG: left menu called");
+    self.leftSwipe = YES;
+    CGRect newFrame = self.mainPanelView.frame;
+    newFrame.origin.x = CGPointZero.x + 0.001;
+    self.mainPanelView.frame = newFrame;
+    [self showLeftViewControllerAnimated:YES];
+}
+
+-(void)callRightMenu{
+    NSLog(@"LOG: right menu called");
+    [self showRightViewControllerAnimated:YES];
+//    self.leftSwipe = YES;
+//    CGRect newFrame = self.mainPanelView.frame;
+//    newFrame.origin.x = CGPointZero.x + 0.001;
+//    self.mainPanelView.frame = newFrame;
+//    [self showLeftViewControllerAnimated:YES];
+}
+
+
 - (void)showLeftViewController
 {
     [self showLeftViewControllerAnimated:YES];
@@ -409,28 +529,33 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 - (void)showLeftViewControllerAnimated:(BOOL)animated
 {
+    //Adding removed baggy shadow
+    _leftPanelView.layer.shadowRadius = 10.0;
+    
     self.slidePosition = MKDSlideViewControllerPositionLeft;
     int offset = 10;
     if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
         [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.leftViewController];
     
-    if( [self isHandlingStatusBarStyleChanges] )
-        [[UIApplication sharedApplication] setStatusBarStyle:self.leftStatusBarStyle animated:YES];
+//    if( [self isHandlingStatusBarStyleChanges] )
+//        [[UIApplication sharedApplication] setStatusBarStyle:self.leftStatusBarStyle animated:YES];
     
+    [self.view sendSubviewToBack:self.mainPanelView];
     [self.view sendSubviewToBack:self.rightPanelView];
     
+    
     if( animated )
-    {
-        [UIView animateWithDuration:(self.slideSpeed-2) animations:^{
-            CGRect theFrame = self.mainPanelView.frame;
-            theFrame.origin.x = theFrame.size.width - self.overlapWidth + offset;
-            self.mainPanelView.frame = theFrame;
+    {        
+        [UIView animateWithDuration:(self.slideSpeed) animations:^{
+            CGRect theFrame = self.leftPanelView.frame;
+            theFrame.origin.x = 0;
+            //theFrame.origin.x = /*-theFrame.size.width;*/theFrame.size.width - self.overlapWidth;// + offset;
+            self.leftPanelView.frame = theFrame;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:self.slideSpeed animations:^{
-            CGRect theFrame = self.mainPanelView.frame;
-
-            theFrame.origin.x = theFrame.size.width - self.overlapWidth;
-            self.mainPanelView.frame = theFrame;
+                CGRect theFrame = self.leftPanelView.frame;
+                theFrame.origin.x = -offset;
+                self.leftPanelView.frame = theFrame;
             }];
             [self addTapViewOverlay];
             
@@ -438,17 +563,17 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
                 [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.leftViewController];
         }];
     }
-    else
-    {
-        CGRect theFrame = self.mainPanelView.frame;
-        theFrame.origin.x = theFrame.size.width - self.overlapWidth;
-        self.mainPanelView.frame = theFrame;
-        [self addTapViewOverlay];
-        
-        if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
-            [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.leftViewController];
-    }
-
+    //    else
+    //    {
+    //        CGRect theFrame = self.mainPanelView.frame;
+    //        theFrame.origin.x = theFrame.size.width - self.overlapWidth;
+    //        self.mainPanelView.frame = theFrame;
+    //        [self addTapViewOverlay];
+    //
+    //        if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
+    //            [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.leftViewController];
+    //    }
+    
 }
 
 - (void)showRightViewController
@@ -463,8 +588,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
         [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.rightViewController];
     
-    if( [self isHandlingStatusBarStyleChanges] )
-        [[UIApplication sharedApplication] setStatusBarStyle:self.rightStatusBarStyle animated:YES];
+//    if( [self isHandlingStatusBarStyleChanges] )
+//        [[UIApplication sharedApplication] setStatusBarStyle:self.rightStatusBarStyle animated:YES];
     
     [self.view sendSubviewToBack:self.leftPanelView];
     
@@ -480,7 +605,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
             theFrame.origin.x = -theFrame.size.width + self.overlapWidth;
             self.mainPanelView.frame = theFrame;
         }];
-
+            
             [self addTapViewOverlay];
             
             if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
@@ -497,7 +622,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
             [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.rightViewController];
     }
-
+    
 }
 
 - (void)showMainViewController
@@ -507,47 +632,111 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 - (void)showMainViewControllerAnimated:(BOOL)animated
 {
-    self.slidePosition = MKDSlideViewControllerPositionCenter;
-    CGPoint offset = {-10,.0}; // - for left bounce, + for right
-    if( self.mainPanelView.frame.origin.x < 0)
-        offset.x *= -1;
-    if( [self isHandlingStatusBarStyleChanges] )
-        [[UIApplication sharedApplication] setStatusBarStyle:self.mainStatusBarStyle animated:YES];
-    
-    if( self.mainPanelView.frame.origin.x != CGPointZero.x )
-    {
-        if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
-            [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.mainViewController];
+    if(self.leftSwipe){ //FOR LEFT MENU
+        NSLog(@"LOG: calling showMainViewControllerAnimated");
+        //[self.view sendSubviewToBack:self.leftPanelView];
+        //[self.view sendSubviewToBack:self.rightPanelView];
+        //}
         
-        if( animated )
+        self.slidePosition = MKDSlideViewControllerPositionCenter;
+        CGPoint offset = {-10,.0}; // - for left bounce, + for right
+        if( self.mainPanelView.frame.origin.x < 0)
+            offset.x *= -1;
+//        if( [self isHandlingStatusBarStyleChanges] )
+//            [[UIApplication sharedApplication] setStatusBarStyle:self.mainStatusBarStyle animated:YES];
+        
+        if( self.mainPanelView.frame.origin.x != CGPointZero.x )
         {
-            [UIView animateWithDuration:(self.slideSpeed) animations:^{
-                CGRect theFrame = self.mainPanelView.frame;
-                theFrame.origin = offset;
-                self.mainPanelView.frame = theFrame;
-            } completion:^(BOOL finished) {
+            if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
+                [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.mainViewController];
+            
+            if( animated )
+            {
+                [UIView animateWithDuration:(self.slideSpeed) animations:^{
+                    CGRect theFrame = self.leftPanelView.frame;
+                    //theFrame.origin = offset;
+                    theFrame.origin.x = -theFrame.size.width;
+                    self.leftPanelView.frame = theFrame;
+                } completion:^(BOOL finished) {
+                    //                [UIView animateWithDuration:(self.slideSpeed) animations:^{
+                    //                    CGRect theFrame = self.leftPanelView.frame;
+                    //                    theFrame.origin = CGPointZero;
+                    //                    self.leftPanelView.frame = theFrame;
+                    //                }];
+                    
+                    //To remove baggy shadow
+                    _leftPanelView.layer.shadowRadius = 0;
+                    
+                    [self removeTapViewOverlay];
+                    
+                    if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
+                        [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.mainViewController];
+                }];
+            }
+            //        else
+            //        {
+            //            CGRect theFrame = self.mainPanelView.frame;
+            //            theFrame.origin = CGPointZero;
+            //            self.mainPanelView.frame = theFrame;
+            //            [self removeTapViewOverlay];
+            //
+            //            if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
+            //                [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.mainViewController];
+            //        }
+            
+        
+        //self.leftSwipe = NO;
+        [UIView animateWithDuration:(self.slideSpeed) animations:^{
+
+        CGRect rect = self.mainPanelView.frame;
+        rect.origin.x = CGRectZero.origin.x;
+        self.mainPanelView.frame = rect;
+        }];
+        }
+    }
+    else{   // FOR RIGHT MENU
+        self.slidePosition = MKDSlideViewControllerPositionCenter;
+        CGPoint offset = {-10,.0}; // - for left bounce, + for right
+        if( self.mainPanelView.frame.origin.x < 0)
+            offset.x *= -1;
+//        if( [self isHandlingStatusBarStyleChanges] )
+//            [[UIApplication sharedApplication] setStatusBarStyle:self.mainStatusBarStyle animated:YES];
+        
+        if( self.mainPanelView.frame.origin.x != CGPointZero.x )
+        {
+            if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )
+                [self.delegate performSelector:@selector(slideViewController:willSlideToViewController:) withObject:self withObject:self.mainViewController];
+            
+            if( animated )
+            {
                 [UIView animateWithDuration:(self.slideSpeed) animations:^{
                     CGRect theFrame = self.mainPanelView.frame;
-                    theFrame.origin = CGPointZero;
+                    theFrame.origin = offset;
                     self.mainPanelView.frame = theFrame;
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:(self.slideSpeed) animations:^{
+                        CGRect theFrame = self.mainPanelView.frame;
+                        theFrame.origin = CGPointZero;
+                        self.mainPanelView.frame = theFrame;
+                    }];
+                    [self removeTapViewOverlay];
+                    
+                    if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
+                        [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.mainViewController];
                 }];
+            }
+            else
+            {
+                CGRect theFrame = self.mainPanelView.frame;
+                theFrame.origin = CGPointZero;
+                self.mainPanelView.frame = theFrame;
                 [self removeTapViewOverlay];
                 
                 if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
                     [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.mainViewController];
-            }];
-        }
-        else
-        {
-            CGRect theFrame = self.mainPanelView.frame;
-            theFrame.origin = CGPointZero;
-            self.mainPanelView.frame = theFrame;
-            [self removeTapViewOverlay];
+            }
             
-            if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
-                [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.mainViewController];
         }
-        
     }
 }
 

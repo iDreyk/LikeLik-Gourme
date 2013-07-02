@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface fifthViewController : UITableViewController
+@property (nonatomic, retain) NSArray *array;
+@property (nonatomic, retain) IBOutlet UITableView *restourantsTableView;
+@property (nonatomic) NSInteger rowCount;
 - (IBAction)showMenu:(id)sender;
 
 @end

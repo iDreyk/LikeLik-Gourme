@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface thirdViewController : UITableViewController
+@property (nonatomic, retain) NSArray *array;
+@property (nonatomic, retain) IBOutlet UITableView *settingsTableView;
+@property (nonatomic, retain) NSMutableSet *storedData;
 - (IBAction)showMenu:(id)sender;
+
+
+
 
 @end
