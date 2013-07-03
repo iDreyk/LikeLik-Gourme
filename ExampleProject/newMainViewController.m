@@ -28,30 +28,47 @@
 
 - (void)viewDidLoad{
     self.array =         [[NSArray alloc] initWithArray:@[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"]];
-    self.distArray = [[NSArray alloc] initWithArray:@[@"50", @"100", @"230", @"378", @"420", @"780", @"1345", @"2312", @"3014", @"45234"]];
+    self.rateArray = [[NSArray alloc] initWithArray:@[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"]];
+    self.subwayArray = [[NSArray alloc] initWithArray:@[@"Arbatskaya", @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", @"Arbatskaya", @"Akademicheskaya", @"Leninskiy prospekt"]];
+    self.paycheckArray = [[NSArray alloc] initWithArray:@[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"]];
+    self.workTimeArray = [[NSArray alloc] initWithArray:@[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 #pragma mark - Map handler
 
 -(void)viewDidAppear:(BOOL)animated{
-    
-    [super viewDidLoad];
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.003;
-    span.longitudeDelta = 0.003;
-    CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-    region.span = span;
-    region.center = location;
-    [self._mapView setRegion:region animated:YES];
-    [self._mapView regionThatFits:region];
-    
+    [super viewDidLoad];    
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self action:@selector(openMap:)];
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
     [tgr release];
+}
+
+- (void)appToBackground{
+    NSLog(@"MAP LOG: app to background");
+    [self._mapView setShowsUserLocation:NO];
+}
+- (void)appReturnsActive{
+    NSLog(@"MAP LOG: app returns active");
+    [self._mapView setShowsUserLocation:YES];
+}
+
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+    NSLog(@"MAP LOG: update");
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.003;
+    span.longitudeDelta = 0.003;
+    CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
+    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+    region.span = span;
+    region.center = location;
+    [self._mapView setRegion:region animated:YES];
+    [self._mapView regionThatFits:region];
 }
 
 #pragma mark - Table view data source
@@ -79,11 +96,13 @@
     
     
     //Here pict for rating
-    UILabel *rait = [[UILabel alloc] initWithFrame:CGRectMake(250, 15, 50, 20)];
-    rait.textColor = [UIColor whiteColor];
-    [rait setText:@"Rating"];
-    [button addSubview:rait];
-    [rait release];
+    
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
+    
+    imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [self.rateArray objectAtIndex:section]]];
+    [button addSubview:imv];
+    [imv release];
+
 
     return button;
 }
@@ -193,46 +212,53 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    NSInteger section = indexPath.section;
+    
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
     if (cell == nil) { cell = [[[UITableViewCell alloc]
                                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier] autorelease];
+   
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
+        [imv addGestureRecognizer:singleTap];
+        [imv setUserInteractionEnabled:YES];
+        
+        imv.image=[UIImage imageNamed:@"testRestPict.jpg"];
+        
+        //Here is line
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
+        line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        [imv addSubview:line];
+        [line release];
+
+        
+        //Here is subway station
+        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 200, 20)];
+        subway.textColor = [UIColor whiteColor];
+        [subway setText:[self.subwayArray objectAtIndex:section]];
+        [imv addSubview:subway];
+        [subway release];
+        
+        //Here is avg paycheck
+        UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
+        paycheck.textColor = [UIColor whiteColor];
+        [paycheck setText:[self.paycheckArray objectAtIndex:section]];
+        [imv addSubview:paycheck];
+        [paycheck release];
+        
+        //Here is work time
+        UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
+        workTime.textColor = [UIColor whiteColor];
+        [workTime setText:[self.workTimeArray objectAtIndex:section]];
+        [imv addSubview:workTime];
+        [workTime release];
+        
+        [cell.contentView addSubview:imv];
+        [imv release];
     }
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
     
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
-    [imv addGestureRecognizer:singleTap];
-    [imv setUserInteractionEnabled:YES];
-
-    imv.image=[UIImage imageNamed:@"testRestPict.jpg"];
-    
-    //Here subway station
-    UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 100, 20)];
-    subway.textColor = [UIColor whiteColor];
-    subway.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    [subway setText:@"Arbatskaya"];
-    [imv addSubview:subway];
-    [subway release];
-    
-    //Here avg paycheck
-    UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 80, 20)];
-    paycheck.textColor = [UIColor whiteColor];
-    paycheck.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    [paycheck setText:@"1200"];
-    [imv addSubview:paycheck];
-    [paycheck release];
-
-    //Here work time
-    UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
-    workTime.textColor = [UIColor whiteColor];
-    workTime.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    [workTime setText:@"10:00 - 23:00"];
-    [imv addSubview:workTime];
-    [workTime release];
-
-    
-    [cell.contentView addSubview:imv];
-    [imv release];
     
     return cell;
 }
@@ -316,10 +342,19 @@
     }
     else if (yOffset < 0) {
         //Paralax handling
+        for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
+            [self._mapView removeGestureRecognizer:recognizer];
+        }
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 152.0 - yOffset + floorf(threshold / 2.0));
     }
     else {
-        //Everything OK!
+        //To normal state
+        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:self action:@selector(openMap:)];
+        tgr.numberOfTapsRequired = 1;
+        tgr.numberOfTouchesRequired = 1;
+        [self._mapView addGestureRecognizer:tgr];
+        [tgr release];
     }
     self._mapView.contentMode = UIViewContentModeScaleAspectFit;
 }
@@ -348,9 +383,9 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
-        button.frame = CGRectMake(00, 00, 340, 40); // position in the parent view and set the size of the button
+        button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
         [button setTitle:@"Back" forState:UIControlStateNormal];
-        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
         button.tag = 99;
         [self._mapView addSubview:button];
@@ -384,7 +419,7 @@
         [self._mapView setRegion:region animated:YES];
         [self._mapView regionThatFits:region];
         
-    } completion:^(BOOL finished) {[UIView animateWithDuration:0.3 animations:^{
+    } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.placesTableView.frame;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;

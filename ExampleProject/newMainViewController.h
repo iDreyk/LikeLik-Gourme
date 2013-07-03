@@ -11,7 +11,12 @@
 
 @interface newMainViewController : UIViewController
 @property (nonatomic, retain) NSArray *array;
-@property (nonatomic, retain) NSArray *distArray;
+@property (nonatomic, retain) NSArray *rateArray;
+@property (nonatomic, retain) NSArray *subwayArray;
+@property (nonatomic, retain) NSArray *paycheckArray;
+@property (nonatomic, retain) NSArray *workTimeArray;
+
+
 @property (nonatomic, retain) IBOutlet UITableView *placesTableView;
 @property (nonatomic, retain) IBOutlet MKMapView *_mapView;
 - (IBAction)showLeftMenu:(id)sender;

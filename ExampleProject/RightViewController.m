@@ -215,20 +215,20 @@ static bool OPENED_MENU = YES;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor blackColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        if(indexPath.section == 1)
+            cell.textLabel.text = [self.expandArrayCash objectAtIndex:[indexPath row]];
+        else if (indexPath.section == 2)
+            cell.textLabel.text = [self.expandArrayCousine objectAtIndex:[indexPath row]];
+        else if(indexPath.section == 3)
+            cell.textLabel.text = [self.expandArrayMenu objectAtIndex:[indexPath row]];
     }
     
     //    cell.backgroundView = [InterfaceFunctions CellBG];
     //    cell.selectedBackgroundView = [InterfaceFunctions SelectedCellBG];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.backgroundColor = [UIColor blackColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    if(indexPath.section == 1)
-    cell.textLabel.text = [self.expandArrayCash objectAtIndex:[indexPath row]];
-    else if (indexPath.section == 2)
-    cell.textLabel.text = [self.expandArrayCousine objectAtIndex:[indexPath row]];
-    else if(indexPath.section == 3)
-    cell.textLabel.text = [self.expandArrayMenu objectAtIndex:[indexPath row]];
-    
+        
     
     // Галочки для фильтров:
     if([self.checkedData containsObject:indexPath]){

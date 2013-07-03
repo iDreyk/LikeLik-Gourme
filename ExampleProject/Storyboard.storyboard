@@ -678,7 +678,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="A0b-eU-RYu">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.50196081399917603" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="lrk-TZ-y3Q" kind="relationship" relationship="rootViewController" id="JWB-UT-OOx"/>
@@ -686,7 +686,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zl7-Tt-80U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1663" y="-1385"/>
+            <point key="canvasLocation" x="-1667" y="-1457"/>
         </scene>
         <!--New Main View Controller - Gourmet-->
         <scene sceneID="WQU-6z-e3R">
@@ -743,6 +743,65 @@
         <image name="ButtonMenu.png" width="22" height="22"/>
         <image name="contB.png" width="80" height="80"/>
     </resources>
+    <classes>
+        <class className="LeftViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LeftViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="catalogueTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="RightViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RightViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="TableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SecondaryViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondaryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+            </relationships>
+        </class>
+        <class className="fifthViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/fifthViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+                <relationship kind="outlet" name="restourantsTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="fourthViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/fourthViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+                <relationship kind="outlet" name="cityTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="modalViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/modalViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="close:"/>
+                <relationship kind="action" name="showMenu:"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="newMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/newMainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showLeftMenu:"/>
+                <relationship kind="action" name="showRightMenu:"/>
+                <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="placesTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="thirdViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/thirdViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showMenu:"/>
+                <relationship kind="outlet" name="settingsTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

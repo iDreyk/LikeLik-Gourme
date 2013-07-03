@@ -254,17 +254,18 @@ int EXPANDED_ON = 0;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor blackColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        if(indexPath.section == 1)
+            cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
+        if(indexPath.section == 2)
+            cell.textLabel.text = [self.languageArray objectAtIndex:[indexPath row]];
     }
     
 //    cell.backgroundView = [InterfaceFunctions CellBG];
 //    cell.selectedBackgroundView = [InterfaceFunctions SelectedCellBG];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.backgroundColor = [UIColor blackColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    if(indexPath.section == 1)
-        cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
-    if(indexPath.section == 2)
-        cell.textLabel.text = [self.languageArray objectAtIndex:[indexPath row]];
+   
 
     
     if([NSUserDefaults standardUserDefaults]){

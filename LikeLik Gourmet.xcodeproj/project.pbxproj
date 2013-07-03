@@ -15,6 +15,11 @@
 		D0059F9317732E71002FCC64 /* ll114.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9217732E71002FCC64 /* ll114.png */; };
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
 		D043067C174A8043003F110F /* thirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043067B174A8043003F110F /* thirdViewController.m */; };
+		D0C2AC461783F5BC00B42E56 /* 1star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC411783F5BC00B42E56 /* 1star.png */; };
+		D0C2AC471783F5BC00B42E56 /* 3star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC421783F5BC00B42E56 /* 3star.png */; };
+		D0C2AC481783F5BC00B42E56 /* 4star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC431783F5BC00B42E56 /* 4star.png */; };
+		D0C2AC491783F5BC00B42E56 /* 2star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC441783F5BC00B42E56 /* 2star.png */; };
+		D0C2AC4A1783F5BC00B42E56 /* 5star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC451783F5BC00B42E56 /* 5star.png */; };
 		D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */ = {isa = PBXBuildFile; fileRef = D0E7E9A3174B6C1500BE51D3 /* contB.png */; };
 		D0E7E9A7174B711100BE51D3 /* fourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9A6174B711100BE51D3 /* fourthViewController.m */; };
 		D0E7E9AA174B76AC00BE51D3 /* fifthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */; };
@@ -51,6 +56,11 @@
 		D00782341758C7D800D4612F /* modalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = modalViewController.m; path = Resources/modalViewController.m; sourceTree = "<group>"; };
 		D043067A174A8043003F110F /* thirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thirdViewController.h; sourceTree = "<group>"; };
 		D043067B174A8043003F110F /* thirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = thirdViewController.m; sourceTree = "<group>"; };
+		D0C2AC411783F5BC00B42E56 /* 1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1star.png; sourceTree = "<group>"; };
+		D0C2AC421783F5BC00B42E56 /* 3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3star.png; sourceTree = "<group>"; };
+		D0C2AC431783F5BC00B42E56 /* 4star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4star.png; sourceTree = "<group>"; };
+		D0C2AC441783F5BC00B42E56 /* 2star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2star.png; sourceTree = "<group>"; };
+		D0C2AC451783F5BC00B42E56 /* 5star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5star.png; sourceTree = "<group>"; };
 		D0E7E9A3174B6C1500BE51D3 /* contB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contB.png; sourceTree = "<group>"; };
 		D0E7E9A5174B711100BE51D3 /* fourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fourthViewController.h; sourceTree = "<group>"; };
 		D0E7E9A6174B711100BE51D3 /* fourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fourthViewController.m; sourceTree = "<group>"; };
@@ -200,6 +210,11 @@
 		DAD0C3D41720872D0031B4E0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D0C2AC411783F5BC00B42E56 /* 1star.png */,
+				D0C2AC421783F5BC00B42E56 /* 3star.png */,
+				D0C2AC431783F5BC00B42E56 /* 4star.png */,
+				D0C2AC441783F5BC00B42E56 /* 2star.png */,
+				D0C2AC451783F5BC00B42E56 /* 5star.png */,
 				D0041B821783390F00D7AB74 /* testRestPict.jpg */,
 				D0E7E9A3174B6C1500BE51D3 /* contB.png */,
 				D0059F9217732E71002FCC64 /* ll114.png */,
@@ -266,12 +281,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF5A79D171D45F8007D143C /* Storyboard.storyboard in Resources */,
+				D0C2AC471783F5BC00B42E56 /* 3star.png in Resources */,
 				D0059F9117732E4A002FCC64 /* ll57.png in Resources */,
 				DAD0C3DD1720872D0031B4E0 /* ButtonMenu.png in Resources */,
 				DAD0C3DE1720872D0031B4E0 /* ButtonMenu@2x.png in Resources */,
 				D0059F9317732E71002FCC64 /* ll114.png in Resources */,
 				DAD0C3DF1720872D0031B4E0 /* Default-568h@2x.png in Resources */,
+				D0C2AC4A1783F5BC00B42E56 /* 5star.png in Resources */,
+				D0C2AC481783F5BC00B42E56 /* 4star.png in Resources */,
+				D0C2AC491783F5BC00B42E56 /* 2star.png in Resources */,
 				D0059F8F17732E01002FCC64 /* ll120.png in Resources */,
+				D0C2AC461783F5BC00B42E56 /* 1star.png in Resources */,
 				DAD0C3E01720872D0031B4E0 /* Default.png in Resources */,
 				DAD0C3E11720872D0031B4E0 /* Default@2x.png in Resources */,
 				D0041B831783390F00D7AB74 /* testRestPict.jpg in Resources */,
