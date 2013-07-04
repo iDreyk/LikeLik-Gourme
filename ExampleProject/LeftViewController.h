@@ -16,6 +16,8 @@
 @property (nonatomic) NSInteger rowCountCity;
 @property (nonatomic) NSInteger rowCountLang;
 @property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
+
 
 -(void)openCityMenu;
 -(void)closeCityMenu;

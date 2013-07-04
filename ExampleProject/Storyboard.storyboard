@@ -45,6 +45,7 @@
                     <navigationItem key="navigationItem" title="LikeLik Gourmet" id="UV8-23-2mU"/>
                     <connections>
                         <outlet property="catalogueTableView" destination="kJf-QP-Aba" id="OVt-Ln-2nP"/>
+                        <outlet property="navBar" destination="UV8-23-2mU" id="Jz9-Ht-6Io"/>
                         <outlet property="searchBar" destination="vLi-9m-XiS" id="aCS-TY-qDG"/>
                     </connections>
                 </tableViewController>
@@ -271,39 +272,6 @@
     <resources>
         <image name="ButtonMenu.png" width="22" height="22"/>
     </resources>
-    <classes>
-        <class className="LeftViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LeftViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="catalogueTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="RightViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RightViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="TableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="modalViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/modalViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="close:"/>
-                <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="placeTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="newMainViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/newMainViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showLeftMenu:"/>
-                <relationship kind="action" name="showRightMenu:"/>
-                <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="placesTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

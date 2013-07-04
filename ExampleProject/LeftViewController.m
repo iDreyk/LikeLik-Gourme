@@ -11,11 +11,13 @@
 #import "UIViewController+MKDSlideViewController.h"
 #import "newMainViewController.h"
 
+
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 @implementation LeftViewController
 @synthesize catalogueTableView;
 @synthesize searchBar;
+@synthesize navBar;
 static bool OPENED_CITY = NO;
 static bool OPENED_LANG = NO;
 int EXPANDED_ON = 0;
@@ -24,13 +26,17 @@ int EXPANDED_ON = 0;
 
 - (void)viewDidLoad{
     
-    self.array =         @[@"  Restaurants", @"  City", @"  Language", @"  Sort by name",@"  Sort by distance"/*,@"  Practical info",@"  Settings"*/];
+    self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Restaurants", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
-    self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Germany", @"      Russian", @"      Japanese"]];
+    self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Deutsch", @"      Русский", @"      Japanese"]];
     self.rowCountCity = 0;
     self.rowCountLang = 0;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+}
 
 #pragma mark - Table view data source
 
@@ -311,11 +317,11 @@ int EXPANDED_ON = 0;
             }
         }
     }
+   
 
     return cell;
 }
 #pragma mark - Table view delegate
-//text
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
 //UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
@@ -341,7 +347,27 @@ int EXPANDED_ON = 0;
         [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentLangSection"];
         [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentLangRow"];
         NSLog(@"Saved language to userdefaults! %d %d",indPthSect, indPthRow);
-
+        NSString *curLang;
+        if (indPthRow == 0){
+            curLang = @"English";
+            LocalizationSetLanguage(@"en");
+            NSLog(@"EN");
+        }
+        if (indPthRow == 1){
+            curLang = @"Deutsch";
+            LocalizationSetLanguage(@"de");
+            NSLog(@"DE");
+        }
+        if (indPthRow == 2){
+            curLang = @"Русский";
+            LocalizationSetLanguage(@"ru");
+            NSLog(@"RU");
+        }
+        [[NSUserDefaults standardUserDefaults] setValue:curLang forKey:@"Language"];
+        NSLog(@"Saved language to userdefaults: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Language"]);
+        navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+        self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Restaurants", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
+        [self.tableView reloadData];
     }
 }
 
