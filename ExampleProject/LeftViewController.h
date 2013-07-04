@@ -2,20 +2,20 @@
 //  LeftViewController.h
 //  MKDSlideViewController
 //
-//  Created by Marcel Dierkes on 18.04.13.
+//  Created by Ilya Tsarev on 20.05.13.
 //
 //
 
 #import <UIKit/UIKit.h>
 
 @interface LeftViewController : UITableViewController
-@property (nonatomic, retain) NSArray *array;
-@property (nonatomic, retain) NSMutableArray *cityArray;
-@property (nonatomic, retain) NSMutableArray *languageArray;
-@property (nonatomic, retain) IBOutlet UITableView *catalogueTableView;
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSMutableArray *cityArray;
+@property (nonatomic, strong) NSMutableArray *languageArray;
+@property (nonatomic, strong) IBOutlet UITableView *catalogueTableView;
 @property (nonatomic) NSInteger rowCountCity;
 @property (nonatomic) NSInteger rowCountLang;
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
 
 -(void)openCityMenu;
 -(void)closeCityMenu;

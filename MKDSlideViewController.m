@@ -24,12 +24,12 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 @interface MKDSlideViewController ()
 @property (nonatomic, assign) MKDSlideViewControllerPositionType slidePosition;
 
-@property (nonatomic, retain) UIView * leftPanelView;
-@property (nonatomic, retain) UIView * mainPanelView;
-@property (nonatomic, retain) UIView * rightPanelView;
+@property (nonatomic, strong) UIView * leftPanelView;
+@property (nonatomic, strong) UIView * mainPanelView;
+@property (nonatomic, strong) UIView * rightPanelView;
 
-@property (nonatomic, retain) UIPanGestureRecognizer * panGestureRecognizer;
-@property (nonatomic, retain) UIView * tapOverlayView;
+@property (nonatomic, strong) UIPanGestureRecognizer * panGestureRecognizer;
+@property (nonatomic, strong) UIView * tapOverlayView;
 
 @property (nonatomic, assign) CGPoint previousLocationInView;
 
@@ -58,20 +58,6 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     return self;
 }
 
-- (void)dealloc
-{
-    [_leftPanelView release];
-    [_rightPanelView release];
-    [_mainPanelView release];
-    
-    [_tapOverlayView release];
-    
-    [_leftViewController release];
-    [_rightViewController release];
-    [_mainViewController release];
-    
-    [super dealloc];
-}
 
 // Create the view hierarchy
 - (void)loadView
@@ -151,7 +137,6 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     }
     
     self.view = view;
-    [view release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -174,9 +159,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         [_mainViewController removeFromParentViewController];
         _mainViewController.slideViewController = nil;
         [_mainViewController.view removeFromSuperview];
-        [_mainViewController release];
     }
-    _mainViewController = [mainViewController retain];
+    _mainViewController = mainViewController;
     _mainViewController.slideViewController = self;
     [self addChildViewController:_mainViewController];
     
@@ -196,9 +180,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         [_leftViewController removeFromParentViewController];
         _leftViewController.slideViewController = nil;
         [_leftViewController.view removeFromSuperview];
-        [_leftViewController release];
     }
-    _leftViewController = [leftViewController retain];
+    _leftViewController = leftViewController;
     _leftViewController.slideViewController = self;
     [self addChildViewController:_leftViewController];
     
@@ -218,9 +201,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         [_rightViewController removeFromParentViewController];
         _rightViewController.slideViewController = nil;
         [_rightViewController.view removeFromSuperview];
-        [_rightViewController release];
     }
-    _rightViewController = [rightViewController retain];
+    _rightViewController = rightViewController;
     _rightViewController.slideViewController = self;
     [self addChildViewController:_rightViewController];
     
@@ -485,7 +467,6 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         tapGesture.numberOfTapsRequired = 1;
         tapGesture.numberOfTouchesRequired = 1;
         [_tapOverlayView addGestureRecognizer:tapGesture];
-        [tapGesture release];
     }
     return _tapOverlayView;
 }

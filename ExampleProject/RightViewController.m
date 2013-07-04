@@ -2,7 +2,7 @@
 //  RightViewController.m
 //  MKDSlideViewController
 //
-//  Created by Marcel Dierkes on 18.04.13.
+//  Created by Ilya Tsarev on 20.05.13.
 //
 //
 
@@ -10,11 +10,6 @@
 #import "RightViewController.h"
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
-#import "MainViewController.h"
-#import "SecondaryViewController.h"
-#import "thirdViewController.h"
-#import "fourthViewController.h"
-#import "fifthViewController.h"
 #import "newMainViewController.h"
 
 @implementation RightViewController
@@ -24,11 +19,13 @@ static bool OPENED_CASH = YES;
 static bool OPENED_COUSINE = YES;
 static bool OPENED_MENU = YES;
 
+#warning Ф-ии фильтрации центрального списка по NSSet checkedData.
+
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
     self.checkedData = [[NSMutableSet alloc] init];
-    self.array =         [[NSArray alloc] initWithArray:@[@"            Reset filters", @"            Cash", @"            Cousine", @"            Menu"]];
+    self.array =         @[@"            Reset filters", @"            Cash", @"            Cousine", @"            Menu"];
     self.expandArrayCash =[[NSMutableArray alloc] initWithArray:@[@"               300-500", @"               500-1000", @"               1000-1500", @"               1500-2500", @"               2500-4000"]];
     self.rowCountCash = 5;
     self.expandArrayCousine = [[NSMutableArray alloc] initWithArray:@[@"               Fusion", @"               Austrian", @"               English", @"               BBQ", @"               Itallian", @"               Spanish", @"               Greek"]];

@@ -12,7 +12,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic, retain) UIWindow * window;
-@property (nonatomic, retain) MKDSlideViewController * slideViewController;
+@property (nonatomic, strong) UIWindow * window;
+@property (nonatomic, strong) MKDSlideViewController * slideViewController;
 
 @end

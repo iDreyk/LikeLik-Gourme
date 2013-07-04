@@ -2,22 +2,22 @@
 //  RightViewController.h
 //  MKDSlideViewController
 //
-//  Created by Marcel Dierkes on 18.04.13.
+//  Created by Ilya Tsarev on 20.05.13.
 //
 //
 
 #import <UIKit/UIKit.h>
 
 @interface RightViewController : UITableViewController
-@property (nonatomic, retain) NSArray *array;
-@property (nonatomic, retain) NSMutableArray *expandArrayCash;
-@property (nonatomic, retain) NSMutableArray *expandArrayCousine;
-@property (nonatomic, retain) NSMutableArray *expandArrayMenu;
-@property (nonatomic, retain) NSMutableArray *expandArrayFun;
-@property (nonatomic, retain) NSMutableArray *expandArrayMusic;
-@property (nonatomic, retain) NSMutableArray *expandArrayOthers;
-@property (nonatomic, retain) IBOutlet UITableView *TableView;
-@property (nonatomic, retain) NSMutableSet *checkedData;
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSMutableArray *expandArrayCash;
+@property (nonatomic, strong) NSMutableArray *expandArrayCousine;
+@property (nonatomic, strong) NSMutableArray *expandArrayMenu;
+@property (nonatomic, strong) NSMutableArray *expandArrayFun;
+@property (nonatomic, strong) NSMutableArray *expandArrayMusic;
+@property (nonatomic, strong) NSMutableArray *expandArrayOthers;
+@property (nonatomic, strong) IBOutlet UITableView *TableView;
+@property (nonatomic, strong) NSMutableSet *checkedData;
 @property (nonatomic) NSInteger rowCountCash;
 @property (nonatomic) NSInteger rowCountCousine;
 @property (nonatomic) NSInteger rowCountMenu;

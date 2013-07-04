@@ -10,7 +10,6 @@
 
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
-#import "thirdViewController.h"
 #import "modalViewController.h"
 
 @implementation newMainViewController
@@ -26,12 +25,22 @@
 
 #pragma mark - Table view delegate
 
+#warning Ф-ия фильтрация списка!
+
 - (void)viewDidLoad{
-    self.array =         [[NSArray alloc] initWithArray:@[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"]];
-    self.rateArray = [[NSArray alloc] initWithArray:@[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"]];
-    self.subwayArray = [[NSArray alloc] initWithArray:@[@"Arbatskaya", @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", @"Arbatskaya", @"Akademicheskaya", @"Leninskiy prospekt"]];
-    self.paycheckArray = [[NSArray alloc] initWithArray:@[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"]];
-    self.workTimeArray = [[NSArray alloc] initWithArray:@[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"]];
+    
+#warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
+    if(!self.array)
+        self.array =         @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"]
+        ;
+    if(!self.rateArray)
+        self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
+    if(!self.subwayArray)
+        self.subwayArray = @[@"Arbatskaya", @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", @"Arbatskaya", @"Akademicheskaya", @"Leninskiy prospekt"];
+    if(!self.paycheckArray)
+        self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
+    if(!self.workTimeArray)
+        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
@@ -45,7 +54,6 @@
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
-    [tgr release];
 }
 
 - (void)appToBackground{
@@ -69,6 +77,7 @@
     region.center = location;
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
+
 }
 
 #pragma mark - Table view data source
@@ -101,7 +110,6 @@
     
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [self.rateArray objectAtIndex:section]]];
     [button addSubview:imv];
-    [imv release];
 
 
     return button;
@@ -216,8 +224,8 @@
     
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
-    if (cell == nil) { cell = [[[UITableViewCell alloc]
-                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier] autorelease];
+    if (cell == nil) { cell = [[UITableViewCell alloc]
+                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
    
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
         
@@ -231,7 +239,6 @@
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
         line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         [imv addSubview:line];
-        [line release];
 
         
         //Here is subway station
@@ -239,24 +246,20 @@
         subway.textColor = [UIColor whiteColor];
         [subway setText:[self.subwayArray objectAtIndex:section]];
         [imv addSubview:subway];
-        [subway release];
         
         //Here is avg paycheck
         UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
         paycheck.textColor = [UIColor whiteColor];
         [paycheck setText:[self.paycheckArray objectAtIndex:section]];
         [imv addSubview:paycheck];
-        [paycheck release];
         
         //Here is work time
         UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
         workTime.textColor = [UIColor whiteColor];
         [workTime setText:[self.workTimeArray objectAtIndex:section]];
         [imv addSubview:workTime];
-        [workTime release];
         
         [cell.contentView addSubview:imv];
-        [imv release];
     }
     
     
@@ -264,8 +267,10 @@
 }
 
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
+
     UIViewController *go = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
-    [self presentModalViewController:go animated:YES];
+    [go setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:go animated:YES completion:^{}];
 }
 
 #pragma mark - Table view delegate
@@ -354,7 +359,6 @@
         tgr.numberOfTapsRequired = 1;
         tgr.numberOfTouchesRequired = 1;
         [self._mapView addGestureRecognizer:tgr];
-        [tgr release];
     }
     self._mapView.contentMode = UIViewContentModeScaleAspectFit;
 }
@@ -380,6 +384,11 @@
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
         
+#warning ПЛОХАЯ КНОПКА!
+  //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
+    //    self.navigationItem.rightBarButtonItem = buttonItem;
+//        [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
@@ -443,7 +452,7 @@
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
-    [tgr release];
 }
 
 @end
+

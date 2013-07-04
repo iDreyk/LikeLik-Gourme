@@ -11,12 +11,12 @@
 @protocol MKDSlideViewControllerDelegate;
 
 @interface MKDSlideViewController : UIViewController
-@property (nonatomic, assign) id<MKDSlideViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<MKDSlideViewControllerDelegate> delegate;
 
 // Child View Controllers
-@property (nonatomic, retain) UIViewController * leftViewController;
-@property (nonatomic, retain) UIViewController * rightViewController;
-@property (nonatomic, retain) UIViewController * mainViewController;
+@property (nonatomic, strong) UIViewController * leftViewController;
+@property (nonatomic, strong) UIViewController * rightViewController;
+@property (nonatomic, strong) UIViewController * mainViewController;
 
 // Status Bar Handling
 @property (nonatomic, assign, getter = isHandlingStatusBarStyleChanges) BOOL handleStatusBarStyleChanges;  // default: YES

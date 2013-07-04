@@ -2,19 +2,16 @@
 //  LeftViewController.m
 //  MKDSlideViewController
 //
-//  Created by Marcel Dierkes on 18.04.13.
+//  Created by Ilya Tsarev on 20.05.13.
 //
 //
 
 #import "LeftViewController.h"
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
-#import "MainViewController.h"
-#import "SecondaryViewController.h"
-#import "thirdViewController.h"
-#import "fourthViewController.h"
-#import "fifthViewController.h"
 #import "newMainViewController.h"
+
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 @implementation LeftViewController
 @synthesize catalogueTableView;
@@ -27,7 +24,7 @@ int EXPANDED_ON = 0;
 
 - (void)viewDidLoad{
     
-    self.array =         [[NSArray alloc] initWithArray:@[@"  Restaurants", @"  City", @"  Language"/*, @"  Favourites",@"  Transportation",@"  Practical info",@"  Settings"*/]];
+    self.array =         @[@"  Restaurants", @"  City", @"  Language", @"  Sort by name",@"  Sort by distance"/*,@"  Practical info",@"  Settings"*/];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
     self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Germany", @"      Russian", @"      Japanese"]];
     self.rowCountCity = 0;
@@ -56,6 +53,14 @@ int EXPANDED_ON = 0;
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor blackColor];
+    if([NSUserDefaults standardUserDefaults]){
+        NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
+        NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
+        if (!sortMethod && section == 3) 
+            button.backgroundColor = [UIColor grayColor];
+        else if (sortMethod && section == 4)
+            button.backgroundColor = [UIColor grayColor];
+    }
    // [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
@@ -173,7 +178,26 @@ int EXPANDED_ON = 0;
         else
             [self openLangMenu];
         OPENED_LANG = !OPENED_LANG;
-        
+    }
+    else if(row == 3){
+        for (UIView *subView in self.catalogueTableView.subviews){
+            if (subView.tag == 3)
+                subView.backgroundColor = [UIColor grayColor];
+            if (subView.tag == 4)
+                subView.backgroundColor = [UIColor blackColor];
+        }
+        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"menuSortMethod"];
+    }
+    else if(row == 4){
+        for (UIView *subView in self.catalogueTableView.subviews){
+            if (subView.tag == 4)
+                subView.backgroundColor = [UIColor grayColor];
+            if (subView.tag == 3)
+                subView.backgroundColor = [UIColor blackColor];
+        }
+        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"menuSortMethod"];
+    }
+    NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
 //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
 //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
 //        else
@@ -216,7 +240,6 @@ int EXPANDED_ON = 0;
 //            //EXPANDED_ON = 7;
 //        }
 //        OPENED_CITY = !OPENED_CITY;
-    }
 //    if( row == 3 + EXPANDED_ON)
 //    {
 //                NSLog(@"pusher 5");
@@ -322,6 +345,72 @@ int EXPANDED_ON = 0;
     }
 }
 
+
+#pragma mark - Searchbar handle
+
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    return YES;
+    
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
+//    if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
+//        [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y-44.0, 320.0, self.SearchTable.frame.size.height+44.0)];
+    [self.searchBar setShowsCancelButton:YES];
+    self.searchBar.text = nil;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    NSLog(@"SEARCH LOG: searched for: %@", searchText);
+
+#warning Поиск подстроки (каждая буква) параметр -- NSString *searchText, а искать надо по местам в newMainViewController 
+//    NSArray *tmp;
+//    if (self.searchBar.text.length > 0){//.text.length>0) {
+//        NSString *strSearchText = self.searchBar.text;
+//        NSLog(@"strSearchText = %@",strSearchText);
+//        //#warning надо переделать под новый каталог
+//        tmp = [ExternalFunctions getAllPlacesInCity:self.CityName];
+//        //#warning backspace неправильно работает
+//        NSMutableArray *ar = [NSMutableArray array];
+//        for (int i=0;i<[tmp count];i++) {
+//            NSString *strData = [[tmp objectAtIndex:i] objectForKey:@"Name"];
+//            //          NSLog(@"strData = %@ strSearchText = %@",strData, strSearchText);
+//            if ([[strData lowercaseString] rangeOfString:[strSearchText lowercaseString]].length>0)
+//                [ar addObject:[tmp objectAtIndex:i]];
+//        }
+//        self.PlacesArray = ar;
+//        [self.SearchTable reloadData];
+//    }
+//    else{
+//        //    NSLog(@"Hello");
+//        //#warning надо переделать под новый каталог
+//        self.PlacesArray = [ExternalFunctions getAllPlacesInCity:self.CityName];
+//        NSLog(@"tmp = %@", tmp);
+//        [self.SearchTable reloadData];
+//    }
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    //if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
+      // [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y+44.0, 320.0, self.SearchTable.frame.size.height-44.0)];
+    
+   // self.PlacesArray = Array;
+    //[self.SearchTable reloadData];
+    [self.searchBar setShowsCancelButton:NO];
+    [self.searchBar resignFirstResponder];
+    
+}
+
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    //    nslog(@"SearchClicked");
+    [self.searchBar setShowsCancelButton:NO];
+    [self.searchBar resignFirstResponder];
+    
+}
 //- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 //    [self handleSearch:searchBar];
 //}

@@ -14,15 +14,12 @@
 		D0059F9117732E4A002FCC64 /* ll57.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9017732E4A002FCC64 /* ll57.png */; };
 		D0059F9317732E71002FCC64 /* ll114.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9217732E71002FCC64 /* ll114.png */; };
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
-		D043067C174A8043003F110F /* thirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043067B174A8043003F110F /* thirdViewController.m */; };
 		D0C2AC461783F5BC00B42E56 /* 1star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC411783F5BC00B42E56 /* 1star.png */; };
 		D0C2AC471783F5BC00B42E56 /* 3star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC421783F5BC00B42E56 /* 3star.png */; };
 		D0C2AC481783F5BC00B42E56 /* 4star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC431783F5BC00B42E56 /* 4star.png */; };
 		D0C2AC491783F5BC00B42E56 /* 2star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC441783F5BC00B42E56 /* 2star.png */; };
 		D0C2AC4A1783F5BC00B42E56 /* 5star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC451783F5BC00B42E56 /* 5star.png */; };
 		D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */ = {isa = PBXBuildFile; fileRef = D0E7E9A3174B6C1500BE51D3 /* contB.png */; };
-		D0E7E9A7174B711100BE51D3 /* fourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9A6174B711100BE51D3 /* fourthViewController.m */; };
-		D0E7E9AA174B76AC00BE51D3 /* fifthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */; };
 		D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */; };
 		DA953C65148AD3700075A1E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C64148AD3700075A1E2 /* UIKit.framework */; };
 		DA953C67148AD3700075A1E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C66148AD3700075A1E2 /* Foundation.framework */; };
@@ -30,9 +27,7 @@
 		DA953C71148AD3700075A1E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA953C70148AD3700075A1E2 /* main.m */; };
 		DA953C75148AD3700075A1E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA953C74148AD3700075A1E2 /* AppDelegate.m */; };
 		DA953C8C148AD61E0075A1E2 /* MKDSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA953C8B148AD61E0075A1E2 /* MKDSlideViewController.m */; };
-		DA953C90148ADA440075A1E2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA953C8E148ADA440075A1E2 /* MainViewController.m */; };
 		DA953C9E148AE7240075A1E2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C9D148AE7240075A1E2 /* QuartzCore.framework */; };
-		DAD0C3CD1720792F0031B4E0 /* SecondaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD0C3CC1720792F0031B4E0 /* SecondaryViewController.m */; };
 		DAD0C3D0172079390031B4E0 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD0C3CF172079390031B4E0 /* LeftViewController.m */; };
 		DAD0C3D317207A2C0031B4E0 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD0C3D217207A2C0031B4E0 /* RightViewController.m */; };
 		DAD0C3DD1720872D0031B4E0 /* ButtonMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD0C3D51720872D0031B4E0 /* ButtonMenu.png */; };
@@ -54,18 +49,12 @@
 		D0059F9217732E71002FCC64 /* ll114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ll114.png; sourceTree = "<group>"; };
 		D00782331758C7D800D4612F /* modalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modalViewController.h; path = Resources/modalViewController.h; sourceTree = "<group>"; };
 		D00782341758C7D800D4612F /* modalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = modalViewController.m; path = Resources/modalViewController.m; sourceTree = "<group>"; };
-		D043067A174A8043003F110F /* thirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thirdViewController.h; sourceTree = "<group>"; };
-		D043067B174A8043003F110F /* thirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = thirdViewController.m; sourceTree = "<group>"; };
 		D0C2AC411783F5BC00B42E56 /* 1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1star.png; sourceTree = "<group>"; };
 		D0C2AC421783F5BC00B42E56 /* 3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3star.png; sourceTree = "<group>"; };
 		D0C2AC431783F5BC00B42E56 /* 4star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4star.png; sourceTree = "<group>"; };
 		D0C2AC441783F5BC00B42E56 /* 2star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2star.png; sourceTree = "<group>"; };
 		D0C2AC451783F5BC00B42E56 /* 5star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5star.png; sourceTree = "<group>"; };
 		D0E7E9A3174B6C1500BE51D3 /* contB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contB.png; sourceTree = "<group>"; };
-		D0E7E9A5174B711100BE51D3 /* fourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fourthViewController.h; sourceTree = "<group>"; };
-		D0E7E9A6174B711100BE51D3 /* fourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fourthViewController.m; sourceTree = "<group>"; };
-		D0E7E9A8174B76AC00BE51D3 /* fifthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fifthViewController.h; sourceTree = "<group>"; };
-		D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fifthViewController.m; sourceTree = "<group>"; };
 		D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newMainViewController.h; sourceTree = "<group>"; };
 		D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newMainViewController.m; sourceTree = "<group>"; };
 		DA953C60148AD3700075A1E2 /* LikeLik Gourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LikeLik Gourmet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,11 +68,7 @@
 		DA953C74148AD3700075A1E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DA953C8A148AD61E0075A1E2 /* MKDSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDSlideViewController.h; sourceTree = "<group>"; };
 		DA953C8B148AD61E0075A1E2 /* MKDSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKDSlideViewController.m; sourceTree = "<group>"; };
-		DA953C8D148ADA440075A1E2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		DA953C8E148ADA440075A1E2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		DA953C9D148AE7240075A1E2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		DAD0C3CB1720792F0031B4E0 /* SecondaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondaryViewController.h; sourceTree = "<group>"; };
-		DAD0C3CC1720792F0031B4E0 /* SecondaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondaryViewController.m; sourceTree = "<group>"; };
 		DAD0C3CE172079390031B4E0 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
 		DAD0C3CF172079390031B4E0 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		DAD0C3D117207A2C0031B4E0 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
@@ -185,20 +170,10 @@
 		DA953C92148ADA4A0075A1E2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DA953C8D148ADA440075A1E2 /* MainViewController.h */,
-				DA953C8E148ADA440075A1E2 /* MainViewController.m */,
-				DAD0C3CB1720792F0031B4E0 /* SecondaryViewController.h */,
-				DAD0C3CC1720792F0031B4E0 /* SecondaryViewController.m */,
 				DAD0C3CE172079390031B4E0 /* LeftViewController.h */,
 				DAD0C3CF172079390031B4E0 /* LeftViewController.m */,
 				DAD0C3D117207A2C0031B4E0 /* RightViewController.h */,
 				DAD0C3D217207A2C0031B4E0 /* RightViewController.m */,
-				D043067A174A8043003F110F /* thirdViewController.h */,
-				D043067B174A8043003F110F /* thirdViewController.m */,
-				D0E7E9A5174B711100BE51D3 /* fourthViewController.h */,
-				D0E7E9A6174B711100BE51D3 /* fourthViewController.m */,
-				D0E7E9A8174B76AC00BE51D3 /* fifthViewController.h */,
-				D0E7E9A9174B76AC00BE51D3 /* fifthViewController.m */,
 				D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */,
 				D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */,
 				D00782331758C7D800D4612F /* modalViewController.h */,
@@ -310,14 +285,9 @@
 				DA953C71148AD3700075A1E2 /* main.m in Sources */,
 				DA953C75148AD3700075A1E2 /* AppDelegate.m in Sources */,
 				DA953C8C148AD61E0075A1E2 /* MKDSlideViewController.m in Sources */,
-				DA953C90148ADA440075A1E2 /* MainViewController.m in Sources */,
 				DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */,
-				DAD0C3CD1720792F0031B4E0 /* SecondaryViewController.m in Sources */,
 				DAD0C3D0172079390031B4E0 /* LeftViewController.m in Sources */,
 				DAD0C3D317207A2C0031B4E0 /* RightViewController.m in Sources */,
-				D043067C174A8043003F110F /* thirdViewController.m in Sources */,
-				D0E7E9A7174B711100BE51D3 /* fourthViewController.m in Sources */,
-				D0E7E9AA174B76AC00BE51D3 /* fifthViewController.m in Sources */,
 				D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */,
 				D00782351758C7D800D4612F /* modalViewController.m in Sources */,
 			);
@@ -391,10 +361,12 @@
 		DA953C82148AD3700075A1E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
 				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "LikeLik Gourmet";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -405,9 +377,11 @@
 		DA953C83148AD3700075A1E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
 				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "LikeLik Gourmet";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

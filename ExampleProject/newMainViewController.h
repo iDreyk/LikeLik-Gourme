@@ -10,15 +10,15 @@
 #import <MapKit/MapKit.h>
 
 @interface newMainViewController : UIViewController
-@property (nonatomic, retain) NSArray *array;
-@property (nonatomic, retain) NSArray *rateArray;
-@property (nonatomic, retain) NSArray *subwayArray;
-@property (nonatomic, retain) NSArray *paycheckArray;
-@property (nonatomic, retain) NSArray *workTimeArray;
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSArray *rateArray;
+@property (nonatomic, strong) NSArray *subwayArray;
+@property (nonatomic, strong) NSArray *paycheckArray;
+@property (nonatomic, strong) NSArray *workTimeArray;
 
 
-@property (nonatomic, retain) IBOutlet UITableView *placesTableView;
-@property (nonatomic, retain) IBOutlet MKMapView *_mapView;
+@property (nonatomic, strong) IBOutlet UITableView *placesTableView;
+@property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 - (IBAction)showLeftMenu:(id)sender;
 - (IBAction)showRightMenu:(id)sender;
 

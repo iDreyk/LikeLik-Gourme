@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 @interface modalViewController : UIViewController
-@property (nonatomic, retain) IBOutlet UITextView * textView;
+@property (nonatomic, strong) IBOutlet UITextView * textView;
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) IBOutlet UITableView *placeTableView;
+@property (nonatomic, strong) IBOutlet MKMapView *_mapView;
+@property (nonatomic) CLLocationCoordinate2D placeCoordinates;
 
-- (IBAction)showMenu:(id)sender;
 - (IBAction)close:(id)sender;
-- (void)setDetailText:(NSString *)detailText;
+
 
 @end
