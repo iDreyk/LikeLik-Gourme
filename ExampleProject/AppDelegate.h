@@ -14,5 +14,10 @@
 
 @property (nonatomic, strong) UIWindow * window;
 @property (nonatomic, strong) MKDSlideViewController * slideViewController;
++(BOOL)isiPhone5;
+
++(UIFont *)OpenSansRegular:(CGFloat)size;
++(UIFont *)OpenSansSemiBold:(CGFloat)size;
++(UIFont *)OpenSansBoldwithSize:(CGFloat)size;
 
 @end

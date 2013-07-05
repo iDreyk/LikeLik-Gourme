@@ -11,7 +11,43 @@
 
 @implementation AppDelegate
 
++(BOOL)isiPhone5{
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if (result.height < 500)
+            return NO;  // iPhone 4S / 4th Gen iPod Touch or earlier
+        else
+            return YES;  // iPhone 5
+    }
+    else
+    {
+        return NO; // iPad
+    }
+}
 
++(UIFont *)OpenSansRegular:(CGFloat)size{
+    UIFont* font = [UIFont fontWithName:@"OpenSans" size:size/2];
+    return font;
+}
++(UIFont *)OpenSansSemiBold:(CGFloat)size{
+    UIFont* font = [UIFont fontWithName:@"OpenSans-Semibold" size:size/2];
+    // //    nslog(@"%@",font);
+    return font;
+    
+}
+
++(UIFont *)OpenSansBoldwithSize:(CGFloat)size{
+    UIFont* font = [UIFont fontWithName:@"OpenSans-Bold" size:size/2];
+    return font;
+}
+
++(UIFont *)OpenSansLight:(CGFloat)size{
+    UIFont *font = [UIFont fontWithName:@"OpenSans" size:size/2];
+    // //    nslog(@"Light 26 = %@",font);
+    return font;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [AppDelegate lang];
