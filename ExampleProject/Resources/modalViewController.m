@@ -17,6 +17,7 @@
 @synthesize placeTableView;
 @synthesize _mapView;
 @synthesize placeCoordinates;
+static BOOL MAP_PRESENTED = false;
 
 #pragma mark - Table view delegate
 
@@ -25,6 +26,7 @@
     if (!self.array)
         self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
+    //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - Map handler
@@ -128,6 +130,9 @@
 
 #pragma mark - Map's parralax
 - (void)updateOffsets{
+    if(MAP_PRESENTED)
+        return;
+    
     CGFloat yOffset   = self.placeTableView.contentOffset.y;
     CGFloat threshold = self.placeTableView.frame.size.height - self.placeTableView.frame.size.height;
     if (yOffset > -threshold && yOffset < 0) {
@@ -158,6 +163,7 @@
 
 - (void)openMap:(UIGestureRecognizer *)gestureRecognizer
 {
+    MAP_PRESENTED = true;
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
     [UIView animateWithDuration:0.3 animations:^{
@@ -240,6 +246,7 @@
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
+    MAP_PRESENTED = false;
 }
 
 @end

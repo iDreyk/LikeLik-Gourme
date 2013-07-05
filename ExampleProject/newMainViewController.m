@@ -14,6 +14,8 @@
 
 @implementation newMainViewController
 @synthesize placesTableView;
+static BOOL MAP_PRESENTED = false;
+
 - (IBAction)showLeftMenu:(id)sender
 {
     // Use the UIViewController (MKDSlideViewController) category as a helper
@@ -31,8 +33,7 @@
     
 #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
     if(!self.array)
-        self.array =         @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"]
-        ;
+        self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.rateArray)
         self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
     if(!self.subwayArray)
@@ -66,13 +67,13 @@
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
-    NSLog(@"MAP LOG: update");
+//    NSLog(@"MAP LOG: update");
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     span.latitudeDelta = 0.003;
     span.longitudeDelta = 0.003;
     CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+//    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
     region.span = span;
     region.center = location;
     [self._mapView setRegion:region animated:YES];
@@ -227,7 +228,8 @@
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
    
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(singleTapGestureCaptured:)];
         
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
         [imv addGestureRecognizer:singleTap];
@@ -340,6 +342,8 @@
 
 #pragma mark - Map's parralax
 - (void)updateOffsets{
+    if(MAP_PRESENTED)
+        return;
     CGFloat yOffset   = self.placesTableView.contentOffset.y;
     CGFloat threshold = self.placesTableView.frame.size.height - self.placesTableView.frame.size.height;
     if (yOffset > -threshold && yOffset < 0) {
@@ -370,6 +374,7 @@
 
 - (void)openMap:(UIGestureRecognizer *)gestureRecognizer
 {
+    MAP_PRESENTED = true;
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
     [UIView animateWithDuration:0.3 animations:^{
@@ -452,6 +457,7 @@
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
+    MAP_PRESENTED = false;
 }
 
 @end
