@@ -9,6 +9,9 @@
 #import "modalViewController.h"
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
+#import "MapViewAnnotation.h"
+#import "UIViewController+KNSemiModal.h"
+#import "AppDelegate.h"
 @interface modalViewController ()
 
 @end
@@ -26,6 +29,9 @@ static BOOL MAP_PRESENTED = false;
     if (!self.array)
         self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
+    
+    
+    //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - Map handler
@@ -43,17 +49,72 @@ static BOOL MAP_PRESENTED = false;
     region.span = span;
     region.center = location;
     
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:location];
-    [annotation setTitle:@"Place Name"]; //You can set the subtitle too
-    [self._mapView addAnnotation:annotation];
+    MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:@"PlaceName" andCoordinate:location andUserinfo:nil andSubtitle:@"Restraunt" AndTag:0];
+    [self._mapView addAnnotation:Annotation];
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
     
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
+    
+    if ([AppDelegate isiPhone5])
+        VC = [[CheckViewController alloc] initWithNibName:@"CheckViewController" bundle:nil];
+    else
+        VC = [[CheckViewController alloc] initWithNibName:@"CheckViewController35" bundle:nil];
+    
 }
+
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(MapViewAnnotation *)annotation {
+    
+    static NSString *identifier = @"MyLocation";
+    if ([annotation isKindOfClass:[MapViewAnnotation class]]) {
+        
+        MKPinAnnotationView *annotationView =
+        (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        
+        if (annotationView == nil) {
+            annotationView = [[MKPinAnnotationView alloc]
+                              initWithAnnotation:annotation
+                              reuseIdentifier:identifier];
+        } else {
+            annotationView.annotation = annotation;
+        }
+        
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+      //  annotationView.image = [InterfaceFunctions MapPin:annotation.subtitle].image;
+        
+        
+//        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//        rightButton.tag = [annotation.tag intValue];
+//        [rightButton addTarget:self action:@selector(map_tu:) forControlEvents:UIControlEventTouchUpInside];
+//        [rightButton setTitle:annotation.title forState:UIControlStateNormal];
+//        [annotationView setRightCalloutAccessoryView:rightButton];
+        
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        leftButton.tag = [annotation.tag intValue];
+        [leftButton addTarget:self action:@selector(showAppleMap:) forControlEvents:UIControlEventTouchUpInside];
+        [leftButton setTitle:annotation.title forState:UIControlStateNormal];
+        [annotationView setLeftCalloutAccessoryView:leftButton];
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+
+-(void)showAppleMap:(UIButton *)sender{
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(self.placeCoordinates.latitude,self.placeCoordinates.longitude);
+    
+    //create MKMapItem out of coordinates
+    MKPlacemark* placeMark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem* destination =  [[MKMapItem alloc] initWithPlacemark:placeMark];
+    
+    [destination openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+}
+
 
 - (void)appToBackground{
     NSLog(@"MW MAP LOG: app to background");
@@ -126,6 +187,23 @@ static BOOL MAP_PRESENTED = false;
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
+-(IBAction)Check:(id)sender{
+    NSLog(@"Hello!");
+    
+    [self presentSemiViewController:VC withOptions:@{
+     KNSemiModalOptionKeys.pushParentBack    : @(YES),
+     KNSemiModalOptionKeys.animationDuration : @(0.5),
+     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
+     }];
+    
+    VC.view.backgroundColor = [UIColor clearColor];
+    VC.PlaceName = @"PlaceName";
+    VC.PlaceCategory = @"PlaceCategory";
+    VC.PlaceCity = @"PlaceCity";
+    VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
+//    _labelonPhoto.hidden = NO;
+//    _background.hidden = NO;
+}
 
 #pragma mark - Map's parralax
 - (void)updateOffsets{

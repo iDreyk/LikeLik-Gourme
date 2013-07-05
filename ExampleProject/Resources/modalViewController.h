@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-
-@interface modalViewController : UIViewController
+#import "CheckViewController.h"
+@interface modalViewController : UIViewController{
+    CheckViewController *VC;
+}
 @property (nonatomic, strong) IBOutlet UITextView * textView;
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) IBOutlet UITableView *placeTableView;
@@ -17,6 +19,6 @@
 @property (nonatomic) CLLocationCoordinate2D placeCoordinates;
 
 - (IBAction)close:(id)sender;
-
+- (IBAction)Check:(id)sender;
 
 @end
