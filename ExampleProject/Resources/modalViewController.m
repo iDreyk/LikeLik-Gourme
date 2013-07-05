@@ -49,10 +49,16 @@ static BOOL MAP_PRESENTED = false;
     region.span = span;
     region.center = location;
     
+    
     MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:@"PlaceName" andCoordinate:location andUserinfo:nil andSubtitle:@"Restraunt" AndTag:0];
     [self._mapView addAnnotation:Annotation];
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
+    
+    CGRect theFrame = self._mapView.frame;
+    theFrame.size.height = 146.0;
+    theFrame.origin.y = 36.0;
+    self._mapView.frame = theFrame;
     
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;

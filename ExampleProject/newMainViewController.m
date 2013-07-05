@@ -14,7 +14,9 @@
 
 @implementation newMainViewController
 @synthesize placesTableView;
-static BOOL MAP_PRESENTED = false;
+static bool MAP_PRESENTED = false;
+NSInteger PREV_SECTION = 0;
+static bool REVERSE_ANIM = false;
 
 - (IBAction)showLeftMenu:(id)sender
 {
@@ -94,6 +96,25 @@ static BOOL MAP_PRESENTED = false;
     return 50;
 }
 
+- (void)reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation{
+    UIView *myView = [[self.placesTableView subviews] objectAtIndex:0];
+    CALayer *layer = myView.layer;
+    
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
+    layer.transform = rotationAndPerspectiveTransform;
+    
+    
+    [UIView beginAnimations:NULL context:nil];
+    [UIView setAnimationDuration:0.8];
+    //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
+    layer.transform = rotationAndPerspectiveTransform;
+    [UIView commitAnimations];
+
+}
+
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -108,11 +129,11 @@ static BOOL MAP_PRESENTED = false;
     
     
     //Here pict for rating
-    
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
     
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [self.rateArray objectAtIndex:section]]];
-    [button addSubview:imv];    
+    [button addSubview:imv];
+    
     return button;
 }
 
@@ -263,32 +284,42 @@ static BOOL MAP_PRESENTED = false;
         [cell.contentView addSubview:imv];
         cell.backgroundColor = [UIColor whiteColor];
         }
-    int r = arc4random() % 2;
+//    int r = arc4random() % 2;
 //    if(r)
 //        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
 //    else
 //        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
 //
             
+    if(PREV_SECTION > section)
+        REVERSE_ANIM = true;
+    else
+        REVERSE_ANIM = false;
+    
+    PREV_SECTION = section;
     UIView *myView = [[cell subviews] objectAtIndex:0];
     CALayer *layer = myView.layer;
     
     CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
     rotationAndPerspectiveTransform.m34 = 1.0 / -500;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+    if(!REVERSE_ANIM)
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
+    else
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
+
     layer.transform = rotationAndPerspectiveTransform;
     
     
     [UIView beginAnimations:NULL context:nil];
-    [UIView setAnimationDuration:0.8];
+    [UIView setAnimationDuration:0.5];
     //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+    if(!REVERSE_ANIM)
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
+    else
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
     layer.transform = rotationAndPerspectiveTransform;
     [UIView commitAnimations];
 
-    
-
-        
     return cell;
 }
 //-(void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)animated completion:(void (^)(void))completion{
@@ -406,6 +437,7 @@ static BOOL MAP_PRESENTED = false;
     }
     self._mapView.contentMode = UIViewContentModeScaleAspectFit;
 }
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self updateOffsets];
 }
