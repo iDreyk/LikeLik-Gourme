@@ -26,7 +26,6 @@ static BOOL MAP_PRESENTED = false;
     if (!self.array)
         self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
-    //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - Map handler
