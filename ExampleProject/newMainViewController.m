@@ -305,19 +305,14 @@ static BOOL MAP_PRESENTED = false;
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
 
     UIViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
-//  
+  [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+    //
 //    CATransition* transition = [CATransition animation];
 //    transition.type = kCATransitionMoveIn;
 //    transition.subtype = kCATransitionFromBottom;
 //    
 //    [self.view.window.layer addAnimation:transition forKey:nil ];
-//    [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
-    [UIView  beginAnimations:nil context:NULL];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.75];
-    [self.navigationController pushViewController:viewControllerToPresent animated:NO];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
-    [UIView commitAnimations];
+ //   [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
 }
 
 #pragma mark - Table view delegate

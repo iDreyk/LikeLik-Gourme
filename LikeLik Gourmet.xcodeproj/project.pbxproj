@@ -12,12 +12,7 @@
 		910E23E017869C7A00C94F8A /* CheckViewController35.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910E23DD17869C7A00C94F8A /* CheckViewController35.xib */; };
 		910E23E317869CCA00C94F8A /* UIViewController+KNSemiModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 910E23E217869CCA00C94F8A /* UIViewController+KNSemiModal.m */; };
 		910E23E617869CD900C94F8A /* NSObject+YMOptionsAndDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 910E23E517869CD900C94F8A /* NSObject+YMOptionsAndDefaults.m */; };
-		910E240A17869D0B00C94F8A /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 910E23E917869D0B00C94F8A /* Icon */; };
-		910E240B17869D0B00C94F8A /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 910E23EB17869D0B00C94F8A /* Icon */; };
-		910E240C17869D0B00C94F8A /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 910E23EF17869D0B00C94F8A /* Icon */; };
-		910E240D17869D0B00C94F8A /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 910E240217869D0B00C94F8A /* Icon */; };
 		910E240E17869D0B00C94F8A /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 910E240317869D0B00C94F8A /* libzbar.a */; };
-		910E240F17869D0B00C94F8A /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 910E240517869D0B00C94F8A /* Icon */; };
 		910E241017869D0B00C94F8A /* zbar-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 910E240617869D0B00C94F8A /* zbar-back.png */; };
 		910E241117869D0B00C94F8A /* zbar-help.html in Resources */ = {isa = PBXBuildFile; fileRef = 910E240717869D0B00C94F8A /* zbar-help.html */; };
 		910E241217869D0B00C94F8A /* zbar-helpicons.png in Resources */ = {isa = PBXBuildFile; fileRef = 910E240817869D0B00C94F8A /* zbar-helpicons.png */; };
@@ -1108,11 +1103,6 @@
 				D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */,
 				910E23DF17869C7A00C94F8A /* CheckViewController.xib in Resources */,
 				910E23E017869C7A00C94F8A /* CheckViewController35.xib in Resources */,
-				910E240A17869D0B00C94F8A /* Icon in Resources */,
-				910E240B17869D0B00C94F8A /* Icon in Resources */,
-				910E240C17869D0B00C94F8A /* Icon in Resources */,
-				910E240D17869D0B00C94F8A /* Icon in Resources */,
-				910E240F17869D0B00C94F8A /* Icon in Resources */,
 				910E241017869D0B00C94F8A /* zbar-back.png in Resources */,
 				910E241117869D0B00C94F8A /* zbar-help.html in Resources */,
 				910E241217869D0B00C94F8A /* zbar-helpicons.png in Resources */,
