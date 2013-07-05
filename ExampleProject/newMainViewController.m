@@ -44,6 +44,7 @@ static BOOL MAP_PRESENTED = false;
         self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
 }
 
 #pragma mark - Map handler
@@ -96,9 +97,10 @@ static BOOL MAP_PRESENTED = false;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = [UIColor blackColor];
+    button.backgroundColor = [UIColor whiteColor];
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
     [button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     // add targets and actions
     [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
@@ -110,9 +112,7 @@ static BOOL MAP_PRESENTED = false;
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
     
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [self.rateArray objectAtIndex:section]]];
-    [button addSubview:imv];
-
-
+    [button addSubview:imv];    
     return button;
 }
 
@@ -220,7 +220,6 @@ static BOOL MAP_PRESENTED = false;
     return 250;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSInteger section = indexPath.section;
     
     static NSString *SimpleTableIdentifier = @"placesTableView";
@@ -262,17 +261,63 @@ static BOOL MAP_PRESENTED = false;
         [imv addSubview:workTime];
         
         [cell.contentView addSubview:imv];
-    }
+        cell.backgroundColor = [UIColor whiteColor];
+        }
+    int r = arc4random() % 2;
+//    if(r)
+//        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
+//    else
+//        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
+//
+            
+    UIView *myView = [[cell subviews] objectAtIndex:0];
+    CALayer *layer = myView.layer;
+    
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+    layer.transform = rotationAndPerspectiveTransform;
     
     
+    [UIView beginAnimations:NULL context:nil];
+    [UIView setAnimationDuration:0.8];
+    //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+    layer.transform = rotationAndPerspectiveTransform;
+    [UIView commitAnimations];
+
+    
+
+        
     return cell;
 }
+//-(void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)animated completion:(void (^)(void))completion{
+//    if(animated){
+//        CATransition* transition = [CATransition animation];
+//        transition.type = kCATransitionMoveIn;
+//        transition.subtype = kCATransitionFromLeft;
+//        // parent.view.window.layer is essential!
+//        [self.view.window.layer addAnimation:transition forKey:nil ];
+//        [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
+//    }
+//}
 
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
 
-    UIViewController *go = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
-    [go setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [self presentViewController:go animated:YES completion:^{}];
+    UIViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
+//  
+//    CATransition* transition = [CATransition animation];
+//    transition.type = kCATransitionMoveIn;
+//    transition.subtype = kCATransitionFromBottom;
+//    
+//    [self.view.window.layer addAnimation:transition forKey:nil ];
+//    [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
+    [UIView  beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.75];
+    [self.navigationController pushViewController:viewControllerToPresent animated:NO];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
+    [UIView commitAnimations];
 }
 
 #pragma mark - Table view delegate

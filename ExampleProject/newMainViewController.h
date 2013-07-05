@@ -16,7 +16,6 @@
 @property (nonatomic, strong) NSArray *paycheckArray;
 @property (nonatomic, strong) NSArray *workTimeArray;
 
-
 @property (nonatomic, strong) IBOutlet UITableView *placesTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 - (IBAction)showLeftMenu:(id)sender;
