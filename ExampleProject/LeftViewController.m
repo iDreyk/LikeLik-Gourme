@@ -193,6 +193,9 @@ int EXPANDED_ON = 0;
                 subView.backgroundColor = [UIColor blackColor];
         }
         [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"menuSortMethod"];
+        NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
+        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
+            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
     else if(row == 4){
         for (UIView *subView in self.catalogueTableView.subviews){
@@ -202,8 +205,10 @@ int EXPANDED_ON = 0;
                 subView.backgroundColor = [UIColor blackColor];
         }
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"menuSortMethod"];
+        NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
+        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
+            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
-    NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
 //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
 //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
 //        else
