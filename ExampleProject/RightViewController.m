@@ -213,7 +213,7 @@ static bool OPENED_MENU = YES;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor blackColor];
+        cell.contentView.backgroundColor = [UIColor blackColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         if(indexPath.section == 1)
             cell.textLabel.text = [self.expandArrayCash objectAtIndex:[indexPath row]];
@@ -230,10 +230,10 @@ static bool OPENED_MENU = YES;
     // Галочки для фильтров:
     if([self.checkedData containsObject:indexPath]){
     //    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-          cell.backgroundColor = [UIColor lightGrayColor];
+          cell.contentView.backgroundColor = [UIColor lightGrayColor];
         //cell.highlighted = YES;
     }else{
-           cell.backgroundColor = [UIColor blackColor];
+           cell.contentView.backgroundColor = [UIColor blackColor];
 //        [UIView animateWithDuration:1.0 animations:^{
 //            cell.backgroundColor = [UIColor blackColor];
 //        } completion:NULL];
