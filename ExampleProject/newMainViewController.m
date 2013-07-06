@@ -14,6 +14,7 @@
 
 @implementation newMainViewController
 @synthesize placesTableView;
+
 static bool MAP_PRESENTED = false;
 NSInteger PREV_SECTION = 0;
 static bool REVERSE_ANIM = false;
@@ -32,8 +33,7 @@ static bool REVERSE_ANIM = false;
 #warning Ф-ия фильтрация списка!
 
 - (void)viewDidLoad{
-    
-#warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
+    #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
     if(!self.array)
         self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.rateArray)
@@ -44,6 +44,20 @@ static bool REVERSE_ANIM = false;
         self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
     if(!self.workTimeArray)
         self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
+    if(!self.imageArray)
+        self.imageArray = @[@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg",
+                            @"http://www.limousine-hire-perth.com.au/C_Restaurant.jpg",
+                            @"http://pittsburghrestaurantdirectory.com/wp-content/uploads/2012/04/restaurant-sample-pic2.jpg",
+                            @"http://media-cdn.tripadvisor.com/media/photo-s/01/9d/ab/6e/restaurant-hort-de-popaire.jpg",
+                            @"http://www.edelweiss-gurgl.co.uk/image/medium/en/restaurant-hotel-obergurgl-2.jpg",
+                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQYjI6IbxVh95C7C8CqxgkcxJpDwhmlKIsRGRq9niTPOXh8ewnw",
+                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS9MwAxrgm6u2tekq9tSInzHOoTkgSec42sCPKE4-dZhgkBi_04",
+                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQn5Sm4-R-wBXANsm0boFE-If4vd5tKbaHXGy2-AJVntPjnweg",
+                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpknvVGQig_9mk0bG_UhHQsgVXx_Pb1GCQXas48gsWpxP04rWw",
+                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT9NCxtouHbM5RfTzIRX1SdUcfXrjvWY4sLHQ-NDLYN-ank7ImZjg"
+                            ];
+    if(!self.imageCache)
+        self.imageCache = [[NSMutableDictionary alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     
@@ -240,50 +254,128 @@ static bool REVERSE_ANIM = false;
 {
     return 250;
 }
+
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+{
+    
+    UIImage* theImage = [self.imageCache objectForKey:url];
+    if ((nil != theImage) && [theImage isKindOfClass:[UIImage class]]) {
+        NSLog(@"img loaded from cache!");
+        completionBlock(YES, theImage);
+    }
+    else{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ( !error )
+                               {
+                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   [self.imageCache setObject:image forKey:url];
+                                           NSLog(@"img saved to cache! (%@)", [self.imageCache objectForKey:url]);
+                                   NSLog(@"Images in cache: %d", [self.imageCache count]);
+                                   completionBlock(YES,image);
+                               } else{
+                                   completionBlock(NO, nil);
+                               }
+                           }];
+    }
+}
+
+/*
+                                        ASYNC EXAMPLE
+ - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ static NSString *cellIdentifier = @"venue";
+ UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+ 
+ if (!cell) {
+ cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+ }
+ 
+ Venue *venue = ((Venue * )self.venues[indexPath.row]);
+ if (venue.userImage) {
+ cell.imageView.image = venue.image;
+ } else {
+ // set default user image while image is being downloaded
+ cell.imageView.image = [UIImage imageNamed:@"batman.png"];
+ 
+ // download the image asynchronously
+ [self downloadImageWithURL:venue.url completionBlock:^(BOOL succeeded, UIImage *image) {
+ if (succeeded) {
+ // change the image in the cell
+ cell.imageView.image = image;
+ 
+ // cache the image for use later (when scrolling up)
+ venue.image = image;
+ }
+ }];
+ }
+ }
+ 
+ 
+ 
+ */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
-    
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
-   
+    }
+    if([cell.contentView.subviews count] > 0)
+       [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                     action:@selector(singleTapGestureCaptured:)];
-        
+    
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
+    
+        //while loading an image
+//        imv.image = [UIImage imageNamed:@"loading.png"];
+//        [cell.contentView addSubview:imv];
+    
         [imv addGestureRecognizer:singleTap];
         [imv setUserInteractionEnabled:YES];
-        
-        imv.image=[UIImage imageNamed:@"testRestPict.jpg"];
+//    imv.image = [UIImage imageNamed:@"icon.png"];
+    [self downloadImageWithURL:[NSURL URLWithString:[self.imageArray objectAtIndex:section]] completionBlock:^(BOOL succeeded, UIImage *image) {
+                   if (succeeded) {
+                        imv.image = image;
+//                       if([cell.contentView.subviews count] > 0)
+//                           [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
+                        [cell.contentView addSubview:imv];
+                    }
+                }];
+
         
         //Here is line
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
         line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         [imv addSubview:line];
 
-        
         //Here is subway station
         UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 200, 20)];
         subway.textColor = [UIColor whiteColor];
+        subway.backgroundColor = [UIColor clearColor];
         [subway setText:[self.subwayArray objectAtIndex:section]];
         [imv addSubview:subway];
-        
+
         //Here is avg paycheck
         UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
         paycheck.textColor = [UIColor whiteColor];
+        paycheck.backgroundColor = [UIColor clearColor];
         [paycheck setText:[self.paycheckArray objectAtIndex:section]];
         [imv addSubview:paycheck];
         
         //Here is work time
         UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
         workTime.textColor = [UIColor whiteColor];
+        workTime.backgroundColor = [UIColor clearColor];
         [workTime setText:[self.workTimeArray objectAtIndex:section]];
         [imv addSubview:workTime];
         
-        [cell.contentView addSubview:imv];
+//        [cell.contentView addSubview:imv];
         cell.backgroundColor = [UIColor whiteColor];
-        }
+//        }
 //    int r = arc4random() % 2;
 //    if(r)
 //        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
@@ -322,6 +414,9 @@ static bool REVERSE_ANIM = false;
 
     return cell;
 }
+
+
+
 //-(void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)animated completion:(void (^)(void))completion{
 //    if(animated){
 //        CATransition* transition = [CATransition animation];
@@ -332,11 +427,48 @@ static bool REVERSE_ANIM = false;
 //        [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
 //    }
 //}
-
+- (void) presentTLModalViewController:(UIViewController *)pDestinationController animated:(BOOL)pAnimated completion:(void (^)(void))completion {
+    if (pAnimated) {
+        [CATransaction begin];
+        
+        CATransition *transition = [CATransition animation];
+        transition.type = kCATransitionFade;
+        transition.subtype = kCATransitionFromBottom;
+        transition.duration = 0.25f;
+        transition.fillMode = kCAFillModeForwards;
+        transition.removedOnCompletion = YES;
+        
+        [[UIApplication sharedApplication].keyWindow.layer addAnimation:transition forKey:@"transition"];
+        
+        [self presentViewController:pDestinationController animated:NO completion:completion];
+        
+        [CATransaction commit];
+    } else {
+        [self presentViewController:pDestinationController animated:NO completion:completion];
+    }
+}
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
-
+//    NSString *docsDir;
+//    NSArray *dirPaths;
+//    
+//    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    docsDir = [dirPaths objectAtIndex:0];
+//    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
+//    
+//    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+//        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+//    else
+//        UIGraphicsBeginImageContext(self.view.bounds.size);
+//    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    NSData * data = UIImageJPEGRepresentation(image, 0.8);
+//    BOOL saved = [data writeToFile:databasePath atomically:YES];
+//    NSLog(@"saved: %d to %@", saved, databasePath);
+//    [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
     UIViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
-  [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+    //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
+    [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     //
 //    CATransition* transition = [CATransition animation];
 //    transition.type = kCATransitionMoveIn;

@@ -12,6 +12,8 @@
 #import "MapViewAnnotation.h"
 #import "UIViewController+KNSemiModal.h"
 #import "AppDelegate.h"
+#import "UIImage+ImageEffects.h"
+
 @interface modalViewController ()
 
 @end
@@ -29,7 +31,15 @@ static BOOL MAP_PRESENTED = false;
     if (!self.array)
         self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
+    //self.background.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg"]]];//[UIImage imageNamed:@"testRestPict.jpg"];
     
+//    NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
+//    NSLog(@"path: %@", path);
+//    self.background.image = [UIImage imageWithContentsOfFile:path];
+    self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
+    UIImage *effectImage = nil;
+    //effectImage = [self.background.image applyLightEffect];
+    //self.background.image = effectImage;
     
     //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
@@ -193,9 +203,7 @@ static BOOL MAP_PRESENTED = false;
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
--(IBAction)Check:(id)sender{
-    NSLog(@"Hello!");
-    
+-(IBAction)Check:(id)sender{    
     [self presentSemiViewController:VC withOptions:@{
      KNSemiModalOptionKeys.pushParentBack    : @(YES),
      KNSemiModalOptionKeys.animationDuration : @(0.5),

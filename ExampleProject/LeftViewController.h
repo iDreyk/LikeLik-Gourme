@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftViewController : UITableViewController
+@interface LeftViewController : UIViewController
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) NSMutableArray *cityArray;
 @property (nonatomic, strong) NSMutableArray *languageArray;
@@ -16,8 +16,8 @@
 @property (nonatomic) NSInteger rowCountCity;
 @property (nonatomic) NSInteger rowCountLang;
 @property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
-
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (weak, nonatomic) IBOutlet UIImageView *background;
 
 -(void)openCityMenu;
 -(void)closeCityMenu;

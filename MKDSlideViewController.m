@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         _slideSpeed = 0.35f;
         _overlapWidth = 52.0f;
         _leftSwipe = NO;
+        _rightSwipe = NO;
         _showMain = NO;
     }
     return self;
@@ -257,6 +258,22 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 #pragma mark - Panning
 
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"CHECK");
+    UIView *cell = [gestureRecognizer view];
+    CGPoint translation = [gestureRecognizer translationInView:[cell superview]];
+    
+    // Check for horizontal gesture
+    if (fabsf(translation.x) > fabsf(translation.y))
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+
 - (UIPanGestureRecognizer *)panGestureRecognizer
 {
     if( _panGestureRecognizer == nil )
@@ -269,17 +286,29 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 - (void)pan:(UIPanGestureRecognizer *)gesture
 {
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded))
+    {
+        CGPoint velocity = [gesture velocityInView:self.view];
+        
+        if (fabs(velocity.y > 0) && fabs(velocity.x) < 30 && !self.leftSwipe && !self.rightSwipe)   // panning down or up
+        {
+            gesture.enabled = NO;
+            gesture.enabled = YES;
+        }
+    }
+    
     CGFloat xOffset = self.mainPanelView.frame.origin.x;
     CGFloat snapThreshold = 0.0f;
     CGFloat dividerPosition = 0.0f;
 //    UIApplication * app = [UIApplication sharedApplication];
-
 //    NSLog(@"LOG: swipe detected. offset:%f, %d",xOffset, self.leftSwipe);
     if( xOffset > (dividerPosition-snapThreshold) /*&& !self.leftSwipe*/)
     {
                // snap to right position
  //       NSLog(@"LOG: swipe from left");
         self.leftSwipe = YES;
+        self.rightSwipe = NO;
         CGRect newFrame = self.mainPanelView.frame;
         newFrame.origin.x = CGPointZero.x + 0.001;
         self.mainPanelView.frame = newFrame;
@@ -326,6 +355,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     else if(xOffset <= (dividerPosition-snapThreshold)){
 //        NSLog(@"LOG: swipe from right");
         self.leftSwipe = NO;
+        self.rightSwipe = YES;
         
         if( gesture.state == UIGestureRecognizerStateBegan )
         {
@@ -393,7 +423,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 //            if( [self isHandlingStatusBarStyleChanges] )
 //                [app setStatusBarStyle:self.rightStatusBarStyle animated:YES];
         }
-        else
+        else if((leftOffset + self.leftPanelView.frame.size.width) > self.overlapWidth)
         {
                         NSLog(@"LOG: point  3");
             // snap to left position
@@ -401,7 +431,10 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 //            if( [self isHandlingStatusBarStyleChanges] )
 //                [app setStatusBarStyle:self.leftStatusBarStyle animated:YES];
         }
-        
+        else{
+            NSLog(@"LOG: point  4");
+            [self showMainViewControllerAnimated:YES];
+        }
     }
     else if( position == MKDSlideViewControllerPositionLeft )
     {
@@ -409,7 +442,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         if( (xOffset >= (dividerPosition-snapThreshold)) && (xOffset <= (dividerPosition+snapThreshold)) )
         {
-                        NSLog(@"LOG: point  4");
+                        NSLog(@"LOG: point  5");
             // Snap back to left position
             [self showLeftViewControllerAnimated:YES];
 //            if( [self isHandlingStatusBarStyleChanges] )
@@ -417,7 +450,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         }
         else if( xOffset < (dividerPosition-snapThreshold) )
         {
-                        NSLog(@"LOG: point  5");
+                        NSLog(@"LOG: point  6");
             // snap to center position
             [self showMainViewControllerAnimated:YES];
             //            if( [self isHandlingStatusBarStyleChanges] )
@@ -432,7 +465,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         
         if( (rightSideX <= dividerPosition) && (rightSideX < (dividerPosition+snapThreshold)) ) // FIXME: Is a bit buggy.
         {
-            NSLog(@"LOG: point  6");
+            NSLog(@"LOG: point  7");
 
             // snap to right position
             [self showRightViewControllerAnimated:YES];
@@ -441,7 +474,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         }
         else
         {
-                        NSLog(@"LOG: point  7");
+                        NSLog(@"LOG: point  8");
             // snap to center position
             [self showMainViewControllerAnimated:YES];
 //            if( [self isHandlingStatusBarStyleChanges] )
@@ -494,6 +527,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 -(void)callRightMenu{
     NSLog(@"LOG: right menu called");
+    self.rightSwipe = YES;
     [self showRightViewControllerAnimated:YES];
 //    self.leftSwipe = YES;
 //    CGRect newFrame = self.mainPanelView.frame;
@@ -554,7 +588,6 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     //        if( [self.delegate respondsToSelector:@selector(slideViewController:didSlideToViewController:)] )
     //            [self.delegate performSelector:@selector(slideViewController:didSlideToViewController:) withObject:self withObject:self.leftViewController];
     //    }
-    
 }
 
 - (void)showRightViewController
@@ -614,6 +647,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 - (void)showMainViewControllerAnimated:(BOOL)animated
 {
     if(self.leftSwipe){ //FOR LEFT MENU
+        self.leftSwipe = NO;
         NSLog(@"LOG: calling showMainViewControllerAnimated");
         //[self.view sendSubviewToBack:self.leftPanelView];
         //[self.view sendSubviewToBack:self.rightPanelView];
@@ -676,6 +710,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         }
     }
     else{   // FOR RIGHT MENU
+        self.rightSwipe = NO;
         self.slidePosition = MKDSlideViewControllerPositionCenter;
         CGPoint offset = {-10,.0}; // - for left bounce, + for right
         if( self.mainPanelView.frame.origin.x < 0)
@@ -719,6 +754,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
             
         }
     }
+    
 }
 
 @end

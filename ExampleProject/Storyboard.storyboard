@@ -59,10 +59,65 @@
             </objects>
             <point key="canvasLocation" x="-2244" y="-1385"/>
         </scene>
+        <!--Left View Controller-->
+        <scene sceneID="DIW-qE-fQL">
+            <objects>
+                <viewController storyboardIdentifier="LeftViewController" id="XNp-Kb-gHZ" customClass="LeftViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Aez-eO-hEU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Fs6-pI-ue1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <searchBar contentMode="redraw" id="VBJ-5Z-ahe">
+                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XNp-Kb-gHZ" id="4Xc-iv-eVe"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7kx-hF-GTt">
+                                <rect key="frame" x="0.0" y="88" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="XNp-Kb-gHZ" id="yuf-M2-dvs"/>
+                                    <outlet property="delegate" destination="XNp-Kb-gHZ" id="6fA-zA-x8n"/>
+                                </connections>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" id="9kO-mv-aVZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="yUO-sA-vTt"/>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="XNp-Kb-gHZ" id="CZ4-2H-JFK"/>
+                                </connections>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="background" destination="Fs6-pI-ue1" id="LoQ-CR-mUt"/>
+                        <outlet property="catalogueTableView" destination="7kx-hF-GTt" id="wps-Yk-Nmk"/>
+                        <outlet property="navBar" destination="9kO-mv-aVZ" id="qkG-LB-m0E"/>
+                        <outlet property="searchBar" destination="VBJ-5Z-ahe" id="KM3-fM-UaC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="saN-mO-SBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2244" y="-680"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="g0e-sg-Ntu">
             <objects>
-                <navigationController storyboardIdentifier="LeftViewController" definesPresentationContext="YES" id="daL-6y-VvY" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LeftViewController2" definesPresentationContext="YES" id="daL-6y-VvY" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="h8h-SY-Hc1">
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,7 +167,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="8Vm-BY-1WQ">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="diA-Mi-wpB" kind="relationship" relationship="rootViewController" id="Q47-E6-onM"/>
@@ -130,6 +185,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uUc-iw-m9V">
+                                <rect key="frame" x="0.0" y="66" width="320" height="502"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" showsUserLocation="YES" id="hma-U2-79w">
                                 <rect key="frame" x="0.0" y="36" width="320" height="146"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -194,6 +253,7 @@
                     <navigationItem key="navigationItem" title="Title" id="LyK-lD-j9y"/>
                     <connections>
                         <outlet property="_mapView" destination="hma-U2-79w" id="cKf-LF-BtH"/>
+                        <outlet property="background" destination="uUc-iw-m9V" id="W0m-p2-861"/>
                         <outlet property="placeTableView" destination="eAY-Gd-CTd" id="HMd-gq-r7x"/>
                     </connections>
                 </viewController>
@@ -272,11 +332,12 @@
         <image name="ButtonMenu.png" width="22" height="22"/>
     </resources>
     <classes>
-        <class className="LeftViewController" superclassName="UITableViewController">
+        <class className="LeftViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LeftViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="catalogueTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
@@ -292,6 +353,7 @@
                 <relationship kind="action" name="Check:"/>
                 <relationship kind="action" name="close:"/>
                 <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="placeTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
             </relationships>

@@ -30,6 +30,7 @@
 
 // Swipes control
 @property (nonatomic, assign) BOOL leftSwipe;
+@property (nonatomic, assign) BOOL rightSwipe;
 @property (nonatomic, assign) BOOL showMain;
 
 - (instancetype)initWithMainViewController:(UIViewController *)mainViewController;

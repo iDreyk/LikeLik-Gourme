@@ -13,6 +13,7 @@
     CheckViewController *VC;
 }
 @property (nonatomic, strong) IBOutlet UITextView * textView;
+@property (nonatomic, strong) IBOutlet UIImageView *background;
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) IBOutlet UITableView *placeTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;

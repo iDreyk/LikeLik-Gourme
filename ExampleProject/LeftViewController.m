@@ -26,16 +26,17 @@ int EXPANDED_ON = 0;
 
 - (void)viewDidLoad{
     
-    self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Restaurants", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
+    self.array =         @[ [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
     self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Deutsch", @"      Русский", @"      Japanese"]];
     self.rowCountCity = 0;
     self.rowCountLang = 0;
+    self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+    navBar.topItem.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
 }
 
 #pragma mark - Table view data source
@@ -43,9 +44,9 @@ int EXPANDED_ON = 0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1)
+    if (section == 0)
         return self.rowCountCity;
-    if (section == 2)
+    if (section == 1)
         return self.rowCountLang;
     //return [self.array count];
     return 0;
@@ -58,7 +59,7 @@ int EXPANDED_ON = 0;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = [UIColor blackColor];
+    button.backgroundColor = [UIColor clearColor];
     if([NSUserDefaults standardUserDefaults]){
         NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
         NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
@@ -67,10 +68,11 @@ int EXPANDED_ON = 0;
         else if (sortMethod && section == 4)
             button.backgroundColor = [UIColor grayColor];
     }
-   // [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
     [button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+    //[button titleLabel].textColor = [UIColor blackColor];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     // add targets and actions
     [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
@@ -87,50 +89,50 @@ int EXPANDED_ON = 0;
 -(void)closeCityMenu{
     self.rowCountCity -= 3;
     NSArray *paths = [[NSArray alloc] initWithObjects:
-                      [NSIndexPath indexPathForRow:0 inSection:1],
-                      [NSIndexPath indexPathForRow:1 inSection:1],
-                      [NSIndexPath indexPathForRow:2 inSection:1],
+                      [NSIndexPath indexPathForRow:0 inSection:0],
+                      [NSIndexPath indexPathForRow:1 inSection:0],
+                      [NSIndexPath indexPathForRow:2 inSection:0],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.catalogueTableView beginUpdates];
+    [self.catalogueTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.catalogueTableView endUpdates];
 
 }
 -(void)openCityMenu{
     self.rowCountCity += 3;
     NSArray *paths = [[NSArray alloc] initWithObjects:
-                      [NSIndexPath indexPathForRow:0 inSection:1],
-                      [NSIndexPath indexPathForRow:1 inSection:1],
-                      [NSIndexPath indexPathForRow:2 inSection:1],
+                      [NSIndexPath indexPathForRow:0 inSection:0],
+                      [NSIndexPath indexPathForRow:1 inSection:0],
+                      [NSIndexPath indexPathForRow:2 inSection:0],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.catalogueTableView beginUpdates];
+    [self.catalogueTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.catalogueTableView endUpdates];
 
 }
 
 -(void)closeLangMenu{
     self.rowCountLang -= 3;
     NSArray *paths = [[NSArray alloc] initWithObjects:
-                      [NSIndexPath indexPathForRow:0 inSection:2],
-                      [NSIndexPath indexPathForRow:1 inSection:2],
-                      [NSIndexPath indexPathForRow:2 inSection:2],
+                      [NSIndexPath indexPathForRow:0 inSection:1],
+                      [NSIndexPath indexPathForRow:1 inSection:1],
+                      [NSIndexPath indexPathForRow:2 inSection:1],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.catalogueTableView beginUpdates];
+    [self.catalogueTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.catalogueTableView endUpdates];
 }
 
 -(void)openLangMenu{
     self.rowCountLang += 3;
     NSArray *paths = [[NSArray alloc] initWithObjects:
-                      [NSIndexPath indexPathForRow:0 inSection:2],
-                      [NSIndexPath indexPathForRow:1 inSection:2],
-                      [NSIndexPath indexPathForRow:2 inSection:2],
+                      [NSIndexPath indexPathForRow:0 inSection:1],
+                      [NSIndexPath indexPathForRow:1 inSection:1],
+                      [NSIndexPath indexPathForRow:2 inSection:1],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.catalogueTableView beginUpdates];
+    [self.catalogueTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.catalogueTableView endUpdates];
 }
 
 
@@ -139,19 +141,23 @@ int EXPANDED_ON = 0;
     
     UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
     
-    if(row == 0){
-        NSLog(@"Call restaurants view");
-        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
-            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-        else
-        {
-            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
-            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
-            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
-        }
-
-    }
-    else if( row == 1 )
+//    if(row == 0){
+//        NSLog(@"Call restaurants view");
+//        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] ){
+//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+//            NSLog(@"Here1");
+//        }
+//        else
+//        {
+//            NSLog(@"Here2");
+//            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
+//            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
+//            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
+//        }
+//
+//    }
+//    else
+    if( row == 0 )
     {
         NSLog(@"Call change city view");
 //        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
@@ -173,7 +179,7 @@ int EXPANDED_ON = 0;
         OPENED_CITY = !OPENED_CITY;
         
     }
-    else if( row == 2 ){
+    else if( row == 1 ){
         NSLog(@"Call settings view");
         if(OPENED_CITY == YES){
             [self closeCityMenu];
@@ -185,24 +191,24 @@ int EXPANDED_ON = 0;
             [self openLangMenu];
         OPENED_LANG = !OPENED_LANG;
     }
-    else if(row == 3){
+    else if(row == 2){
         for (UIView *subView in self.catalogueTableView.subviews){
-            if (subView.tag == 3)
+            if (subView.tag == 2)
                 subView.backgroundColor = [UIColor grayColor];
-            if (subView.tag == 4)
-                subView.backgroundColor = [UIColor blackColor];
+            if (subView.tag == 3)
+                subView.backgroundColor = [UIColor clearColor];
         }
         [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"menuSortMethod"];
         NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
         if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
             [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
-    else if(row == 4){
+    else if(row == 3){
         for (UIView *subView in self.catalogueTableView.subviews){
-            if (subView.tag == 4)
-                subView.backgroundColor = [UIColor grayColor];
             if (subView.tag == 3)
-                subView.backgroundColor = [UIColor blackColor];
+                subView.backgroundColor = [UIColor grayColor];
+            if (subView.tag == 2)
+                subView.backgroundColor = [UIColor clearColor];
         }
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"menuSortMethod"];
         NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
@@ -289,11 +295,11 @@ int EXPANDED_ON = 0;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor blackColor];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        if(indexPath.section == 1)
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor blackColor];
+        if(indexPath.section == 0)
             cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
-        if(indexPath.section == 2)
+        if(indexPath.section == 1)
             cell.textLabel.text = [self.languageArray objectAtIndex:[indexPath row]];
     }
     
@@ -303,21 +309,21 @@ int EXPANDED_ON = 0;
 
     
     if([NSUserDefaults standardUserDefaults]){
-        if(indexPath.section == 1){
+        if(indexPath.section == 0){
             NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCitySection"];
             NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCityRow"];
             if (indexPath.section == section && indexPath.row == row){
                 NSIndexPath *savedCity = [NSIndexPath indexPathForRow:row inSection:section];
-                [self.tableView selectRowAtIndexPath:savedCity animated:YES scrollPosition:NO];
+                [self.catalogueTableView selectRowAtIndexPath:savedCity animated:YES scrollPosition:NO];
                 NSLog(@"Loaded city from userdefaults! %d %d",section, row);
             }
         }
-        else if(indexPath.section == 2){
+        else if(indexPath.section == 1){
             NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangSection"];
             NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangRow"];
             if (indexPath.section == section && indexPath.row == row){
                 NSIndexPath *savedLang = [NSIndexPath indexPathForRow:row inSection:section];
-                [self.tableView selectRowAtIndexPath:savedLang animated:YES scrollPosition:NO];
+                [self.catalogueTableView selectRowAtIndexPath:savedLang animated:YES scrollPosition:NO];
                 NSLog(@"Loaded language from userdefaults! %d %d",section, row);
             }
         }
@@ -339,14 +345,14 @@ int EXPANDED_ON = 0;
 //        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
 //    }
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.section == 1){
+    if(indexPath.section == 0){
         NSInteger indPthSect = [indexPath section];
         NSInteger indPthRow = [indexPath row];
         [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentCitySection"];
         [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentCityRow"];
         NSLog(@"Saved city to userdefaults! %d %d",indPthSect, indPthRow);
     }
-    else if(indexPath.section == 2){
+    else if(indexPath.section == 1){
         NSInteger indPthSect = [indexPath section];
         NSInteger indPthRow = [indexPath row];
         [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentLangSection"];
@@ -370,9 +376,9 @@ int EXPANDED_ON = 0;
         }
         [[NSUserDefaults standardUserDefaults] setValue:curLang forKey:@"Language"];
         NSLog(@"Saved language to userdefaults: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Language"]);
-        navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
-        self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Restaurants", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
-        [self.tableView reloadData];
+        navBar.topItem.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+        self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
+        [self.catalogueTableView reloadData];
     }
 }
 

@@ -247,6 +247,9 @@
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
 		D00D2D82178578BA00232D7F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = D00D2D81178578BA00232D7F /* LocalizationSystem.m */; };
 		D00D2D8617857A0D00232D7F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00D2D8817857A0D00232D7F /* Localizable.strings */; };
+		D095AC5E1788207900E49B11 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = D095AC5D1788207900E49B11 /* loading.png */; };
+		D095AC611788336E00E49B11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */; };
+		D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D095AC64178835F800E49B11 /* Accelerate.framework */; };
 		D0C2AC461783F5BC00B42E56 /* 1star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC411783F5BC00B42E56 /* 1star.png */; };
 		D0C2AC471783F5BC00B42E56 /* 3star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC421783F5BC00B42E56 /* 3star.png */; };
 		D0C2AC481783F5BC00B42E56 /* 4star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC431783F5BC00B42E56 /* 4star.png */; };
@@ -551,6 +554,11 @@
 		D00D2D8917857A2F00232D7F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8A17857A3500232D7F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8B17857A3D00232D7F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D095AC5D1788207900E49B11 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		D095AC5F1788336E00E49B11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		D095AC62178833DE00E49B11 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D095AC64178835F800E49B11 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D0C2AC411783F5BC00B42E56 /* 1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1star.png; sourceTree = "<group>"; };
 		D0C2AC421783F5BC00B42E56 /* 3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3star.png; sourceTree = "<group>"; };
 		D0C2AC431783F5BC00B42E56 /* 4star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4star.png; sourceTree = "<group>"; };
@@ -591,6 +599,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */,
 				910E24371786A0E100C94F8A /* CoreVideo.framework in Frameworks */,
 				910E24351786A0DB00C94F8A /* CoreMedia.framework in Frameworks */,
 				910E24331786A08600C94F8A /* AVFoundation.framework in Frameworks */,
@@ -922,6 +931,8 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D095AC64178835F800E49B11 /* Accelerate.framework */,
+				D095AC62178833DE00E49B11 /* XCTest.framework */,
 				D0041B801782EE7C00D7AB74 /* CoreLocation.framework */,
 				D0041B7B1782E75F00D7AB74 /* MapKit.framework */,
 				DA953C9D148AE7240075A1E2 /* QuartzCore.framework */,
@@ -1003,6 +1014,8 @@
 				910E25D61786B0B000C94F8A /* CheckViewController.m */,
 				910E23DC17869C7A00C94F8A /* CheckViewController.xib */,
 				910E23DD17869C7A00C94F8A /* CheckViewController35.xib */,
+				D095AC5F1788336E00E49B11 /* UIImage+ImageEffects.h */,
+				D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1010,6 +1023,7 @@
 		DAD0C3D41720872D0031B4E0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D095AC5D1788207900E49B11 /* loading.png */,
 				D0C2AC411783F5BC00B42E56 /* 1star.png */,
 				D0C2AC421783F5BC00B42E56 /* 3star.png */,
 				D0C2AC431783F5BC00B42E56 /* 4star.png */,
@@ -1173,6 +1187,7 @@
 				910E25431786A12900C94F8A /* 214_100 Tabitem_place_5_3share_selected@2x.png in Resources */,
 				910E25441786A12900C94F8A /* 214_100 Tabitem_place_6_1fav_normal@2x.png in Resources */,
 				910E25451786A12900C94F8A /* 214_100 Tabitem_place_6_1fav_selected@2x.png in Resources */,
+				D095AC5E1788207900E49B11 /* loading.png in Resources */,
 				910E25461786A12900C94F8A /* 214_100 Tabitem_place_6_3share_normal@2x.png in Resources */,
 				910E25471786A12900C94F8A /* 214_100 Tabitem_place_6_3share_selected@2x.png in Resources */,
 				910E25481786A12900C94F8A /* 214_100 Tabitem_place_7_1fav_normal@2x.png in Resources */,
@@ -1342,6 +1357,7 @@
 				910E241C17869DE500C94F8A /* MBProgressHUD.m in Sources */,
 				910E242717869F7100C94F8A /* InterfaceFunctions.m in Sources */,
 				910E25D71786B0B000C94F8A /* CheckViewController.m in Sources */,
+				D095AC611788336E00E49B11 /* UIImage+ImageEffects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1429,6 +1445,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
 				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
@@ -1448,6 +1468,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
 				INFOPLIST_FILE = "ExampleProject/LikeLik Gourmet-Info.plist";
