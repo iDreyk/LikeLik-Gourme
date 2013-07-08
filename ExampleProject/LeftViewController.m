@@ -63,9 +63,9 @@ int EXPANDED_ON = 0;
     if([NSUserDefaults standardUserDefaults]){
         NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
         NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
-        if (!sortMethod && section == 3) 
+        if (!sortMethod && section == 2)
             button.backgroundColor = [UIColor grayColor];
-        else if (sortMethod && section == 4)
+        else if (sortMethod && section == 3)
             button.backgroundColor = [UIColor grayColor];
     }
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
