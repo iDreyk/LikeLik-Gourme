@@ -40,7 +40,7 @@ static bool REVERSE_ANIM = false;
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
     }
 
-    
+    #warning все заполнять
     if(!self.array)
         self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.rateArray)
@@ -72,6 +72,8 @@ static bool REVERSE_ANIM = false;
 
 #pragma mark - NSNotification handlers
 -(void)languageChanged{
+#warning здесь станции
+
     self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
     [self.placesTableView reloadData];
 }
@@ -512,6 +514,9 @@ static bool REVERSE_ANIM = false;
     modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
     //modalViewController *view = [[modalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
     viewControllerToPresent.placeName = [self.array objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.subway = [self.subwayArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.paycheck = [self.paycheckArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.worktime = [self.workTimeArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
     //viewControllerToPresent.
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];

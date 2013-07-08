@@ -28,8 +28,18 @@ int EXPANDED_ON = 0;
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
-#warning placesArray -- это все наши места
+    
+#warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
+    if(!self.subwayArray)
     self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
+    if(!self.subwayArray)
+        self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
+    if(!self.paycheckArray)
+        self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
+    if(!self.workTimeArray)
+        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
+
+    
     self.array =         @[ [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
     self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Deutsch", @"      Русский", @"      Japanese"]];
@@ -386,8 +396,13 @@ int EXPANDED_ON = 0;
     if(SEARCHING){
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         NSString *str = cell.textLabel.text;
+        NSInteger ind = [self.placesArray indexOfObject:str];
+
         modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
         viewControllerToPresent.placeName = str;
+        viewControllerToPresent.subway = [self.subwayArray objectAtIndex:ind];
+        viewControllerToPresent.paycheck = [self.paycheckArray objectAtIndex:ind];
+        viewControllerToPresent.worktime = [self.workTimeArray objectAtIndex:ind];
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     }
     else{

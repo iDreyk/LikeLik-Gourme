@@ -16,6 +16,9 @@
 @property (nonatomic, strong) IBOutlet UIImageView *background;
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) NSString *placeName;
+@property (nonatomic, strong) NSString *subway;
+@property (nonatomic, strong) NSString *paycheck;
+@property (nonatomic, strong) NSString *worktime;
 @property (nonatomic, strong) IBOutlet UITableView *placeTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 @property (nonatomic) CLLocationCoordinate2D placeCoordinates;

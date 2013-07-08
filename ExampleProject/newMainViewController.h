@@ -14,9 +14,9 @@
 @property (nonatomic, strong) NSArray *rateArray;
 @property (nonatomic, strong) NSArray *subwayArray;
 @property (nonatomic, strong) NSArray *paycheckArray;
+@property (nonatomic, strong) NSArray *workTimeArray;
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSMutableDictionary *imageCache;
-@property (nonatomic, strong) NSArray *workTimeArray;
 
 @property (nonatomic, strong) IBOutlet UITableView *placesTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;

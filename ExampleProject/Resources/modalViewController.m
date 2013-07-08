@@ -24,6 +24,9 @@
 @synthesize placeCoordinates;
 @synthesize placeName;
 @synthesize navBar;
+@synthesize subway;
+@synthesize paycheck;
+@synthesize worktime;
 static BOOL MAP_PRESENTED = false;
 NSInteger GLOBAL_OFFSET = 0;
 
@@ -40,8 +43,11 @@ NSInteger GLOBAL_OFFSET = 0;
         newImgFrame.size.height -= GLOBAL_OFFSET;
         self.background.frame = newImgFrame;
     }
+    
+#warning Надо заполнить инфу к месту
     if (!self.array)
-        self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
+        self.array = @[self.subway, @"Адрес", self.paycheck, self.worktime];
+#warning Надо заполнить координаты
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
     //self.background.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg"]]];//[UIImage imageNamed:@"testRestPict.jpg"];
 //    NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
@@ -51,6 +57,7 @@ NSInteger GLOBAL_OFFSET = 0;
 //    UIImage *effectImage = nil;
     //effectImage = [self.background.image applyLightEffect];
     //self.background.image = effectImage;
+#warning Надо заполнить имя места
     navBar.topItem.title = self.placeName;
     //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
@@ -222,6 +229,7 @@ NSInteger GLOBAL_OFFSET = 0;
      }];
     
     VC.view.backgroundColor = [UIColor clearColor];
+#warning Это тоже нужно будет заполнять
     VC.PlaceName = self.placeName;
     VC.PlaceCategory = @"PlaceCategory";
     VC.PlaceCity = @"PlaceCity";
