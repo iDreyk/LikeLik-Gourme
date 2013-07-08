@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *expandArrayFun;
 @property (nonatomic, strong) NSMutableArray *expandArrayMusic;
 @property (nonatomic, strong) NSMutableArray *expandArrayOthers;
-@property (nonatomic, strong) IBOutlet UITableView *TableView;
+@property (nonatomic, strong) IBOutlet UITableView *filtersTableView;
 @property (nonatomic, strong) NSMutableSet *checkedData;
 @property (nonatomic) NSInteger rowCountCash;
 @property (nonatomic) NSInteger rowCountCousine;

@@ -17,7 +17,9 @@
 
 static bool MAP_PRESENTED = false;
 NSInteger PREV_SECTION = 0;
+NSInteger SECTION_FOR_CARD;
 static bool REVERSE_ANIM = false;
+
 
 - (IBAction)showLeftMenu:(id)sender
 {
@@ -34,12 +36,17 @@ static bool REVERSE_ANIM = false;
 
 - (void)viewDidLoad{
     #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
+    if(self.view.bounds.size.height == 460.0){
+        self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
+    }
+
+    
     if(!self.array)
         self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.rateArray)
         self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
     if(!self.subwayArray)
-        self.subwayArray = @[@"Arbatskaya", @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", @"Arbatskaya", @"Akademicheskaya", @"Leninskiy prospekt"];
+        self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
     if(!self.paycheckArray)
         self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
     if(!self.workTimeArray)
@@ -60,7 +67,13 @@ static bool REVERSE_ANIM = false;
         self.imageCache = [[NSMutableDictionary alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(languageChanged) name:@"LanguageChanged" object:nil];
+}
+
+#pragma mark - NSNotification handlers
+-(void)languageChanged{
+    self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
+    [self.placesTableView reloadData];
 }
 
 #pragma mark - Map handler
@@ -325,15 +338,13 @@ static bool REVERSE_ANIM = false;
     }
     if([cell.contentView.subviews count] > 0)
        [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                    action:@selector(singleTapGestureCaptured:)];
-    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
     
         //while loading an image
 //        imv.image = [UIImage imageNamed:@"loading.png"];
 //        [cell.contentView addSubview:imv];
-    
+        imv.tag = section;
         [imv addGestureRecognizer:singleTap];
         [imv setUserInteractionEnabled:YES];
 //    imv.image = [UIImage imageNamed:@"icon.png"];
@@ -470,7 +481,10 @@ static bool REVERSE_ANIM = false;
 //    BOOL saved = [data writeToFile:databasePath atomically:YES];
 //    NSLog(@"saved: %d to %@", saved, databasePath);
 //    [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
-    UIViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
+    modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
+    //modalViewController *view = [[modalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
+    viewControllerToPresent.placeName = [self.array objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    //viewControllerToPresent.
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     //

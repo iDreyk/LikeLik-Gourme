@@ -646,6 +646,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 
 - (void)showMainViewControllerAnimated:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"callingMainView" object:nil];
     if(self.leftSwipe){ //FOR LEFT MENU
         self.leftSwipe = NO;
         NSLog(@"LOG: calling showMainViewControllerAnimated");

@@ -71,15 +71,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <searchBar contentMode="redraw" id="VBJ-5Z-ahe">
-                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="XNp-Kb-gHZ" id="4Xc-iv-eVe"/>
-                                </connections>
-                            </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7kx-hF-GTt">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7kx-hF-GTt">
                                 <rect key="frame" x="0.0" y="88" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -99,6 +91,14 @@
                                     <outlet property="delegate" destination="XNp-Kb-gHZ" id="CZ4-2H-JFK"/>
                                 </connections>
                             </navigationBar>
+                            <searchBar contentMode="redraw" id="3WW-mL-sE2">
+                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XNp-Kb-gHZ" id="r3e-ev-oPT"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -107,10 +107,19 @@
                         <outlet property="background" destination="Fs6-pI-ue1" id="LoQ-CR-mUt"/>
                         <outlet property="catalogueTableView" destination="7kx-hF-GTt" id="wps-Yk-Nmk"/>
                         <outlet property="navBar" destination="9kO-mv-aVZ" id="qkG-LB-m0E"/>
-                        <outlet property="searchBar" destination="VBJ-5Z-ahe" id="KM3-fM-UaC"/>
+                        <outlet property="searchBar" destination="3WW-mL-sE2" id="jjf-rB-tsn"/>
+                        <outlet property="searchDisplayController" destination="CGi-T9-Qv7" id="RFO-Bk-SvH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="saN-mO-SBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="CGi-T9-Qv7">
+                    <connections>
+                        <outlet property="delegate" destination="XNp-Kb-gHZ" id="R2m-A8-o4d"/>
+                        <outlet property="searchContentsController" destination="XNp-Kb-gHZ" id="bVM-2O-Vqn"/>
+                        <outlet property="searchResultsDataSource" destination="XNp-Kb-gHZ" id="T8l-6u-sGp"/>
+                        <outlet property="searchResultsDelegate" destination="XNp-Kb-gHZ" id="euc-OG-VrS"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-2244" y="-680"/>
         </scene>
@@ -151,9 +160,16 @@
                             </tableViewCell>
                         </prototypes>
                         <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="diA-Mi-wpB" id="8VF-mL-dLr"/>
+                            <outlet property="delegate" destination="diA-Mi-wpB" id="bef-B1-gtE"/>
+                        </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Filters" id="YHi-ci-Ypf"/>
+                    <connections>
+                        <outlet property="filtersTableView" destination="UOx-sy-dZD" id="HwY-b7-tMF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u8g-Bp-7lG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -201,7 +217,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.25215106726853442" green="0.0024882636000413631" blue="0.54787149234693877" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <navigationItem title="Place Name" id="bec-wt-2sc">
+                                    <navigationItem id="bec-wt-2sc">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="H9T-Re-nLU">
                                             <connections>
                                                 <action selector="close:" destination="TVj-Ek-60C" id="i0Y-Ay-XWw"/>
@@ -214,6 +230,9 @@
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
+                                <connections>
+                                    <outlet property="delegate" destination="TVj-Ek-60C" id="jLD-LH-Lh6"/>
+                                </connections>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eAY-Gd-CTd">
                                 <rect key="frame" x="0.0" y="166" width="320" height="382"/>
@@ -254,6 +273,7 @@
                     <connections>
                         <outlet property="_mapView" destination="hma-U2-79w" id="cKf-LF-BtH"/>
                         <outlet property="background" destination="uUc-iw-m9V" id="W0m-p2-861"/>
+                        <outlet property="navBar" destination="qCh-xd-Fue" id="eVk-Q6-9Ce"/>
                         <outlet property="placeTableView" destination="eAY-Gd-CTd" id="HMd-gq-r7x"/>
                     </connections>
                 </viewController>
@@ -278,7 +298,7 @@
             </objects>
             <point key="canvasLocation" x="-1667" y="-1457"/>
         </scene>
-        <!--New Main View Controller - Gourmet-->
+        <!--New Main View Controller-->
         <scene sceneID="WQU-6z-e3R">
             <objects>
                 <viewController id="lrk-TZ-y3Q" customClass="newMainViewController" sceneMemberID="viewController">
@@ -306,7 +326,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Gourmet" id="QCp-Js-sQ8">
+                    <navigationItem key="navigationItem" id="QCp-Js-sQ8">
                         <barButtonItem key="leftBarButtonItem" image="ButtonMenu.png" id="NTN-Sq-3M4">
                             <connections>
                                 <action selector="showLeftMenu:" destination="lrk-TZ-y3Q" id="13c-tQ-IYl"/>
@@ -331,43 +351,6 @@
     <resources>
         <image name="ButtonMenu.png" width="22" height="22"/>
     </resources>
-    <classes>
-        <class className="LeftViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LeftViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="catalogueTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="RightViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RightViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="TableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="modalViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/modalViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="Check:"/>
-                <relationship kind="action" name="close:"/>
-                <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="placeTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="newMainViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/newMainViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showLeftMenu:"/>
-                <relationship kind="action" name="showRightMenu:"/>
-                <relationship kind="outlet" name="_mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="placesTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

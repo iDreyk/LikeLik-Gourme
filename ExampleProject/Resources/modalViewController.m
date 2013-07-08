@@ -22,25 +22,36 @@
 @synthesize placeTableView;
 @synthesize _mapView;
 @synthesize placeCoordinates;
+@synthesize placeName;
+@synthesize navBar;
 static BOOL MAP_PRESENTED = false;
+NSInteger GLOBAL_OFFSET = 0;
 
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    if(self.view.bounds.size.height == 548.0 || self.view.bounds.size.height == 460.0){
+        GLOBAL_OFFSET = 22;
+        CGRect newBar = navBar.frame;
+        newBar.origin.y = 0;
+        navBar.frame = newBar;
+        CGRect newImgFrame = self.background.frame;
+        newImgFrame.size.height -= GLOBAL_OFFSET;
+        self.background.frame = newImgFrame;
+    }
     if (!self.array)
         self.array = @[@"Метро", @"Адрес", @"Средний счет", @"Часы работы"];
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
     //self.background.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg"]]];//[UIImage imageNamed:@"testRestPict.jpg"];
-    
 //    NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
 //    NSLog(@"path: %@", path);
 //    self.background.image = [UIImage imageWithContentsOfFile:path];
     self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
-    UIImage *effectImage = nil;
+//    UIImage *effectImage = nil;
     //effectImage = [self.background.image applyLightEffect];
     //self.background.image = effectImage;
-    
+    navBar.topItem.title = self.placeName;
     //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -60,7 +71,7 @@ static BOOL MAP_PRESENTED = false;
     region.center = location;
     
     
-    MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:@"PlaceName" andCoordinate:location andUserinfo:nil andSubtitle:@"Restraunt" AndTag:0];
+    MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:self.placeName andCoordinate:location andUserinfo:nil andSubtitle:@"Restraunt" AndTag:0];
     [self._mapView addAnnotation:Annotation];
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
@@ -165,7 +176,7 @@ static BOOL MAP_PRESENTED = false;
     // [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
-    [button setTitle:@"placeName" forState:UIControlStateNormal];
+    [button setTitle:self.placeName forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     // add targets and actions
     [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
@@ -211,7 +222,7 @@ static BOOL MAP_PRESENTED = false;
      }];
     
     VC.view.backgroundColor = [UIColor clearColor];
-    VC.PlaceName = @"PlaceName";
+    VC.PlaceName = self.placeName;
     VC.PlaceCategory = @"PlaceCategory";
     VC.PlaceCity = @"PlaceCity";
     VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
@@ -260,7 +271,7 @@ static BOOL MAP_PRESENTED = false;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeTableView.frame;
-        theFrame.origin.y = 66;
+        theFrame.origin.y = 66 - GLOBAL_OFFSET;
         theFrame.size.height = self.view.frame.size.height;
         frame.origin.y = self.view.frame.size.height;
         self._mapView.frame = theFrame;

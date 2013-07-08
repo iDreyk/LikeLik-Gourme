@@ -15,9 +15,11 @@
 @property (nonatomic, strong) IBOutlet UITextView * textView;
 @property (nonatomic, strong) IBOutlet UIImageView *background;
 @property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSString *placeName;
 @property (nonatomic, strong) IBOutlet UITableView *placeTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 @property (nonatomic) CLLocationCoordinate2D placeCoordinates;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
 - (IBAction)close:(id)sender;
 - (IBAction)Check:(id)sender;

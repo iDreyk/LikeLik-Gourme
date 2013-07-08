@@ -10,6 +10,7 @@
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
 #import "newMainViewController.h"
+#import "modalViewController.h"
 
 
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
@@ -18,20 +19,47 @@
 @synthesize catalogueTableView;
 @synthesize searchBar;
 @synthesize navBar;
+@synthesize displayItems;
 static bool OPENED_CITY = NO;
 static bool OPENED_LANG = NO;
+static bool SEARCHING = NO;
 int EXPANDED_ON = 0;
 
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
-    
+    self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     self.array =         @[ [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
     self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Deutsch", @"      Русский", @"      Japanese"]];
     self.rowCountCity = 0;
     self.rowCountLang = 0;
     self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
+    self.displayItems = [[NSMutableArray alloc] initWithArray:self.array];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:@"callingMainView" object:nil];
+}
+
+#pragma mark - Notifications
+-(void)hideKeyboard:(NSNotification *)note{
+    [self.searchBar setShowsCancelButton:NO];
+    [self.searchBar resignFirstResponder];
+}
+
+-(void)keyboardShown:(NSNotification *)note{
+    CGRect keyboardFrame;
+    [[[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardFrame];
+    CGRect tableViewFrame = self.catalogueTableView.frame;
+    tableViewFrame.size.height -= keyboardFrame.size.height;
+    self.catalogueTableView.frame = tableViewFrame;
+}
+
+-(void)keyboardHidden:(NSNotification *)note{
+    CGRect tableViewFrame = self.catalogueTableView.frame;
+    tableViewFrame.origin.y = 88;
+    tableViewFrame.size.height = self.view.frame.size.height - tableViewFrame.origin.y;
+    self.catalogueTableView.frame = tableViewFrame;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -44,6 +72,8 @@ int EXPANDED_ON = 0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if(SEARCHING)
+        return self.displayItems.count;
     if (section == 0)
         return self.rowCountCity;
     if (section == 1)
@@ -60,6 +90,7 @@ int EXPANDED_ON = 0;
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor clearColor];
+    if(!SEARCHING){
     if([NSUserDefaults standardUserDefaults]){
         NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
         NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
@@ -77,11 +108,14 @@ int EXPANDED_ON = 0;
     // add targets and actions
     [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
     [button setTag:section];
+    }
     return button;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if(SEARCHING)
+        return 1;
     return [self.array count];
 }
 
@@ -297,6 +331,9 @@ int EXPANDED_ON = 0;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor blackColor];
+        if(SEARCHING)
+            cell.textLabel.text = [self.displayItems objectAtIndex:[indexPath row]];
+        else{
         if(indexPath.section == 0)
             cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
         if(indexPath.section == 1)
@@ -328,7 +365,7 @@ int EXPANDED_ON = 0;
             }
         }
     }
-   
+    }
 
     return cell;
 }
@@ -345,6 +382,14 @@ int EXPANDED_ON = 0;
 //        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
 //    }
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(SEARCHING){
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSString *str = cell.textLabel.text;
+        modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
+        viewControllerToPresent.placeName = str;
+        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+    }
+    else{
     if(indexPath.section == 0){
         NSInteger indPthSect = [indexPath section];
         NSInteger indPthRow = [indexPath row];
@@ -379,6 +424,8 @@ int EXPANDED_ON = 0;
         navBar.topItem.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
         self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
         [self.catalogueTableView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LanguageChanged" object:nil];
+    }
     }
 }
 
@@ -401,8 +448,24 @@ int EXPANDED_ON = 0;
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     NSLog(@"SEARCH LOG: searched for: %@", searchText);
-
-#warning Поиск подстроки (каждая буква) параметр -- NSString *searchText, а искать надо по местам в newMainViewController 
+    if(!SEARCHING)
+        SEARCHING = YES;
+#warning Поиск подстроки (каждая буква) параметр -- NSString *searchText, а искать надо по местам в newMainViewController
+    if(searchText.length == 0){
+        [self.displayItems removeAllObjects];
+        [self.displayItems addObjectsFromArray:self.placesArray];
+    }
+    else{
+        [displayItems removeAllObjects];
+        for(NSString *data in self.placesArray){
+            NSRange r = [data rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if(r.location != NSNotFound){
+                [self.displayItems addObject:data];
+            }
+        }
+    }
+    [self.catalogueTableView reloadData];
+    
 //    NSArray *tmp;
 //    if (self.searchBar.text.length > 0){//.text.length>0) {
 //        NSString *strSearchText = self.searchBar.text;
@@ -435,6 +498,8 @@ int EXPANDED_ON = 0;
     
    // self.PlacesArray = Array;
     //[self.SearchTable reloadData];
+    SEARCHING = NO;
+    [self.catalogueTableView reloadData];
     [self.searchBar setShowsCancelButton:NO];
     [self.searchBar resignFirstResponder];
     

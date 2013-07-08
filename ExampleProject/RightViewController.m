@@ -13,7 +13,7 @@
 #import "newMainViewController.h"
 
 @implementation RightViewController
-@synthesize TableView;
+@synthesize filtersTableView;
 
 static bool OPENED_CASH = YES;
 static bool OPENED_COUSINE = YES;
@@ -25,17 +25,20 @@ static bool OPENED_MENU = YES;
 
 - (void)viewDidLoad{
     self.checkedData = [[NSMutableSet alloc] init];
-    self.array =         @[@"            Reset filters", @"            Cash", @"            Cousine", @"            Menu"];
+    self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
     self.expandArrayCash =[[NSMutableArray alloc] initWithArray:@[@"               300-500", @"               500-1000", @"               1000-1500", @"               1500-2500", @"               2500-4000"]];
     self.rowCountCash = 5;
     self.expandArrayCousine = [[NSMutableArray alloc] initWithArray:@[@"               Fusion", @"               Austrian", @"               English", @"               BBQ", @"               Itallian", @"               Spanish", @"               Greek"]];
     self.rowCountCousine = 7;
     self.expandArrayMenu = [[NSMutableArray alloc] initWithArray:@[@"               Vegeterian", @"               Lenten", @"               Fitnes", @"               Kosher", @"               Children's", @"               Diet", @"               Halal"]];
     self.rowCountMenu = 7;
-
-
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(languageChanged) name:@"LanguageChanged" object:nil];
 }
 
+-(void)languageChanged{
+    self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
+    [self.filtersTableView reloadData];
+}
 
 #pragma mark - Table view data source
 
@@ -89,9 +92,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:3 inSection:1],
                       [NSIndexPath indexPathForRow:4 inSection:1],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 }
 -(void)openCousineMenu{
     self.rowCountCousine += 7;
@@ -104,9 +107,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:5 inSection:2],
                       [NSIndexPath indexPathForRow:6 inSection:2],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 
 }
 -(void)openMenuMenu{
@@ -120,9 +123,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:5 inSection:3],
                       [NSIndexPath indexPathForRow:6 inSection:3],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 
 }
 
@@ -135,9 +138,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:3 inSection:1],
                       [NSIndexPath indexPathForRow:4 inSection:1],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 
 }
 -(void)closeCousineMenu{
@@ -151,9 +154,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:5 inSection:2],
                       [NSIndexPath indexPathForRow:6 inSection:2],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 
 }
 -(void)closeMenuMenu{
@@ -167,9 +170,9 @@ static bool OPENED_MENU = YES;
                       [NSIndexPath indexPathForRow:5 inSection:3],
                       [NSIndexPath indexPathForRow:6 inSection:3],
                       nil];
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [self.filtersTableView beginUpdates];
+    [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.filtersTableView endUpdates];
 
 }
 
@@ -177,7 +180,7 @@ static bool OPENED_MENU = YES;
     NSUInteger row = Sender.tag;
     if(row == 0){
         [self.checkedData removeAllObjects];
-        [self.tableView reloadData];
+        [self.filtersTableView reloadData];
     }
     else if(row == 1){
         if (OPENED_CASH == YES)
@@ -250,7 +253,7 @@ static bool OPENED_MENU = YES;
 {
     //[tableView deselectRowAtIndexPath:indexPath animated:NO];
 
-    self.tableView.allowsMultipleSelection = YES;
+    self.filtersTableView.allowsMultipleSelection = YES;
 
     if([self.checkedData containsObject:indexPath]){
         [self.checkedData removeObject:indexPath];      // убираем снятый фильтр
