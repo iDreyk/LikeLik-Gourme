@@ -21,7 +21,7 @@
 @property (nonatomic) NSInteger rowCountCity;
 @property (nonatomic) NSInteger rowCountLang;
 @property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 @property (weak, nonatomic) IBOutlet UIImageView *background;
 @property (nonatomic, strong) NSMutableArray *displayItems;
 

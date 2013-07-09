@@ -75,8 +75,9 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     _rightPanelView.backgroundColor = [UIColor blackColor];
     [view addSubview:_rightPanelView];
     
+#warning Изменение размера leftViewController
     CGRect p = view.bounds;
-    p.size.width -= 50;
+    p.size.width -= _overlapWidth;
     p.origin.x -= p.size.width;
     
     _leftPanelView = [[UIView alloc] initWithFrame:p];

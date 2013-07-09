@@ -34,14 +34,19 @@ NSInteger GLOBAL_OFFSET = 0;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    if(self.view.bounds.size.height == 548.0 || self.view.bounds.size.height == 460.0){
-        GLOBAL_OFFSET = 22;
-        CGRect newBar = navBar.frame;
-        newBar.origin.y = 0;
-        navBar.frame = newBar;
-        CGRect newImgFrame = self.background.frame;
-        newImgFrame.size.height -= GLOBAL_OFFSET;
-        self.background.frame = newImgFrame;
+
+    if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
+        CGRect newNav = self.navBar.frame;
+        newNav.origin.y = 0;
+        newNav.size.height = 40;
+        self.navBar.frame = newNav;
+        GLOBAL_OFFSET = 30;
+        CGRect newImgFrame = self.view.frame;
+        newImgFrame.origin.y = 0;
+        self.view.frame = newImgFrame;
+        CGRect newTWFrame = self.placeTableView.frame;
+        newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
+        self.placeTableView.frame = newTWFrame;
     }
     
 #warning Надо заполнить инфу к месту

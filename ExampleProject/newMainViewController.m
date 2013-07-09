@@ -36,13 +36,16 @@ static bool REVERSE_ANIM = false;
 
 - (void)viewDidLoad{
     #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
-    if(self.view.bounds.size.height == 460.0){
+    if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
+                   CGRect newTWFrame = self.placesTableView.frame;
+            newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
+            self.placesTableView.frame = newTWFrame;
     }
 
     #warning все заполнять
     if(!self.array)
-        self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
+        self.array = @[[NSString stringWithFormat:@" %@",@"1st place"],[NSString stringWithFormat:@" %@",@" 2nd place"],[NSString stringWithFormat:@" %@",@"3rd place"],[NSString stringWithFormat:@" %@",@"4th place"],[NSString stringWithFormat:@" %@",@"5th place"],[NSString stringWithFormat:@" %@",@"6th place"],[NSString stringWithFormat:@" %@",@"7th place"],[NSString stringWithFormat:@" %@",@"8th place"], [NSString stringWithFormat:@" %@",@"9th place"], [NSString stringWithFormat:@" %@",@"10th place"]];
     if(!self.rateArray)
         self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
     if(!self.subwayArray)
@@ -341,7 +344,8 @@ static bool REVERSE_ANIM = false;
     if([cell.contentView.subviews count] > 0)
        [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
+#warning 320 на ios7 beta 3 не достает до конца экрана. Сделаем 321
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 321, 250)];
     
         //while loading an image
 //        imv.image = [UIImage imageNamed:@"loading.png"];
@@ -366,7 +370,7 @@ static bool REVERSE_ANIM = false;
         [imv addSubview:line];
 
         //Here is subway station
-        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 200, 20)];
+        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
         subway.textColor = [UIColor whiteColor];
         subway.backgroundColor = [UIColor clearColor];
         [subway setText:[self.subwayArray objectAtIndex:section]];
@@ -432,7 +436,7 @@ static bool REVERSE_ANIM = false;
     
     
     [UIView beginAnimations:NULL context:nil];
-    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDuration:0.75];
     //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
     if(!REVERSE_ANIM){
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI/2, 1, 0, 0);

@@ -23,13 +23,14 @@
 static bool OPENED_CITY = NO;
 static bool OPENED_LANG = NO;
 static bool SEARCHING = NO;
+static bool KEYBOARD_SHOWN = NO;
 int EXPANDED_ON = 0;
+CGRect tableViewFrame;
 
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
-    
-#warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
+    #warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
     if(!self.subwayArray)
     self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.subwayArray)
@@ -38,44 +39,94 @@ int EXPANDED_ON = 0;
         self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
     if(!self.workTimeArray)
         self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
-
-    
-    self.array =         @[ [NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
+    self.array =         @[ [NSString stringWithFormat:@"   %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"   %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by distance", Nil)]];
     self.cityArray =[[NSMutableArray alloc] initWithArray:@[@"      Moscow", @"      Viena", @"      Ufa"]];
     self.languageArray = [[NSMutableArray alloc] initWithArray:@[@"      English", @"      Deutsch", @"      Русский", @"      Japanese"]];
     self.rowCountCity = 0;
     self.rowCountLang = 0;
     self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
+    
+    CGRect picSize = self.view.frame;
+    picSize.origin.y = 44;
+    picSize.size.height = 460;
+    picSize.size.width -= 52.0;
+    self.background.frame = picSize;
+    
+    
     self.displayItems = [[NSMutableArray alloc] initWithArray:self.array];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:@"callingMainView" object:nil];
+
+    if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
+        CGRect newTWFrame = self.catalogueTableView.frame;
+        NSLog(@"%f %f %f %f",newTWFrame.origin.x, newTWFrame.origin.y, newTWFrame.size.height,newTWFrame.size.width);
+        newTWFrame.origin.y = 40;
+        self.catalogueTableView.frame = newTWFrame;
+        
+        newTWFrame = self.background.frame;
+//        NSLog(@"%f %f %f %f",newTWFrame.origin.x, newTWFrame.origin.y, newTWFrame.size.height,newTWFrame.size.width);
+        newTWFrame.origin.y = 40;
+        newTWFrame.size.height = self.view.bounds.size.height - 80;
+        self.background.frame = newTWFrame;
+        //self.background.frame = newTWFrame;
+        newTWFrame = self.searchBar.frame;
+        newTWFrame.size.height = 40;
+        self.searchBar.frame = newTWFrame;
+    }
+    tableViewFrame = self.catalogueTableView.frame;
 }
 
 #pragma mark - Notifications
 -(void)hideKeyboard:(NSNotification *)note{
     [self.searchBar setShowsCancelButton:NO];
     [self.searchBar resignFirstResponder];
+    SEARCHING = NO;
+    [self.catalogueTableView reloadData];
 }
 
 -(void)keyboardShown:(NSNotification *)note{
-    CGRect keyboardFrame;
-    [[[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardFrame];
-    CGRect tableViewFrame = self.catalogueTableView.frame;
-    tableViewFrame.size.height -= keyboardFrame.size.height;
-    self.catalogueTableView.frame = tableViewFrame;
+    if(!KEYBOARD_SHOWN){
+        CGRect keyboardFrame;
+        [[[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardFrame];
+        CGRect ViewFrame = self.catalogueTableView.frame;
+        ViewFrame.origin.y = 0;
+        ViewFrame.size.height = self.view.frame.size.height;
+        ViewFrame.size.height -= keyboardFrame.size.height;
+        [UIView animateWithDuration:0.4 animations:^{
+            CGRect frame = self.catalogueTableView.frame;
+            frame.origin.y = -600;
+            self.catalogueTableView.frame = frame;
+        }completion:^(BOOL finished) {
+            CGRect frame = self.catalogueTableView.frame;
+            frame.origin.y = 600;
+            self.catalogueTableView.frame = frame;
+            [UIView animateWithDuration:0.3 animations:^{
+            SEARCHING = YES;
+            [self.displayItems removeAllObjects];
+            [self.displayItems addObjectsFromArray:self.placesArray];
+            [self.catalogueTableView reloadData];
+            self.catalogueTableView.frame = ViewFrame;
+            }];
+        }];
+        KEYBOARD_SHOWN = YES;
+    }
 }
 
 -(void)keyboardHidden:(NSNotification *)note{
-    CGRect tableViewFrame = self.catalogueTableView.frame;
-    tableViewFrame.origin.y = 88;
-    tableViewFrame.size.height = self.view.frame.size.height - tableViewFrame.origin.y;
-    self.catalogueTableView.frame = tableViewFrame;
+
+    CGRect frame = self.catalogueTableView.frame;
+    frame.origin.y = -600;
+    self.catalogueTableView.frame = frame;
+    [UIView animateWithDuration:0.4 animations:^{
+        self.catalogueTableView.frame = tableViewFrame;
+                                                }];
+    KEYBOARD_SHOWN = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    navBar.topItem.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+    navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
 }
 
 #pragma mark - Table view data source
@@ -437,8 +488,8 @@ int EXPANDED_ON = 0;
         }
         [[NSUserDefaults standardUserDefaults] setValue:curLang forKey:@"Language"];
         NSLog(@"Saved language to userdefaults: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Language"]);
-        navBar.topItem.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
-        self.array =         @[[NSString stringWithFormat:@"  %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"  %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"  %@",AMLocalizedString(@"Sort by distance", Nil)]];
+        navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+        self.array =         @[[NSString stringWithFormat:@"   %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"   %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by distance", Nil)]];
         [self.catalogueTableView reloadData];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LanguageChanged" object:nil];
     }

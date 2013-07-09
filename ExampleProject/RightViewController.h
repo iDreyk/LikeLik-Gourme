@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RightViewController : UITableViewController
+@interface RightViewController : UIViewController
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) NSMutableArray *expandArrayCash;
 @property (nonatomic, strong) NSMutableArray *expandArrayCousine;

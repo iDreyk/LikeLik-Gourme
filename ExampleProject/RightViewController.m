@@ -24,6 +24,13 @@ static bool OPENED_MENU = YES;
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
+    
+    if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
+        CGRect newTWFrame = self.filtersTableView.frame;
+        newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
+        self.filtersTableView.frame = newTWFrame;
+    }
+    
     self.checkedData = [[NSMutableSet alloc] init];
     self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
     self.expandArrayCash =[[NSMutableArray alloc] initWithArray:@[@"               300-500", @"               500-1000", @"               1000-1500", @"               1500-2500", @"               2500-4000"]];
