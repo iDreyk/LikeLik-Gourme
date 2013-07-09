@@ -35,15 +35,15 @@ static bool REVERSE_ANIM = false;
 #warning Ф-ия фильтрация списка!
 
 - (void)viewDidLoad{
-    #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки    
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
                    CGRect newTWFrame = self.placesTableView.frame;
             newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
             self.placesTableView.frame = newTWFrame;
     }
-
-    #warning все заполнять
+    
+#warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки
+#warning все заполнять
     if(!self.array)
         self.array = @[[NSString stringWithFormat:@" %@",@"1st place"],[NSString stringWithFormat:@" %@",@" 2nd place"],[NSString stringWithFormat:@" %@",@"3rd place"],[NSString stringWithFormat:@" %@",@"4th place"],[NSString stringWithFormat:@" %@",@"5th place"],[NSString stringWithFormat:@" %@",@"6th place"],[NSString stringWithFormat:@" %@",@"7th place"],[NSString stringWithFormat:@" %@",@"8th place"], [NSString stringWithFormat:@" %@",@"9th place"], [NSString stringWithFormat:@" %@",@"10th place"]];
     if(!self.rateArray)
@@ -90,6 +90,8 @@ static bool REVERSE_ANIM = false;
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
+    self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0);
+
 }
 
 - (void)appToBackground{
@@ -603,16 +605,12 @@ static bool REVERSE_ANIM = false;
     if(MAP_PRESENTED)
         return;
     CGFloat yOffset   = self.placesTableView.contentOffset.y;
-    CGFloat threshold = self.placesTableView.frame.size.height - self.placesTableView.frame.size.height;
-    if (yOffset > -threshold && yOffset < 0) {
-        //Everything OK!
-    }
-    else if (yOffset < 0) {
+    if (yOffset < 0) {
         //Paralax handling
         for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
             [self._mapView removeGestureRecognizer:recognizer];
         }
-        self._mapView.frame = CGRectMake(0, -44.0, 320.0, 152.0 - yOffset + floorf(threshold / 2.0));
+        self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0 - yOffset);
     }
     else {
         //To normal state
@@ -671,7 +669,7 @@ static bool REVERSE_ANIM = false;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
-        theFrame.size.height = 140 + offset;
+        theFrame.size.height = 140;// + offset;
         theFrame.origin.y = -44.0;
         frame.origin.y = 96 - offset;
         frame.size.height = self.view.frame.size.height;

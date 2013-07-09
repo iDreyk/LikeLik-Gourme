@@ -249,16 +249,12 @@ NSInteger GLOBAL_OFFSET = 0;
         return;
     
     CGFloat yOffset   = self.placeTableView.contentOffset.y;
-    CGFloat threshold = self.placeTableView.frame.size.height - self.placeTableView.frame.size.height;
-    if (yOffset > -threshold && yOffset < 0) {
-        //Everything OK!
-    }
-    else if (yOffset < 0) {
+   if (yOffset < 0) {
         //Paralax handling
         for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
             [self._mapView removeGestureRecognizer:recognizer];
         }
-        self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset + floorf(threshold / 2.0));
+       self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset);
     }
     else {
         //To normal state
@@ -316,8 +312,8 @@ NSInteger GLOBAL_OFFSET = 0;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeTableView.frame;
-        theFrame.size.height = 146.0;
-        theFrame.origin.y = 36.0;
+        theFrame.size.height = 146.0;// + offset;
+        theFrame.origin.y = 52.0 - offset - GLOBAL_OFFSET;
         frame.origin.y = 166 - offset;
         frame.size.height = self.view.frame.size.height;
         self._mapView.frame = theFrame;
@@ -338,6 +334,11 @@ NSInteger GLOBAL_OFFSET = 0;
         [self._mapView regionThatFits:region];
         
     } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
+        CGRect theFrame = self._mapView.frame;
+        theFrame.size.height = 166.0;
+        theFrame.origin.y = 36;
+        self._mapView.frame = theFrame;
+
         CGRect frame = self.placeTableView.frame;
         frame.origin.y = 166;
         frame.size.height = self.view.frame.size.height - 166;

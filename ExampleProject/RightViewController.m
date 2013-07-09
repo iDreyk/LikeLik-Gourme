@@ -14,6 +14,7 @@
 
 @implementation RightViewController
 @synthesize filtersTableView;
+@synthesize navBar;
 
 static bool OPENED_CASH = YES;
 static bool OPENED_COUSINE = YES;
@@ -39,11 +40,13 @@ static bool OPENED_MENU = YES;
     self.rowCountCousine = 7;
     self.expandArrayMenu = [[NSMutableArray alloc] initWithArray:@[@"               Vegeterian", @"               Lenten", @"               Fitnes", @"               Kosher", @"               Children's", @"               Diet", @"               Halal"]];
     self.rowCountMenu = 7;
+    navBar.title = AMLocalizedString(@"Filters", Nil);
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(languageChanged) name:@"LanguageChanged" object:nil];
 }
 
 -(void)languageChanged{
     self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
+    navBar.title = AMLocalizedString(@"Filters", Nil);
     [self.filtersTableView reloadData];
 }
 
@@ -184,12 +187,12 @@ static bool OPENED_MENU = YES;
 }
 
 -(void)pusher:(UIButton *)Sender{
-    NSUInteger row = Sender.tag;
-    if(row == 0){
+    NSUInteger section = Sender.tag;
+    if(section == 0){
         [self.checkedData removeAllObjects];
         [self.filtersTableView reloadData];
     }
-    else if(row == 1){
+    else if(section == 1){
         if (OPENED_CASH == YES)
             [self closeCashMenu];
         else
@@ -197,7 +200,7 @@ static bool OPENED_MENU = YES;
         OPENED_CASH = !OPENED_CASH;
         
     }
-    else if( row == 2 ){
+    else if( section == 2 ){
         if (OPENED_COUSINE == YES)
             [self closeCousineMenu];
         else
@@ -205,11 +208,15 @@ static bool OPENED_MENU = YES;
         OPENED_COUSINE = !OPENED_COUSINE;
         
     }
-    else if( row == 3 ){
+    else if( section == 3 ){
         if (OPENED_MENU == YES)
             [self closeMenuMenu];
-        else
+        else{
             [self openMenuMenu];
+            //Этот кусок в последнюю секцию. Чтобы при раскрытии последней секции понимать, что она раскрылась!
+            [self.filtersTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:section]
+                             atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
         OPENED_MENU = !OPENED_MENU;
     }
 }
@@ -272,5 +279,3 @@ static bool OPENED_MENU = YES;
 }
 
 @end
-
-

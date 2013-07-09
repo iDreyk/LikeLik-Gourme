@@ -24,6 +24,7 @@
 @property (nonatomic) NSInteger rowCountFun;
 @property (nonatomic) NSInteger rowCountMusic;
 @property (nonatomic) NSInteger rowCountOthers;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 -(void)openCashMenu;
 -(void)openCousineMenu;
