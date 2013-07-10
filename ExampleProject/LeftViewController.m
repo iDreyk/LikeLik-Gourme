@@ -30,9 +30,9 @@ CGRect tableViewFrame;
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
-    #warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
+#warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
     if(!self.subwayArray)
-    self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
+        self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];
     if(!self.subwayArray)
         self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
     if(!self.paycheckArray)
@@ -57,7 +57,7 @@ CGRect tableViewFrame;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:@"callingMainView" object:nil];
-
+    
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         CGRect newTWFrame = self.catalogueTableView.frame;
         NSLog(@"%f %f %f %f",newTWFrame.origin.x, newTWFrame.origin.y, newTWFrame.size.height,newTWFrame.size.width);
@@ -65,7 +65,7 @@ CGRect tableViewFrame;
         self.catalogueTableView.frame = newTWFrame;
         
         newTWFrame = self.background.frame;
-//        NSLog(@"%f %f %f %f",newTWFrame.origin.x, newTWFrame.origin.y, newTWFrame.size.height,newTWFrame.size.width);
+        //        NSLog(@"%f %f %f %f",newTWFrame.origin.x, newTWFrame.origin.y, newTWFrame.size.height,newTWFrame.size.width);
         newTWFrame.origin.y = 40;
         newTWFrame.size.height = self.view.bounds.size.height - 80;
         self.background.frame = newTWFrame;
@@ -102,11 +102,11 @@ CGRect tableViewFrame;
             frame.origin.y = 600;
             self.catalogueTableView.frame = frame;
             [UIView animateWithDuration:0.3 animations:^{
-            SEARCHING = YES;
-            [self.displayItems removeAllObjects];
-            [self.displayItems addObjectsFromArray:self.placesArray];
-            [self.catalogueTableView reloadData];
-            self.catalogueTableView.frame = ViewFrame;
+                SEARCHING = YES;
+                [self.displayItems removeAllObjects];
+                [self.displayItems addObjectsFromArray:self.placesArray];
+                [self.catalogueTableView reloadData];
+                self.catalogueTableView.frame = ViewFrame;
             }];
         }];
         KEYBOARD_SHOWN = YES;
@@ -114,14 +114,27 @@ CGRect tableViewFrame;
 }
 
 -(void)keyboardHidden:(NSNotification *)note{
-
-    CGRect frame = self.catalogueTableView.frame;
-    frame.origin.y = -600;
-    self.catalogueTableView.frame = frame;
     [UIView animateWithDuration:0.4 animations:^{
-        self.catalogueTableView.frame = tableViewFrame;
-                                                }];
+        CGRect frame = self.catalogueTableView.frame;
+        frame.origin.y = 600;
+        self.catalogueTableView.frame = frame;
+    }completion:^(BOOL finished) {
+        CGRect frame = self.catalogueTableView.frame;
+        frame.origin.y = -600;
+        self.catalogueTableView.frame = frame;
+        [UIView animateWithDuration:0.3 animations:^{
+            SEARCHING = NO;
+            [self.catalogueTableView reloadData];
+            self.catalogueTableView.frame = tableViewFrame;
+        }];
+    }];
     KEYBOARD_SHOWN = NO;
+//    CGRect frame = self.catalogueTableView.frame;
+//    frame.origin.y = -600;
+//    self.catalogueTableView.frame = frame;
+//    [UIView animateWithDuration:0.4 animations:^{
+//        self.catalogueTableView.frame = tableViewFrame;
+//    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -153,29 +166,28 @@ CGRect tableViewFrame;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor clearColor];
     if(!SEARCHING){
-    if([NSUserDefaults standardUserDefaults]){
-        NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
-        NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
-        if (!sortMethod && section == 2)
-            button.backgroundColor = [UIColor grayColor];
-        else if (sortMethod && section == 3)
-            button.backgroundColor = [UIColor grayColor];
-    }
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
-    button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
-    [button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
-    //[button titleLabel].textColor = [UIColor blackColor];
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    // add targets and actions
-    [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTag:section];
+        if([NSUserDefaults standardUserDefaults]){
+            NSLog(@"Loaded from userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
+            NSInteger sortMethod = [[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"];
+            if (!sortMethod && section == 2)
+                button.backgroundColor = [UIColor grayColor];
+            else if (sortMethod && section == 3)
+                button.backgroundColor = [UIColor grayColor];
+        }
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
+        [button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+        //[button titleLabel].textColor = [UIColor blackColor];
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        // add targets and actions
+        [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTag:section];
     }
     return button;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if(SEARCHING)
         return 1;
     return [self.array count];
@@ -192,7 +204,7 @@ CGRect tableViewFrame;
     [self.catalogueTableView beginUpdates];
     [self.catalogueTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.catalogueTableView endUpdates];
-
+    
 }
 -(void)openCityMenu{
     self.rowCountCity += 3;
@@ -204,7 +216,7 @@ CGRect tableViewFrame;
     [self.catalogueTableView beginUpdates];
     [self.catalogueTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.catalogueTableView endUpdates];
-
+    
 }
 
 -(void)closeLangMenu{
@@ -237,33 +249,32 @@ CGRect tableViewFrame;
     
     UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
     
-//    if(row == 0){
-//        NSLog(@"Call restaurants view");
-//        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] ){
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//            NSLog(@"Here1");
-//        }
-//        else
-//        {
-//            NSLog(@"Here2");
-//            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
-//            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
-//        }
-//
-//    }
-//    else
-    if( row == 0 )
-    {
+    //    if(row == 0){
+    //        NSLog(@"Call restaurants view");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] ){
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //            NSLog(@"Here1");
+    //        }
+    //        else
+    //        {
+    //            NSLog(@"Here2");
+    //            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
+    //            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
+    //        }
+    //
+    //    }
+    //    else
+    if( row == 0 ){
         NSLog(@"Call change city view");
-//        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
-//            [self.navigationController.slideViewController setMainViewController:settingsViewController animated:YES];
-//        }
+        //        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
+        //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+        //        else
+        //        {
+        //            UIViewController * settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
+        //            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
+        //            [self.navigationController.slideViewController setMainViewController:settingsViewController animated:YES];
+        //        }
         if(OPENED_LANG == YES){
             [self closeLangMenu];
             OPENED_LANG = NO;
@@ -311,73 +322,73 @@ CGRect tableViewFrame;
         if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
             [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
-//        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * selectCityViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
-//            [self.navigationController.slideViewController setMainViewController:selectCityViewController animated:YES];
-//        }
-
-//        if (OPENED_CITY == YES){
-//                    NSLog(@"pusher 3");
-//           // EXPANDED_ON = 0;
-//            self.rowCountCity -= 6;
-//            NSArray *paths = [[NSArray alloc] initWithObjects:
-//                              [NSIndexPath indexPathForRow:0 inSection:2],
-//                              [NSIndexPath indexPathForRow:1 inSection:2],
-//                              [NSIndexPath indexPathForRow:2 inSection:2],
-//                              [NSIndexPath indexPathForRow:3 inSection:2],
-//                              [NSIndexPath indexPathForRow:4 inSection:2],
-//                              [NSIndexPath indexPathForRow:5 inSection:2],
-//                              nil];
-//            [self.tableView beginUpdates];
-//            [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-//            [self.tableView endUpdates];
-//        }
-//        else{
-//                    NSLog(@"pusher 4");
-//            self.rowCountCity += 6;
-//            NSArray *paths = [[NSArray alloc] initWithObjects:
-//                                         [NSIndexPath indexPathForRow:0 inSection:2],
-//                                         [NSIndexPath indexPathForRow:1 inSection:2],
-//                                         [NSIndexPath indexPathForRow:2 inSection:2],
-//                                         [NSIndexPath indexPathForRow:3 inSection:2],
-//                                         [NSIndexPath indexPathForRow:4 inSection:2],
-//                                         [NSIndexPath indexPathForRow:5 inSection:2],
-//                                         nil];
-//            [self.tableView beginUpdates];
-//            [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-//            [self.tableView endUpdates];
-//            //EXPANDED_ON = 7;
-//        }
-//        OPENED_CITY = !OPENED_CITY;
-//    if( row == 3 + EXPANDED_ON)
-//    {
-//                NSLog(@"pusher 5");
-//        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:thirdViewController];
-//            [self.navigationController.slideViewController setMainViewController:thirdViewController animated:YES];
-//        }
-//    }
-//    else if( row == 4 + EXPANDED_ON)
-//    {
-//                NSLog(@"pusher 6");
-//        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:fourthViewController];
-//            [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
-//        }
-//    }
-
+    //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * selectCityViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
+    //            [self.navigationController.slideViewController setMainViewController:selectCityViewController animated:YES];
+    //        }
+    
+    //        if (OPENED_CITY == YES){
+    //                    NSLog(@"pusher 3");
+    //           // EXPANDED_ON = 0;
+    //            self.rowCountCity -= 6;
+    //            NSArray *paths = [[NSArray alloc] initWithObjects:
+    //                              [NSIndexPath indexPathForRow:0 inSection:2],
+    //                              [NSIndexPath indexPathForRow:1 inSection:2],
+    //                              [NSIndexPath indexPathForRow:2 inSection:2],
+    //                              [NSIndexPath indexPathForRow:3 inSection:2],
+    //                              [NSIndexPath indexPathForRow:4 inSection:2],
+    //                              [NSIndexPath indexPathForRow:5 inSection:2],
+    //                              nil];
+    //            [self.tableView beginUpdates];
+    //            [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    //            [self.tableView endUpdates];
+    //        }
+    //        else{
+    //                    NSLog(@"pusher 4");
+    //            self.rowCountCity += 6;
+    //            NSArray *paths = [[NSArray alloc] initWithObjects:
+    //                                         [NSIndexPath indexPathForRow:0 inSection:2],
+    //                                         [NSIndexPath indexPathForRow:1 inSection:2],
+    //                                         [NSIndexPath indexPathForRow:2 inSection:2],
+    //                                         [NSIndexPath indexPathForRow:3 inSection:2],
+    //                                         [NSIndexPath indexPathForRow:4 inSection:2],
+    //                                         [NSIndexPath indexPathForRow:5 inSection:2],
+    //                                         nil];
+    //            [self.tableView beginUpdates];
+    //            [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    //            [self.tableView endUpdates];
+    //            //EXPANDED_ON = 7;
+    //        }
+    //        OPENED_CITY = !OPENED_CITY;
+    //    if( row == 3 + EXPANDED_ON)
+    //    {
+    //                NSLog(@"pusher 5");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:thirdViewController];
+    //            [self.navigationController.slideViewController setMainViewController:thirdViewController animated:YES];
+    //        }
+    //    }
+    //    else if( row == 4 + EXPANDED_ON)
+    //    {
+    //                NSLog(@"pusher 6");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:fourthViewController];
+    //            [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
+    //        }
+    //    }
+    
 }
 
 
@@ -396,59 +407,58 @@ CGRect tableViewFrame;
         if(SEARCHING)
             cell.textLabel.text = [self.displayItems objectAtIndex:[indexPath row]];
         else{
-        if(indexPath.section == 0)
-            cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
-        if(indexPath.section == 1)
-            cell.textLabel.text = [self.languageArray objectAtIndex:[indexPath row]];
-    }
-    
-//    cell.backgroundView = [InterfaceFunctions CellBG];
-//    cell.selectedBackgroundView = [InterfaceFunctions SelectedCellBG];
-   
-
-    
-    if([NSUserDefaults standardUserDefaults]){
-        if(indexPath.section == 0){
-            NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCitySection"];
-            NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCityRow"];
-            if (indexPath.section == section && indexPath.row == row){
-                NSIndexPath *savedCity = [NSIndexPath indexPathForRow:row inSection:section];
-                [self.catalogueTableView selectRowAtIndexPath:savedCity animated:YES scrollPosition:NO];
-                NSLog(@"Loaded city from userdefaults! %d %d",section, row);
+            if(indexPath.section == 0)
+                cell.textLabel.text = [self.cityArray objectAtIndex:[indexPath row]];
+            if(indexPath.section == 1)
+                cell.textLabel.text = [self.languageArray objectAtIndex:[indexPath row]];
+        }
+        
+        //    cell.backgroundView = [InterfaceFunctions CellBG];
+        //    cell.selectedBackgroundView = [InterfaceFunctions SelectedCellBG];
+        
+        
+        
+        if([NSUserDefaults standardUserDefaults]){
+            if(indexPath.section == 0){
+                NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCitySection"];
+                NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentCityRow"];
+                if (indexPath.section == section && indexPath.row == row){
+                    NSIndexPath *savedCity = [NSIndexPath indexPathForRow:row inSection:section];
+                    [self.catalogueTableView selectRowAtIndexPath:savedCity animated:YES scrollPosition:NO];
+                    NSLog(@"Loaded city from userdefaults! %d %d",section, row);
+                }
+            }
+            else if(indexPath.section == 1){
+                NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangSection"];
+                NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangRow"];
+                if (indexPath.section == section && indexPath.row == row){
+                    NSIndexPath *savedLang = [NSIndexPath indexPathForRow:row inSection:section];
+                    [self.catalogueTableView selectRowAtIndexPath:savedLang animated:YES scrollPosition:NO];
+                    NSLog(@"Loaded language from userdefaults! %d %d",section, row);
+                }
             }
         }
-        else if(indexPath.section == 1){
-            NSInteger section = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangSection"];
-            NSInteger row = [[NSUserDefaults standardUserDefaults] integerForKey:@"curentLangRow"];
-            if (indexPath.section == section && indexPath.row == row){
-                NSIndexPath *savedLang = [NSIndexPath indexPathForRow:row inSection:section];
-                [self.catalogueTableView selectRowAtIndexPath:savedLang animated:YES scrollPosition:NO];
-                NSLog(@"Loaded language from userdefaults! %d %d",section, row);
-            }
-        }
     }
-    }
-
     return cell;
 }
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-//UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
-//    if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
-//        [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//    else
-//    {
-//        UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
-//        //[self.navigationController.slideViewController setMainViewController:fifthViewController];
-//        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
-//    }
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    //UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
+    //    if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
+    //        [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //    else
+    //    {
+    //        UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
+    //        //[self.navigationController.slideViewController setMainViewController:fifthViewController];
+    //        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
+    //    }
+    //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(SEARCHING){
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         NSString *str = cell.textLabel.text;
         NSInteger ind = [self.placesArray indexOfObject:str];
-
+        
         modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
         viewControllerToPresent.placeName = str;
         viewControllerToPresent.subway = [self.subwayArray objectAtIndex:ind];
@@ -457,42 +467,43 @@ CGRect tableViewFrame;
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     }
     else{
-    if(indexPath.section == 0){
-        NSInteger indPthSect = [indexPath section];
-        NSInteger indPthRow = [indexPath row];
-        [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentCitySection"];
-        [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentCityRow"];
-        NSLog(@"Saved city to userdefaults! %d %d",indPthSect, indPthRow);
-    }
-    else if(indexPath.section == 1){
-        NSInteger indPthSect = [indexPath section];
-        NSInteger indPthRow = [indexPath row];
-        [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentLangSection"];
-        [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentLangRow"];
-        NSLog(@"Saved language to userdefaults! %d %d",indPthSect, indPthRow);
-        NSString *curLang;
-        if (indPthRow == 0){
-            curLang = @"English";
-            LocalizationSetLanguage(@"en");
-            NSLog(@"EN");
+        if(indexPath.section == 0){
+            NSInteger indPthSect = [indexPath section];
+            NSInteger indPthRow = [indexPath row];
+            [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentCitySection"];
+            [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentCityRow"];
+            NSLog(@"Saved city to userdefaults! %d %d",indPthSect, indPthRow);
         }
-        if (indPthRow == 1){
-            curLang = @"Deutsch";
-            LocalizationSetLanguage(@"de");
-            NSLog(@"DE");
+        else if(indexPath.section == 1){
+            NSInteger indPthSect = [indexPath section];
+            NSInteger indPthRow = [indexPath row];
+            [[NSUserDefaults standardUserDefaults] setInteger:indPthSect forKey:@"curentLangSection"];
+            [[NSUserDefaults standardUserDefaults] setInteger:indPthRow forKey:@"curentLangRow"];
+            NSLog(@"Saved language to userdefaults! %d %d",indPthSect, indPthRow);
+            NSString *curLang;
+            if (indPthRow == 0){
+                curLang = @"English";
+                LocalizationSetLanguage(@"en");
+                NSLog(@"EN");
+            }
+            if (indPthRow == 1){
+                curLang = @"Deutsch";
+                LocalizationSetLanguage(@"de");
+                NSLog(@"DE");
+            }
+            if (indPthRow == 2){
+                curLang = @"Русский";
+                LocalizationSetLanguage(@"ru");
+                NSLog(@"RU");
+            }
+            [[NSUserDefaults standardUserDefaults] setValue:curLang forKey:@"Language"];
+            NSLog(@"Saved language to userdefaults: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Language"]);
+            navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
+            self.array =         @[[NSString stringWithFormat:@"   %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"   %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by distance", Nil)]];
+            [self.catalogueTableView  reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.array.count)] withRowAnimation:UITableViewRowAnimationFade];
+            //[self.catalogueTableView reloadData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LanguageChanged" object:nil];
         }
-        if (indPthRow == 2){
-            curLang = @"Русский";
-            LocalizationSetLanguage(@"ru");
-            NSLog(@"RU");
-        }
-        [[NSUserDefaults standardUserDefaults] setValue:curLang forKey:@"Language"];
-        NSLog(@"Saved language to userdefaults: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Language"]);
-        navBar.title = AMLocalizedString(@"LikeLik Gourmet", Nil);
-        self.array =         @[[NSString stringWithFormat:@"   %@",AMLocalizedString(@"City", Nil)], [NSString stringWithFormat:@"   %@",AMLocalizedString(@"Language", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by name", Nil)],[NSString stringWithFormat:@"   %@",AMLocalizedString(@"Sort by distance", Nil)]];
-        [self.catalogueTableView reloadData];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LanguageChanged" object:nil];
-    }
     }
 }
 
@@ -507,8 +518,8 @@ CGRect tableViewFrame;
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
-//    if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
-//        [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y-44.0, 320.0, self.SearchTable.frame.size.height+44.0)];
+    //    if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
+    //        [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y-44.0, 320.0, self.SearchTable.frame.size.height+44.0)];
     [self.searchBar setShowsCancelButton:YES];
     self.searchBar.text = nil;
 }
@@ -531,42 +542,42 @@ CGRect tableViewFrame;
             }
         }
     }
-    [self.catalogueTableView reloadData];
+    [self.catalogueTableView  reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
-//    NSArray *tmp;
-//    if (self.searchBar.text.length > 0){//.text.length>0) {
-//        NSString *strSearchText = self.searchBar.text;
-//        NSLog(@"strSearchText = %@",strSearchText);
-//        //#warning надо переделать под новый каталог
-//        tmp = [ExternalFunctions getAllPlacesInCity:self.CityName];
-//        //#warning backspace неправильно работает
-//        NSMutableArray *ar = [NSMutableArray array];
-//        for (int i=0;i<[tmp count];i++) {
-//            NSString *strData = [[tmp objectAtIndex:i] objectForKey:@"Name"];
-//            //          NSLog(@"strData = %@ strSearchText = %@",strData, strSearchText);
-//            if ([[strData lowercaseString] rangeOfString:[strSearchText lowercaseString]].length>0)
-//                [ar addObject:[tmp objectAtIndex:i]];
-//        }
-//        self.PlacesArray = ar;
-//        [self.SearchTable reloadData];
-//    }
-//    else{
-//        //    NSLog(@"Hello");
-//        //#warning надо переделать под новый каталог
-//        self.PlacesArray = [ExternalFunctions getAllPlacesInCity:self.CityName];
-//        NSLog(@"tmp = %@", tmp);
-//        [self.SearchTable reloadData];
-//    }
+    //    NSArray *tmp;
+    //    if (self.searchBar.text.length > 0){//.text.length>0) {
+    //        NSString *strSearchText = self.searchBar.text;
+    //        NSLog(@"strSearchText = %@",strSearchText);
+    //        //#warning надо переделать под новый каталог
+    //        tmp = [ExternalFunctions getAllPlacesInCity:self.CityName];
+    //        //#warning backspace неправильно работает
+    //        NSMutableArray *ar = [NSMutableArray array];
+    //        for (int i=0;i<[tmp count];i++) {
+    //            NSString *strData = [[tmp objectAtIndex:i] objectForKey:@"Name"];
+    //            //          NSLog(@"strData = %@ strSearchText = %@",strData, strSearchText);
+    //            if ([[strData lowercaseString] rangeOfString:[strSearchText lowercaseString]].length>0)
+    //                [ar addObject:[tmp objectAtIndex:i]];
+    //        }
+    //        self.PlacesArray = ar;
+    //        [self.SearchTable reloadData];
+    //    }
+    //    else{
+    //        //    NSLog(@"Hello");
+    //        //#warning надо переделать под новый каталог
+    //        self.PlacesArray = [ExternalFunctions getAllPlacesInCity:self.CityName];
+    //        NSLog(@"tmp = %@", tmp);
+    //        [self.SearchTable reloadData];
+    //    }
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     //if (SYSTEM_VERSION_LESS_THAN(@"6.0"))
-      // [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y+44.0, 320.0, self.SearchTable.frame.size.height-44.0)];
+    // [self.SearchTable setFrame:CGRectMake(self.SearchTable.frame.origin.x, self.SearchTable.frame.origin.y+44.0, 320.0, self.SearchTable.frame.size.height-44.0)];
     
-   // self.PlacesArray = Array;
+    // self.PlacesArray = Array;
     //[self.SearchTable reloadData];
     SEARCHING = NO;
-    [self.catalogueTableView reloadData];
+//    [self.catalogueTableView reloadData];
     [self.searchBar setShowsCancelButton:NO];
     [self.searchBar resignFirstResponder];
     

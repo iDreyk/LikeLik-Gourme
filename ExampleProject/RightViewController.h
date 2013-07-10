@@ -11,7 +11,7 @@
 @interface RightViewController : UIViewController
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) NSMutableArray *expandArrayCash;
-@property (nonatomic, strong) NSMutableArray *expandArrayCousine;
+@property (nonatomic, strong) NSMutableArray *expandArrayCuisine;
 @property (nonatomic, strong) NSMutableArray *expandArrayMenu;
 @property (nonatomic, strong) NSMutableArray *expandArrayFun;
 @property (nonatomic, strong) NSMutableArray *expandArrayMusic;
@@ -19,7 +19,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *filtersTableView;
 @property (nonatomic, strong) NSMutableSet *checkedData;
 @property (nonatomic) NSInteger rowCountCash;
-@property (nonatomic) NSInteger rowCountCousine;
+@property (nonatomic) NSInteger rowCountCuisine;
 @property (nonatomic) NSInteger rowCountMenu;
 @property (nonatomic) NSInteger rowCountFun;
 @property (nonatomic) NSInteger rowCountMusic;
@@ -27,14 +27,14 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 -(void)openCashMenu;
--(void)openCousineMenu;
+-(void)openCuisineMenu;
 -(void)openMenuMenu;
 -(void)openFunMenu;
 -(void)openMusicMenu;
 -(void)openOthersMenu;
 
 -(void)closeCashMenu;
--(void)closeCousineMenu;
+-(void)closeCuisineMenu;
 -(void)closeMenuMenu;
 -(void)closeFunMenu;
 -(void)closeMusicMenu;

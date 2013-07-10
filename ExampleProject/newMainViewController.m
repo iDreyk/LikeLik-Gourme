@@ -37,9 +37,9 @@ static bool REVERSE_ANIM = false;
 - (void)viewDidLoad{
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
-                   CGRect newTWFrame = self.placesTableView.frame;
-            newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
-            self.placesTableView.frame = newTWFrame;
+        CGRect newTWFrame = self.placesTableView.frame;
+        newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
+        self.placesTableView.frame = newTWFrame;
     }
     
 #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки
@@ -66,6 +66,8 @@ static bool REVERSE_ANIM = false;
                             @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpknvVGQig_9mk0bG_UhHQsgVXx_Pb1GCQXas48gsWpxP04rWw",
                             @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT9NCxtouHbM5RfTzIRX1SdUcfXrjvWY4sLHQ-NDLYN-ank7ImZjg"
                             ];
+    if(!self.allPlaces)
+        self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
     if(!self.imageCache)
         self.imageCache = [[NSMutableDictionary alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -76,22 +78,22 @@ static bool REVERSE_ANIM = false;
 #pragma mark - NSNotification handlers
 -(void)languageChanged{
 #warning здесь станции
-
     self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
+    self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
     [self.placesTableView reloadData];
 }
 
 #pragma mark - Map handler
 
 -(void)viewDidAppear:(BOOL)animated{
-    [super viewDidLoad];    
+    [super viewDidLoad];
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self action:@selector(openMap:)];
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
     self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0);
-
+    
 }
 
 - (void)appToBackground{
@@ -104,18 +106,18 @@ static bool REVERSE_ANIM = false;
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
-//    NSLog(@"MAP LOG: update");
+    //    NSLog(@"MAP LOG: update");
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     span.latitudeDelta = 0.003;
     span.longitudeDelta = 0.003;
     CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-//    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+    //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
     region.span = span;
     region.center = location;
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
-
+    
 }
 
 #pragma mark - Table view data source
@@ -146,7 +148,7 @@ static bool REVERSE_ANIM = false;
     rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
     layer.transform = rotationAndPerspectiveTransform;
     [UIView commitAnimations];
-
+    
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -154,7 +156,8 @@ static bool REVERSE_ANIM = false;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor whiteColor];
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
-    [button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+    //[button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+    [button setTitle:[[self.allPlaces objectForKey:@"name"] objectAtIndex:section] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     // add targets and actions
@@ -165,104 +168,104 @@ static bool REVERSE_ANIM = false;
     //Here pict for rating
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
     
-    imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [self.rateArray objectAtIndex:section]]];
+    imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
     [button addSubview:imv];
     
     return button;
 }
 
 -(void)pusher:(UIButton *)Sender{
-//        UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
-  //      [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
-
-//    NSUInteger row = Sender.tag;
+    //        UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
+    //      [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
     
-//    UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
+    //    NSUInteger row = Sender.tag;
     
-//    if( row == 0 )
-//    {
-//        NSLog(@"pusher 1");
-//        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
-//            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
-//        }
-//    }
-//    else if( row == 1 )
-//    {
-//        NSLog(@"pusher 2");
-//        if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:fifthViewController];
-//            [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
-//        }
-//    }
-//    
-//    else if( row == 2 ){
-//        if (OPENED == YES){
-//            NSLog(@"pusher 3");
-//            // EXPANDED_ON = 0;
-//            self.rowCount -= 6;
-//            NSArray *paths = [[NSArray alloc] initWithObjects:
-//                              [NSIndexPath indexPathForRow:0 inSection:2],
-//                              [NSIndexPath indexPathForRow:1 inSection:2],
-//                              [NSIndexPath indexPathForRow:2 inSection:2],
-//                              [NSIndexPath indexPathForRow:3 inSection:2],
-//                              [NSIndexPath indexPathForRow:4 inSection:2],
-//                              [NSIndexPath indexPathForRow:5 inSection:2],
-//                              nil];
-//            [self.tableView beginUpdates];
-//            [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-//            [self.tableView endUpdates];
-//        }
-//        else{
-//            NSLog(@"pusher 4");
-//            self.rowCount += 6;
-//            NSArray *paths = [[NSArray alloc] initWithObjects:
-//                              [NSIndexPath indexPathForRow:0 inSection:2],
-//                              [NSIndexPath indexPathForRow:1 inSection:2],
-//                              [NSIndexPath indexPathForRow:2 inSection:2],
-//                              [NSIndexPath indexPathForRow:3 inSection:2],
-//                              [NSIndexPath indexPathForRow:4 inSection:2],
-//                              [NSIndexPath indexPathForRow:5 inSection:2],
-//                              nil];
-//            [self.tableView beginUpdates];
-//            [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
-//            [self.tableView endUpdates];
-//            //EXPANDED_ON = 7;
-//        }
-//        OPENED = !OPENED;
-//    }
-//    if( row == 3 + EXPANDED_ON)
-//    {
-//        NSLog(@"pusher 5");
-//        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:thirdViewController];
-//            [self.navigationController.slideViewController setMainViewController:thirdViewController animated:YES];
-//        }
-//    }
-//    else if( row == 4 + EXPANDED_ON)
-//    {
-//        NSLog(@"pusher 6");
-//        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
-//            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//        else
-//        {
-//            UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
-//            //[self.navigationController.slideViewController setMainViewController:fourthViewController];
-//            [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
-//        }
-//    }
+    //    UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
+    
+    //    if( row == 0 )
+    //    {
+    //        NSLog(@"pusher 1");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * newMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:newMainViewController];
+    //            [self.navigationController.slideViewController setMainViewController:newMainViewController animated:YES];
+    //        }
+    //    }
+    //    else if( row == 1 )
+    //    {
+    //        NSLog(@"pusher 2");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:fifthViewController];
+    //            [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
+    //        }
+    //    }
+    //
+    //    else if( row == 2 ){
+    //        if (OPENED == YES){
+    //            NSLog(@"pusher 3");
+    //            // EXPANDED_ON = 0;
+    //            self.rowCount -= 6;
+    //            NSArray *paths = [[NSArray alloc] initWithObjects:
+    //                              [NSIndexPath indexPathForRow:0 inSection:2],
+    //                              [NSIndexPath indexPathForRow:1 inSection:2],
+    //                              [NSIndexPath indexPathForRow:2 inSection:2],
+    //                              [NSIndexPath indexPathForRow:3 inSection:2],
+    //                              [NSIndexPath indexPathForRow:4 inSection:2],
+    //                              [NSIndexPath indexPathForRow:5 inSection:2],
+    //                              nil];
+    //            [self.tableView beginUpdates];
+    //            [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    //            [self.tableView endUpdates];
+    //        }
+    //        else{
+    //            NSLog(@"pusher 4");
+    //            self.rowCount += 6;
+    //            NSArray *paths = [[NSArray alloc] initWithObjects:
+    //                              [NSIndexPath indexPathForRow:0 inSection:2],
+    //                              [NSIndexPath indexPathForRow:1 inSection:2],
+    //                              [NSIndexPath indexPathForRow:2 inSection:2],
+    //                              [NSIndexPath indexPathForRow:3 inSection:2],
+    //                              [NSIndexPath indexPathForRow:4 inSection:2],
+    //                              [NSIndexPath indexPathForRow:5 inSection:2],
+    //                              nil];
+    //            [self.tableView beginUpdates];
+    //            [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
+    //            [self.tableView endUpdates];
+    //            //EXPANDED_ON = 7;
+    //        }
+    //        OPENED = !OPENED;
+    //    }
+    //    if( row == 3 + EXPANDED_ON)
+    //    {
+    //        NSLog(@"pusher 5");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ThirdViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:thirdViewController];
+    //            [self.navigationController.slideViewController setMainViewController:thirdViewController animated:YES];
+    //        }
+    //    }
+    //    else if( row == 4 + EXPANDED_ON)
+    //    {
+    //        NSLog(@"pusher 6");
+    //        if( [centerNavigationController.topViewController isKindOfClass:[fourthViewController class]] )
+    //            [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //        else
+    //        {
+    //            UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
+    //            //[self.navigationController.slideViewController setMainViewController:fourthViewController];
+    //            [self.navigationController.slideViewController setMainViewController:fourthViewController animated:YES];
+    //        }
+    //    }
     
 }
 
@@ -284,26 +287,26 @@ static bool REVERSE_ANIM = false;
         completionBlock(YES, theImage);
     }
     else{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ( !error )
-                               {
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
-                                   [self.imageCache setObject:image forKey:url];
-                                           NSLog(@"img saved to cache! (%@)", [self.imageCache objectForKey:url]);
-                                   NSLog(@"Images in cache: %d", [self.imageCache count]);
-                                   completionBlock(YES,image);
-                               } else{
-                                   completionBlock(NO, nil);
-                               }
-                           }];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   if ( !error )
+                                   {
+                                       UIImage *image = [[UIImage alloc] initWithData:data];
+                                       [self.imageCache setObject:image forKey:url];
+                                       NSLog(@"img saved to cache! (%@)", [self.imageCache objectForKey:url]);
+                                       NSLog(@"Images in cache: %d", [self.imageCache count]);
+                                       completionBlock(YES,image);
+                                   } else{
+                                       completionBlock(NO, nil);
+                                   }
+                               }];
     }
 }
 
 /*
-                                        ASYNC EXAMPLE
+ ASYNC EXAMPLE
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
  static NSString *cellIdentifier = @"venue";
@@ -341,67 +344,67 @@ static bool REVERSE_ANIM = false;
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
     if (cell == nil) { cell = [[UITableViewCell alloc]
-                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
+                               initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
     }
     if([cell.contentView.subviews count] > 0)
-       [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
+        [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
 #warning 320 на ios7 beta 3 не достает до конца экрана. Сделаем 321
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 321, 250)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 321, 250)];
     
-        //while loading an image
-//        imv.image = [UIImage imageNamed:@"loading.png"];
-//        [cell.contentView addSubview:imv];
-        imv.tag = section;
-        [imv addGestureRecognizer:singleTap];
-        [imv setUserInteractionEnabled:YES];
-//    imv.image = [UIImage imageNamed:@"icon.png"];
-    [self downloadImageWithURL:[NSURL URLWithString:[self.imageArray objectAtIndex:section]] completionBlock:^(BOOL succeeded, UIImage *image) {
-                   if (succeeded) {
-                        imv.image = image;
-//                       if([cell.contentView.subviews count] > 0)
-//                           [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
-                        [cell.contentView addSubview:imv];
-                    }
-                }];
-
-        
-        //Here is line
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
-        line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-        [imv addSubview:line];
-
-        //Here is subway station
-        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
-        subway.textColor = [UIColor whiteColor];
-        subway.backgroundColor = [UIColor clearColor];
-        [subway setText:[self.subwayArray objectAtIndex:section]];
-        [imv addSubview:subway];
-
-        //Here is avg paycheck
-        UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
-        paycheck.textColor = [UIColor whiteColor];
-        paycheck.backgroundColor = [UIColor clearColor];
-        [paycheck setText:[self.paycheckArray objectAtIndex:section]];
-        [imv addSubview:paycheck];
-        
-        //Here is work time
-        UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
-        workTime.textColor = [UIColor whiteColor];
-        workTime.backgroundColor = [UIColor clearColor];
-        [workTime setText:[self.workTimeArray objectAtIndex:section]];
-        [imv addSubview:workTime];
-        
-//        [cell.contentView addSubview:imv];
-        cell.backgroundColor = [UIColor whiteColor];
-//        }
-//    int r = arc4random() % 2;
-//    if(r)
-//        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
-//    else
-//        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
-//
-            
+    //while loading an image
+    //        imv.image = [UIImage imageNamed:@"loading.png"];
+    //        [cell.contentView addSubview:imv];
+    imv.tag = section;
+    [imv addGestureRecognizer:singleTap];
+    [imv setUserInteractionEnabled:YES];
+    //    imv.image = [UIImage imageNamed:@"icon.png"];
+    [self downloadImageWithURL:[NSURL URLWithString:[[self.allPlaces objectForKey:@"image"] objectAtIndex:section]] completionBlock:^(BOOL succeeded, UIImage *image) {
+        if (succeeded) {
+            imv.image = image;
+            //                       if([cell.contentView.subviews count] > 0)
+            //                           [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
+            [cell.contentView addSubview:imv];
+        }
+    }];
+    
+    
+    //Here is line
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
+    line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    [imv addSubview:line];
+    
+    //Here is subway station
+    UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
+    subway.textColor = [UIColor whiteColor];
+    subway.backgroundColor = [UIColor clearColor];
+    [subway setText:[[self.allPlaces objectForKey:@"subway"] objectAtIndex:section]];
+    [imv addSubview:subway];
+    
+    //Here is avg paycheck
+    UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
+    paycheck.textColor = [UIColor whiteColor];
+    paycheck.backgroundColor = [UIColor clearColor];
+    [paycheck setText:[[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:section]];
+    [imv addSubview:paycheck];
+    
+    //Here is work time
+    UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
+    workTime.textColor = [UIColor whiteColor];
+    workTime.backgroundColor = [UIColor clearColor];
+    [workTime setText:[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section]];
+    [imv addSubview:workTime];
+    
+    //        [cell.contentView addSubview:imv];
+    cell.backgroundColor = [UIColor whiteColor];
+    //        }
+    //    int r = arc4random() % 2;
+    //    if(r)
+    //        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
+    //    else
+    //        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
+    //
+    
     if(PREV_SECTION > section)
         REVERSE_ANIM = true;
     else
@@ -415,13 +418,13 @@ static bool REVERSE_ANIM = false;
     rotationAndPerspectiveTransform.m34 = 1.0 / -500;
     if(!REVERSE_ANIM){
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -M_PI/2, 1, 0, 0);
-         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -1, 1, 1, 1);
+        //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -1, 1, 1, 1);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -M_PI, -M_PI, -M_PI, 0);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -M_PI, 0, -M_PI, 0);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 2 * M_PI / 2, 100, 1, 100);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, -8.0f, 1.0f, 0.0f);
-         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 0, 1.0f, 0.0f);
-          //  rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
+        //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 0, 1.0f, 0.0f);
+        //  rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
     }
     else{
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI/2, 1, 0, 0);
@@ -431,9 +434,9 @@ static bool REVERSE_ANIM = false;
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 2 * M_PI / 2, -100, 1, 100);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, -8.0f, 1.0f, 0.0f);
         //rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 0, 1.0f, 0.0f);
-         // rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
+        // rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, -2.0f, 1.0f, 0.0f);
     }
-
+    
     layer.transform = rotationAndPerspectiveTransform;
     
     
@@ -462,7 +465,7 @@ static bool REVERSE_ANIM = false;
     }
     layer.transform = rotationAndPerspectiveTransform;
     [UIView commitAnimations];
-
+    
     return cell;
 }
 
@@ -499,55 +502,55 @@ static bool REVERSE_ANIM = false;
     }
 }
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
-//    NSString *docsDir;
-//    NSArray *dirPaths;
-//    
-//    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    docsDir = [dirPaths objectAtIndex:0];
-//    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
-//    
-//    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-//        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
-//    else
-//        UIGraphicsBeginImageContext(self.view.bounds.size);
-//    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    NSData * data = UIImageJPEGRepresentation(image, 0.8);
-//    BOOL saved = [data writeToFile:databasePath atomically:YES];
-//    NSLog(@"saved: %d to %@", saved, databasePath);
-//    [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
+    //    NSString *docsDir;
+    //    NSArray *dirPaths;
+    //
+    //    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    docsDir = [dirPaths objectAtIndex:0];
+    //    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
+    //
+    //    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+    //        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+    //    else
+    //        UIGraphicsBeginImageContext(self.view.bounds.size);
+    //    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    //    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    //    UIGraphicsEndImageContext();
+    //    NSData * data = UIImageJPEGRepresentation(image, 0.8);
+    //    BOOL saved = [data writeToFile:databasePath atomically:YES];
+    //    NSLog(@"saved: %d to %@", saved, databasePath);
+    //    [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
     modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
     //modalViewController *view = [[modalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
-    viewControllerToPresent.placeName = [self.array objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.subway = [self.subwayArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.paycheck = [self.paycheckArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.worktime = [self.workTimeArray objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.placeName = [[self.allPlaces objectForKey:@"name"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.subway = [[self.allPlaces objectForKey:@"subway"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
     //viewControllerToPresent.
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     //
-//    CATransition* transition = [CATransition animation];
-//    transition.type = kCATransitionMoveIn;
-//    transition.subtype = kCATransitionFromBottom;
-//    
-//    [self.view.window.layer addAnimation:transition forKey:nil ];
- //   [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
+    //    CATransition* transition = [CATransition animation];
+    //    transition.type = kCATransitionMoveIn;
+    //    transition.subtype = kCATransitionFromBottom;
+    //
+    //    [self.view.window.layer addAnimation:transition forKey:nil ];
+    //   [self presentViewController:viewControllerToPresent animated:NO completion:^{}];
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
-//    if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
-//        [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
-//    else
-//    {
-//        UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
-//        //[self.navigationController.slideViewController setMainViewController:fifthViewController];
-//        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
-//    }
+    //    UINavigationController * centerNavigationController = (UINavigationController *)self.navigationController.slideViewController.mainViewController;
+    //    if( [centerNavigationController.topViewController isKindOfClass:[fifthViewController class]] )
+    //        [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
+    //    else
+    //    {
+    //        UIViewController * fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FifthViewController"];
+    //        //[self.navigationController.slideViewController setMainViewController:fifthViewController];
+    //        [self.navigationController.slideViewController setMainViewController:fifthViewController animated:YES];
+    //    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -574,14 +577,14 @@ static bool REVERSE_ANIM = false;
 //    CGFloat currentOffsetX = scrollView_.contentOffset.x;
 //    CGFloat currentOffSetY = scrollView_.contentOffset.y;
 //    CGFloat contentHeight = scrollView_.contentSize.height;
-//    
+//
 //    if (currentOffSetY < (contentHeight / 8.0)) {
 //        scrollView_.contentOffset = CGPointMake(currentOffsetX,(currentOffSetY + (contentHeight/2)));
 //    }
 //    if (currentOffSetY > ((contentHeight * 6)/ 8.0)) {
 //        scrollView_.contentOffset = CGPointMake(currentOffsetX,(currentOffSetY - (contentHeight/2)));
 //    }
-//    
+//
 ////    [UIView animateWithDuration:0.4
 ////                     animations:^{
 ////                         self.mainPanelView.frame = frame;
@@ -593,7 +596,7 @@ static bool REVERSE_ANIM = false;
 ////                     }
 ////     ];
 //
-//    
+//
 ////    [UIView beginAnimations:nil context:nil];
 ////    [UIView setAnimationDuration:0.4];
 ////    [scrollView_ setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -647,10 +650,10 @@ static bool REVERSE_ANIM = false;
         [self._mapView setScrollEnabled:YES];
         
 #warning ПЛОХАЯ КНОПКА!
-  //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
-    //    self.navigationItem.rightBarButtonItem = buttonItem;
-//        [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
-
+        //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
+        //    self.navigationItem.rightBarButtonItem = buttonItem;
+        //        [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+        
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
@@ -695,7 +698,7 @@ static bool REVERSE_ANIM = false;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;
         self.placesTableView.frame = frame;
-
+        
         //Remove button
         for (UIView *subView in self._mapView.subviews){
             if (subView.tag == 99)

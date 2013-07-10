@@ -34,7 +34,7 @@ NSInteger GLOBAL_OFFSET = 0;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-
+    
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         CGRect newNav = self.navBar.frame;
         newNav.origin.y = 0;
@@ -55,11 +55,11 @@ NSInteger GLOBAL_OFFSET = 0;
 #warning Надо заполнить координаты
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
     //self.background.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg"]]];//[UIImage imageNamed:@"testRestPict.jpg"];
-//    NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
-//    NSLog(@"path: %@", path);
-//    self.background.image = [UIImage imageWithContentsOfFile:path];
+    //    NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
+    //    NSLog(@"path: %@", path);
+    //    self.background.image = [UIImage imageWithContentsOfFile:path];
     self.background.image = [UIImage imageNamed:@"640_1136 LaunchScreen-568h@2x.png"];
-//    UIImage *effectImage = nil;
+    //    UIImage *effectImage = nil;
     //effectImage = [self.background.image applyLightEffect];
     //self.background.image = effectImage;
 #warning Надо заполнить имя места
@@ -123,14 +123,14 @@ NSInteger GLOBAL_OFFSET = 0;
         
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
-      //  annotationView.image = [InterfaceFunctions MapPin:annotation.subtitle].image;
+        //  annotationView.image = [InterfaceFunctions MapPin:annotation.subtitle].image;
         
         
-//        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//        rightButton.tag = [annotation.tag intValue];
-//        [rightButton addTarget:self action:@selector(map_tu:) forControlEvents:UIControlEventTouchUpInside];
-//        [rightButton setTitle:annotation.title forState:UIControlStateNormal];
-//        [annotationView setRightCalloutAccessoryView:rightButton];
+        //        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        //        rightButton.tag = [annotation.tag intValue];
+        //        [rightButton addTarget:self action:@selector(map_tu:) forControlEvents:UIControlEventTouchUpInside];
+        //        [rightButton setTitle:annotation.title forState:UIControlStateNormal];
+        //        [annotationView setRightCalloutAccessoryView:rightButton];
         
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
         leftButton.tag = [annotation.tag intValue];
@@ -197,7 +197,7 @@ NSInteger GLOBAL_OFFSET = 0;
 }
 
 -(void)pusher:(UIButton *)Sender{
-
+    
 }
 
 #pragma mark - Cell and sections settings
@@ -219,19 +219,19 @@ NSInteger GLOBAL_OFFSET = 0;
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (IBAction)close:(id)sender{
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
--(IBAction)Check:(id)sender{    
+-(IBAction)Check:(id)sender{
     [self presentSemiViewController:VC withOptions:@{
-     KNSemiModalOptionKeys.pushParentBack    : @(YES),
-     KNSemiModalOptionKeys.animationDuration : @(0.5),
-     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
-     }];
+                                                     KNSemiModalOptionKeys.pushParentBack    : @(YES),
+                                                     KNSemiModalOptionKeys.animationDuration : @(0.5),
+                                                     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
+                                                     }];
     
     VC.view.backgroundColor = [UIColor clearColor];
 #warning Это тоже нужно будет заполнять
@@ -239,8 +239,8 @@ NSInteger GLOBAL_OFFSET = 0;
     VC.PlaceCategory = @"PlaceCategory";
     VC.PlaceCity = @"PlaceCity";
     VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
-//    _labelonPhoto.hidden = NO;
-//    _background.hidden = NO;
+    //    _labelonPhoto.hidden = NO;
+    //    _background.hidden = NO;
 }
 
 #pragma mark - Map's parralax
@@ -249,12 +249,12 @@ NSInteger GLOBAL_OFFSET = 0;
         return;
     
     CGFloat yOffset   = self.placeTableView.contentOffset.y;
-   if (yOffset < 0) {
+    if (yOffset < 0) {
         //Paralax handling
         for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
             [self._mapView removeGestureRecognizer:recognizer];
         }
-       self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset);
+        self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset);
     }
     else {
         //To normal state
@@ -338,7 +338,7 @@ NSInteger GLOBAL_OFFSET = 0;
         theFrame.size.height = 166.0;
         theFrame.origin.y = 36;
         self._mapView.frame = theFrame;
-
+        
         CGRect frame = self.placeTableView.frame;
         frame.origin.y = 166;
         frame.size.height = self.view.frame.size.height - 166;

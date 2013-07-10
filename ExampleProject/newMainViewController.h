@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSArray *workTimeArray;
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSMutableDictionary *imageCache;
+@property (nonatomic, strong) NSMutableDictionary *allPlaces;
 
 @property (nonatomic, strong) IBOutlet UITableView *placesTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;

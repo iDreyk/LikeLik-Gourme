@@ -17,7 +17,7 @@
 @synthesize navBar;
 
 static bool OPENED_CASH = YES;
-static bool OPENED_COUSINE = YES;
+static bool OPENED_Cuisine = YES;
 static bool OPENED_MENU = YES;
 
 #warning Ф-ии фильтрации центрального списка по NSSet checkedData.
@@ -36,8 +36,8 @@ static bool OPENED_MENU = YES;
     self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
     self.expandArrayCash =[[NSMutableArray alloc] initWithArray:@[@"               300-500", @"               500-1000", @"               1000-1500", @"               1500-2500", @"               2500-4000"]];
     self.rowCountCash = 5;
-    self.expandArrayCousine = [[NSMutableArray alloc] initWithArray:@[@"               Fusion", @"               Austrian", @"               English", @"               BBQ", @"               Itallian", @"               Spanish", @"               Greek"]];
-    self.rowCountCousine = 7;
+    self.expandArrayCuisine = [[NSMutableArray alloc] initWithArray:@[@"               Fusion", @"               Austrian", @"               English", @"               BBQ", @"               Itallian", @"               Spanish", @"               Greek"]];
+    self.rowCountCuisine = 7;
     self.expandArrayMenu = [[NSMutableArray alloc] initWithArray:@[@"               Vegeterian", @"               Lenten", @"               Fitnes", @"               Kosher", @"               Children's", @"               Diet", @"               Halal"]];
     self.rowCountMenu = 7;
     navBar.title = AMLocalizedString(@"Filters", Nil);
@@ -58,11 +58,11 @@ static bool OPENED_MENU = YES;
     if (section == 1)
         return self.rowCountCash;
     if (section == 2)
-        return  self.rowCountCousine;
+        return  self.rowCountCuisine;
     if (section == 3)
         return  self.rowCountMenu;
-
-        //return self.rowCount;
+    
+    //return self.rowCount;
     //return [self.array count];
     return 0;
 }
@@ -106,8 +106,8 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
 }
--(void)openCousineMenu{
-    self.rowCountCousine += 7;
+-(void)openCuisineMenu{
+    self.rowCountCuisine += 7;
     NSArray *paths = [[NSArray alloc] initWithObjects:
                       [NSIndexPath indexPathForRow:0 inSection:2],
                       [NSIndexPath indexPathForRow:1 inSection:2],
@@ -120,7 +120,7 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView beginUpdates];
     [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
-
+    
 }
 -(void)openMenuMenu{
     self.rowCountMenu += 7;
@@ -136,7 +136,7 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView beginUpdates];
     [self.filtersTableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
-
+    
 }
 
 -(void)closeCashMenu{
@@ -151,10 +151,10 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView beginUpdates];
     [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
-
+    
 }
--(void)closeCousineMenu{
-    self.rowCountCousine -= 7;
+-(void)closeCuisineMenu{
+    self.rowCountCuisine -= 7;
     NSArray *paths = [[NSArray alloc] initWithObjects:
                       [NSIndexPath indexPathForRow:0 inSection:2],
                       [NSIndexPath indexPathForRow:1 inSection:2],
@@ -167,7 +167,7 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView beginUpdates];
     [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
-
+    
 }
 -(void)closeMenuMenu{
     self.rowCountMenu -= 7;
@@ -183,14 +183,14 @@ static bool OPENED_MENU = YES;
     [self.filtersTableView beginUpdates];
     [self.filtersTableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationMiddle];
     [self.filtersTableView endUpdates];
-
+    
 }
 
 -(void)pusher:(UIButton *)Sender{
     NSUInteger section = Sender.tag;
     if(section == 0){
         [self.checkedData removeAllObjects];
-        [self.filtersTableView reloadData];
+        [self.filtersTableView  reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.array.count)] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if(section == 1){
         if (OPENED_CASH == YES)
@@ -198,24 +198,22 @@ static bool OPENED_MENU = YES;
         else
             [self openCashMenu];
         OPENED_CASH = !OPENED_CASH;
-        
     }
     else if( section == 2 ){
-        if (OPENED_COUSINE == YES)
-            [self closeCousineMenu];
+        if (OPENED_Cuisine == YES)
+            [self closeCuisineMenu];
         else
-            [self openCousineMenu];
-        OPENED_COUSINE = !OPENED_COUSINE;
-        
+            [self openCuisineMenu];
+        OPENED_Cuisine = !OPENED_Cuisine;
     }
     else if( section == 3 ){
         if (OPENED_MENU == YES)
             [self closeMenuMenu];
         else{
             [self openMenuMenu];
-            //Этот кусок в последнюю секцию. Чтобы при раскрытии последней секции понимать, что она раскрылась!
+//Этот кусок в последнюю секцию. Чтобы при раскрытии последней секции было видно, что она раскрылась!
             [self.filtersTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:section]
-                             atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+                                         atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         }
         OPENED_MENU = !OPENED_MENU;
     }
@@ -223,8 +221,7 @@ static bool OPENED_MENU = YES;
 
 #pragma mark - cell settings
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = nil;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -235,47 +232,71 @@ static bool OPENED_MENU = YES;
         if(indexPath.section == 1)
             cell.textLabel.text = [self.expandArrayCash objectAtIndex:[indexPath row]];
         else if (indexPath.section == 2)
-            cell.textLabel.text = [self.expandArrayCousine objectAtIndex:[indexPath row]];
+            cell.textLabel.text = [self.expandArrayCuisine objectAtIndex:[indexPath row]];
         else if(indexPath.section == 3)
             cell.textLabel.text = [self.expandArrayMenu objectAtIndex:[indexPath row]];
     }
     
     //    cell.backgroundView = [InterfaceFunctions CellBG];
     //    cell.selectedBackgroundView = [InterfaceFunctions SelectedCellBG];
-        
+    
     
     // Галочки для фильтров:
     if([self.checkedData containsObject:indexPath]){
-    //    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-          cell.contentView.backgroundColor = [UIColor lightGrayColor];
+        //    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.contentView.backgroundColor = [UIColor purpleColor];
         //cell.highlighted = YES;
     }else{
-           cell.contentView.backgroundColor = [UIColor blackColor];
-//        [UIView animateWithDuration:1.0 animations:^{
-//            cell.backgroundColor = [UIColor blackColor];
-//        } completion:NULL];
-
+        cell.contentView.backgroundColor = [UIColor blackColor];
         //cell.accessoryType = UITableViewCellAccessoryNone;
-       // cell.selected = NO;
+        // cell.selected = NO;
         //cell.highlighted = NO;
     }
     return cell;
 }
 #pragma mark - Table view delegate
 
+-(void)customCellSelectionAnimation:(NSIndexPath *)indexPath{
+    UITableViewCell *selectedCell = [self.filtersTableView cellForRowAtIndexPath:indexPath];
+    CGRect frame = selectedCell.frame;
+    
+    frame.origin.x = 400;
+    
+    [UIView animateWithDuration:0.15 animations:^{
+        selectedCell.frame = frame;
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.15 animations:^{
+            CGRect theFrame = selectedCell.frame;
+            theFrame.origin.x = 0;
+            selectedCell.frame = theFrame;
+            if([self.checkedData containsObject:indexPath])
+                selectedCell.contentView.backgroundColor = [UIColor purpleColor];
+            else
+                selectedCell.contentView.backgroundColor = [UIColor blackColor];
+        }];
+    }];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //[tableView deselectRowAtIndexPath:indexPath animated:NO];
-
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
     self.filtersTableView.allowsMultipleSelection = YES;
-
+    
     if([self.checkedData containsObject:indexPath]){
         [self.checkedData removeObject:indexPath];      // убираем снятый фильтр
     } else {
         [self.checkedData addObject:indexPath];         // добавляем выбранный фильтр
     }
-
-    [tableView reloadData];
+//  Custom animation
+    [self customCellSelectionAnimation:indexPath];
+    
+//  Cool but slow animation
+    //NSArray* rowsToReload = [NSArray arrayWithObjects:indexPath, nil];
+    //[tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationFade];
+   
+//  Without animation
+    //[tableView reloadData];
 }
 
 @end
