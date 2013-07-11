@@ -13,6 +13,8 @@
 @property (nonatomic, strong) NSArray *placesArray;
 @property (nonatomic, strong) NSArray *subwayArray;
 @property (nonatomic, strong) NSArray *paycheckArray;
+@property (nonatomic, strong) NSArray *imageArray;
+@property (nonatomic, strong) NSArray *rateArray;
 @property (nonatomic, strong) NSArray *workTimeArray;
 @property (nonatomic, strong) NSMutableArray *cityArray;
 @property (nonatomic, strong) NSMutableArray *languageArray;
@@ -24,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 @property (weak, nonatomic) IBOutlet UIImageView *background;
 @property (nonatomic, strong) NSMutableArray *displayItems;
+@property (nonatomic, strong) NSMutableDictionary *allPlaces;
+
 
 -(void)openCityMenu;
 -(void)closeCityMenu;

@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  MKDSlideViewController
 //
-//  Created by Marcel Dierkes on 03.12.11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by Ilya Tsarev on 03.04.13.
+//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 //
 
 #import "AppDelegate.h"

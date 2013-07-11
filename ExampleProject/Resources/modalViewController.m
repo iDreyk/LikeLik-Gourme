@@ -28,6 +28,8 @@
 @synthesize paycheck;
 @synthesize worktime;
 static BOOL MAP_PRESENTED = false;
+static BOOL DELETE_FROM_FAVORITES;
+
 NSInteger GLOBAL_OFFSET = 0;
 
 #pragma mark - Table view delegate
@@ -50,8 +52,23 @@ NSInteger GLOBAL_OFFSET = 0;
     }
     
 #warning Надо заполнить инфу к месту
-    if (!self.array)
-        self.array = @[self.subway, @"Адрес", self.paycheck, self.worktime];
+    if (!self.array){
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"]){
+            NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+            if([favorite objectForKey:placeName]){
+                self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Delete from favorites"];
+                DELETE_FROM_FAVORITES = YES;
+            }
+            else{
+                self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Add to favorites"];
+                DELETE_FROM_FAVORITES = NO;
+            }
+        }
+        else{
+            self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Add to favorites"];
+            DELETE_FROM_FAVORITES = NO;
+        }
+    }
 #warning Надо заполнить координаты
     self.placeCoordinates = CLLocationCoordinate2DMake(55.751185,37.596921);
     //self.background.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg"]]];//[UIImage imageNamed:@"testRestPict.jpg"];
@@ -76,8 +93,8 @@ NSInteger GLOBAL_OFFSET = 0;
     
     MKCoordinateRegion region;
     MKCoordinateSpan span;
-    span.latitudeDelta = 0.001;
-    span.longitudeDelta = 0.001;
+    span.latitudeDelta = 0.003;
+    span.longitudeDelta = 0.003;
     CLLocationCoordinate2D location = placeCoordinates;// CLLocationCoordinate2DMake(55.751185,37.596921);
     region.span = span;
     region.center = location;
@@ -212,13 +229,126 @@ NSInteger GLOBAL_OFFSET = 0;
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor blackColor];
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.textLabel.text = [self.array objectAtIndex:[indexPath row]];
+        cell.textLabel.text = AMLocalizedString([self.array objectAtIndex:[indexPath row]], nil);
     }
     return cell;
 }
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 4){
+        if(!DELETE_FROM_FAVORITES){
+//            NSString *docsDir;
+//            NSArray *dirPaths;
+//            
+//            dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            docsDir = [dirPaths objectAtIndex:0];
+//            NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
+//            
+//            if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+//                UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+//            else
+//                UIGraphicsBeginImageContext(self.view.bounds.size);
+//            [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+//            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//            UIGraphicsEndImageContext();
+//            NSData * data = UIImageJPEGRepresentation(image, 0.8);
+//            BOOL saved = [data writeToFile:databasePath atomically:YES];
+//
+//            NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"bckg"];
+//            //    NSLog(@"path: %@", path);
+//            //    self.background.image = [UIImage imageWithContentsOfFile:path];
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
+            UIGraphicsBeginImageContext(self.view.bounds.size);
+            [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            UIImageView *starView = [[UIImageView alloc] initWithImage:image];
+            
+            [self.view addSubview:starView];
+
+            
+           // CGRect rect = starView.frame;
+            // begin ---- apply position animation
+            CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+            pathAnimation.calculationMode = kCAAnimationPaced;
+            pathAnimation.fillMode = kCAFillModeForwards;
+            pathAnimation.removedOnCompletion = NO;
+            pathAnimation.duration=0.4;
+            pathAnimation.delegate=self;
+            
+            // tab-bar right side item frame-point = end point
+          //  CGPoint endPoint = CGPointMake(210+rect.size.width/2, 390+rect.size.height/2);
+            CGPoint endPoint = CGPointMake(-400, 40);
+
+            CGMutablePathRef curvedPath = CGPathCreateMutable();
+            CGPathMoveToPoint(curvedPath, NULL, self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+            CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, starView.frame.origin.y, endPoint.x, starView.frame.origin.y, endPoint.x, endPoint.y);
+            pathAnimation.path = curvedPath;
+            CGPathRelease(curvedPath);
+            // end ---- apply position animation
+            
+            // apply transform animation
+            CABasicAnimation *basic=[CABasicAnimation animationWithKeyPath:@"transform"];
+            [basic setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 0.1)]];
+            [basic setAutoreverses:NO];
+            [basic setDuration:0.4];
+            [starView.layer addAnimation:pathAnimation forKey:@"curveAnimation"];
+            [starView.layer addAnimation:basic forKey:@"transform"];
+            [starView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.4];
+//            [UIView animateWithDuration:0.5 animations:^{
+//                CGRect frame = starView.frame;
+//                frame.size.height /= 8;
+//                frame.size.width /= 8;
+//                frame.origin.x = self.view.frame.size.width / 2;
+//                frame.origin.y = self.view.frame.size.height / 2;
+//                starView.frame = frame;
+//            } completion:^(BOOL finished) {
+//                [UIView animateWithDuration:0.5 animations:^{
+//                    CGRect rect = starView.frame;
+//                    CGPoint endPoint = CGPointMake(210+rect.size.width/2, 390+rect.size.height/2);
+//                    CGMutablePathRef curvedPath = CGPathCreateMutable();
+//                    CGPathMoveToPoint(curvedPath, NULL, starView.frame.origin.x, starView.frame.origin.y);
+//                    CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, starView.frame.origin.y, endPoint.x, starView.frame.origin.y, endPoint.x, endPoint.y);
+//                    CGPathRelease(curvedPath);
+//
+//                } completion:^(BOOL finished) {
+//                    
+//                }];
+//            }];
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces" ]){
+                NSLog(@"favourite exists!");
+                NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+                NSMutableDictionary *newDict = [favorite mutableCopy];
+                NSLog(@"dict was: %@", newDict);
+                NSMutableDictionary *placeToSave = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.placeName, @"name", self.rating, @"rating", self.subway, @"subway", self.paycheck, @"paycheck", self.worktime, @"worktime", self.image, @"image", nil];
+                [newDict setObject:placeToSave forKey:self.placeName];
+                NSLog(@"dict is: %@", newDict);
+                
+                [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"favoritePlaces"];
+            }
+            else{
+                NSLog(@"favourite creating!");
+                NSMutableDictionary *placeToSave = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.placeName, @"name", self.rating, @"rating", self.subway, @"subway", self.paycheck, @"paycheck", self.worktime, @"worktime", self.image, @"image", nil];
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:placeToSave, self.placeName, nil];
+                [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"favoritePlaces"];
+            }
+            self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Delete from favorites"];
+            [self.placeTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            DELETE_FROM_FAVORITES = YES;
+        }
+        else{
+            NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+            NSMutableDictionary *newDict = [favorite mutableCopy];
+            [newDict removeObjectForKey:self.placeName];
+            [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"favoritePlaces"];
+            self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Add to favorites"];
+            [self.placeTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            DELETE_FROM_FAVORITES = NO;
+        }
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -325,8 +455,8 @@ NSInteger GLOBAL_OFFSET = 0;
         //Resize and scroll map to current position
         MKCoordinateRegion region;
         MKCoordinateSpan span;
-        span.latitudeDelta = 0.001;
-        span.longitudeDelta = 0.001;
+        span.latitudeDelta = 0.003;
+        span.longitudeDelta = 0.003;
         CLLocationCoordinate2D location = self.placeCoordinates;//self._mapView.userLocation.coordinate;
         region.span = span;
         region.center = location;

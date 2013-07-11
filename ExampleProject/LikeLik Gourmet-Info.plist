@@ -6,6 +6,8 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>LikeLik Gourmet</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
@@ -16,7 +18,7 @@
 		<string>ll120</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>info.marcel-dierkes.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>LL.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

@@ -1,23 +1,24 @@
 //
-//  newMainViewController.m
-//  MKDSlideViewController
+//  favoritesViewController.m
+//  LikeLik Gourmet
 //
-//  Created by Ilya on 21.05.13.
+//  Created by Ilya on 11.07.13.
 //
 //
 
-#import "newMainViewController.h"
+#import "favoritesViewController.h"
 
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
 #import "modalViewController.h"
 
-@implementation newMainViewController
+@implementation favoritesViewController
 @synthesize placesTableView;
 
 static bool MAP_PRESENTED = false;
-NSInteger PREV_SECTION = 0;
-NSInteger SECTION_FOR_CARD;
+NSInteger PREVIOUS_SECTION = 0;
+NSInteger PREV_NUM_OF_PLACES = 0;
+NSInteger SELECTED_SECTION;
 static bool REVERSE_ANIM = false;
 
 
@@ -44,30 +45,50 @@ static bool REVERSE_ANIM = false;
     
 #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки
 #warning все заполнять
-    if(!self.array)
-        self.array = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place",@"9th place",@"10th place"];
-       if(!self.subwayArray)
-        self.subwayArray = @[@"Arbatskaya", @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", @"Arbatskaya", @"Akademicheskaya", @"Leninskiy prospekt"];
-    if(!self.paycheckArray)
-        self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
-    if(!self.workTimeArray)
-        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
-    if(!self.rateArray)
-        self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
-    if(!self.imageArray)
-        self.imageArray = @[@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg",
-                            @"http://www.limousine-hire-perth.com.au/C_Restaurant.jpg",
-                            @"http://pittsburghrestaurantdirectory.com/wp-content/uploads/2012/04/restaurant-sample-pic2.jpg",
-                            @"http://media-cdn.tripadvisor.com/media/photo-s/01/9d/ab/6e/restaurant-hort-de-popaire.jpg",
-                            @"http://www.edelweiss-gurgl.co.uk/image/medium/en/restaurant-hotel-obergurgl-2.jpg",
-                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQYjI6IbxVh95C7C8CqxgkcxJpDwhmlKIsRGRq9niTPOXh8ewnw",
-                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS9MwAxrgm6u2tekq9tSInzHOoTkgSec42sCPKE4-dZhgkBi_04",
-                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQn5Sm4-R-wBXANsm0boFE-If4vd5tKbaHXGy2-AJVntPjnweg",
-                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpknvVGQig_9mk0bG_UhHQsgVXx_Pb1GCQXas48gsWpxP04rWw",
-                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT9NCxtouHbM5RfTzIRX1SdUcfXrjvWY4sLHQ-NDLYN-ank7ImZjg"
-                            ];
-    if(!self.allPlaces)
+    //    if(!self.array)
+    //        self.array = @[[NSString stringWithFormat:@" %@",@"1st place"],[NSString stringWithFormat:@" %@",@" 2nd place"],[NSString stringWithFormat:@" %@",@"3rd place"],[NSString stringWithFormat:@" %@",@"4th place"],[NSString stringWithFormat:@" %@",@"5th place"],[NSString stringWithFormat:@" %@",@"6th place"],[NSString stringWithFormat:@" %@",@"7th place"],[NSString stringWithFormat:@" %@",@"8th place"], [NSString stringWithFormat:@" %@",@"9th place"], [NSString stringWithFormat:@" %@",@"10th place"]];
+    //    if(!self.rateArray)
+    //        self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
+    //    if(!self.subwayArray)
+    //        self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
+    //    if(!self.paycheckArray)
+    //        self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
+    //    if(!self.workTimeArray)
+    //        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
+    //    if(!self.imageArray)
+    //        self.imageArray = @[@"http://asset0.cbsistatic.com/cnwk.1d/i/bto/20061228/under_water_restaurant_525x378.jpg",
+    //                            @"http://www.limousine-hire-perth.com.au/C_Restaurant.jpg",
+    //                            @"http://pittsburghrestaurantdirectory.com/wp-content/uploads/2012/04/restaurant-sample-pic2.jpg",
+    //                            @"http://media-cdn.tripadvisor.com/media/photo-s/01/9d/ab/6e/restaurant-hort-de-popaire.jpg",
+    //                            @"http://www.edelweiss-gurgl.co.uk/image/medium/en/restaurant-hotel-obergurgl-2.jpg",
+    //                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQYjI6IbxVh95C7C8CqxgkcxJpDwhmlKIsRGRq9niTPOXh8ewnw",
+    //                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS9MwAxrgm6u2tekq9tSInzHOoTkgSec42sCPKE4-dZhgkBi_04",
+    //                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQn5Sm4-R-wBXANsm0boFE-If4vd5tKbaHXGy2-AJVntPjnweg",
+    //                            @"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSpknvVGQig_9mk0bG_UhHQsgVXx_Pb1GCQXas48gsWpxP04rWw",
+    //                            @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT9NCxtouHbM5RfTzIRX1SdUcfXrjvWY4sLHQ-NDLYN-ank7ImZjg"
+    //                            ];
+    //    if(!self.allPlaces)
+    //        self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"]){
+        self.array = [[NSMutableArray alloc] init];
+        self.rateArray = [[NSMutableArray alloc] init];
+        self.subwayArray = [[NSMutableArray alloc] init];
+        self.paycheckArray = [[NSMutableArray alloc] init];
+        self.workTimeArray = [[NSMutableArray alloc] init];
+        self.imageArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+        for(id key in favorite) {
+            [self.array addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"name"]]];
+            [self.rateArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"rating"]]];
+            [self.subwayArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"subway"]]];
+            [self.paycheckArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"paycheck"]]];
+            [self.workTimeArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"worktime"]]];
+            [self.imageArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"image"]]];
+        }
         self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
+        NSLog(@"PLACES IN FAV: %@",self.allPlaces);
+        PREV_NUM_OF_PLACES = self.array.count;
+    }
     if(!self.imageCache)
         self.imageCache = [[NSMutableDictionary alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -78,8 +99,16 @@ static bool REVERSE_ANIM = false;
 #pragma mark - NSNotification handlers
 -(void)languageChanged{
 #warning здесь станции
-//    self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
-//    self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
+    //    self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
+    //    self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
+    //    if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"]){
+    //        NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+    //        for(id key in favorite) {
+    //            NSString *str = [[favorite objectForKey:key] objectForKey:@"subway"];
+    //            [self.subwayArray addObject:AMLocalizedString(str, Nil)];
+    //        }
+    //        self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];    [self.placesTableView reloadData];
+    //    }
     [self.placesTableView reloadData];
 }
 
@@ -87,6 +116,32 @@ static bool REVERSE_ANIM = false;
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidLoad];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"]){
+        [self.array removeAllObjects];
+        [self.rateArray removeAllObjects];
+        [self.subwayArray removeAllObjects];
+        [self.paycheckArray removeAllObjects];
+        [self.workTimeArray removeAllObjects];
+        [self.imageArray removeAllObjects];
+        NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
+        for(id key in favorite) {
+            [self.array addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"name"]]];
+            [self.rateArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"rating"]]];
+            [self.subwayArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"subway"]]];
+            [self.paycheckArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"paycheck"]]];
+            [self.workTimeArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"worktime"]]];
+            [self.imageArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"image"]]];
+        }
+        self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
+    }
+    if(PREV_NUM_OF_PLACES != self.array.count){
+        [self.placesTableView beginUpdates];
+        [self.placesTableView deleteSections:[NSIndexSet indexSetWithIndex:SELECTED_SECTION] withRowAnimation:UITableViewRowAnimationFade];
+        [self.placesTableView endUpdates];
+        [self.placesTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.array.count)] withRowAnimation:UITableViewRowAnimationNone];
+        PREV_NUM_OF_PLACES = self.array.count;
+    }
+    
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self action:@selector(openMap:)];
     tgr.numberOfTapsRequired = 1;
@@ -157,7 +212,7 @@ static bool REVERSE_ANIM = false;
     button.backgroundColor = [UIColor whiteColor];
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
     //[button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
-    //[button setTitle:[[self.allPlaces objectForKey:@"name"] objectAtIndex:section] forState:UIControlStateNormal];
+    //    [button setTitle:[[self.allPlaces objectForKey:@"name"] objectAtIndex:section] forState:UIControlStateNormal];
     [button setTitle:[NSString stringWithFormat:@" %@",[[self.allPlaces objectForKey:@"name"] objectAtIndex:section]] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -168,7 +223,7 @@ static bool REVERSE_ANIM = false;
     
     //Here pict for rating
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
-    
+    NSLog(@"rate: '%@'", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]);
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
     [button addSubview:imv];
     
@@ -406,12 +461,12 @@ static bool REVERSE_ANIM = false;
     //        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
     //
     
-    if(PREV_SECTION > section)
+    if(PREVIOUS_SECTION > section)
         REVERSE_ANIM = true;
     else
         REVERSE_ANIM = false;
     
-    PREV_SECTION = section;
+    PREVIOUS_SECTION = section;
     UIView *myView = [[cell subviews] objectAtIndex:0];
     CALayer *layer = myView.layer;
     
@@ -503,33 +558,33 @@ static bool REVERSE_ANIM = false;
     }
 }
 -(void)singleTapGestureCaptured:(UIButton *)Sender{
-//        NSString *docsDir;
-//        NSArray *dirPaths;
-//    
-//        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        docsDir = [dirPaths objectAtIndex:0];
-//        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
-//    
-//        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-//            UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
-//        else
-//            UIGraphicsBeginImageContext(self.view.bounds.size);
-//        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-//        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        NSData * data = UIImageJPEGRepresentation(image, 0.8);
-//        BOOL saved = [data writeToFile:databasePath atomically:YES];
-//        NSLog(@"saved: %d to %@", saved, databasePath);
-//        [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
+    //    NSString *docsDir;
+    //    NSArray *dirPaths;
+    //
+    //    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    docsDir = [dirPaths objectAtIndex:0];
+    //    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"foo.jpg"]];
+    //
+    //    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+    //        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+    //    else
+    //        UIGraphicsBeginImageContext(self.view.bounds.size);
+    //    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    //    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    //    UIGraphicsEndImageContext();
+    //    NSData * data = UIImageJPEGRepresentation(image, 0.8);
+    //    BOOL saved = [data writeToFile:databasePath atomically:YES];
+    //    NSLog(@"saved: %d to %@", saved, databasePath);
+    //    [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
+    SELECTED_SECTION = [(UIGestureRecognizer *)Sender view].tag;
     modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
     //modalViewController *view = [[modalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
-    viewControllerToPresent.placeName = [[self.allPlaces objectForKey:@"name"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.rating = [[self.allPlaces objectForKey:@"rating"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.subway = [[self.allPlaces objectForKey:@"subway"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    //viewControllerToPresent.
+    viewControllerToPresent.placeName = [[self.allPlaces objectForKey:@"name"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.rating = [[self.allPlaces objectForKey:@"rating"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.subway = [[self.allPlaces objectForKey:@"subway"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:SELECTED_SECTION];
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     //

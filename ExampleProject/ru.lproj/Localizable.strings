@@ -42,7 +42,7 @@
 "City info" = "Информация о городе";
 "Transportation" = "Транспорт";
 "Metro" = "Метро";
-"Favorites" = "Избранные";
+"Favorites" = "Избранное";
 "Share" = "Поделиться";
 "Object added to favourites" = "Объект добавлен в Избранные";
 "Share on facebook" = "Поделиться на Facebook";
@@ -109,3 +109,6 @@
 "Cuisine" = "Кухня";
 "Menu" = "Меню";
 "Filters" = "Фильтры";
+"Add to favorites" = "Добавить в избранное";
+"Delete from favorites" = "Удалить из избранного";
+"All places" = "Все места";

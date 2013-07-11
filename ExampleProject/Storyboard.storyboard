@@ -59,7 +59,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-2244" y="-1385"/>
+            <point key="canvasLocation" x="-2114" y="-2429"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sqe-vU-xFH">
@@ -74,7 +74,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vjt-3A-2ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2737" y="-680"/>
+            <point key="canvasLocation" x="-2703" y="-1466"/>
         </scene>
         <!--Left View Controller - TITLE-->
         <scene sceneID="DIW-qE-fQL">
@@ -130,7 +130,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-2244" y="-680"/>
+            <point key="canvasLocation" x="-2210" y="-1466"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="g0e-sg-Ntu">
@@ -146,7 +146,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ohb-ax-6YR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2778" y="-1385"/>
+            <point key="canvasLocation" x="-2648" y="-2429"/>
         </scene>
         <!--Right View Controller - Filters-->
         <scene sceneID="Qbm-WZ-4Df">
@@ -181,7 +181,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u8g-Bp-7lG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-72" y="-1385"/>
+            <point key="canvasLocation" x="-126" y="-2453"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p5i-6U-9pQ">
@@ -199,7 +199,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJc-qP-V40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-606" y="-1385"/>
+            <point key="canvasLocation" x="-660" y="-2453"/>
         </scene>
         <!--Modal View Controller - Title-->
         <scene sceneID="QGt-rS-OZI">
@@ -287,7 +287,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5S-zb-gzE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1180" y="-587"/>
+            <point key="canvasLocation" x="-1100" y="-615"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dG2-Ph-1Ba">
@@ -303,7 +303,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LgJ-Oy-Tsw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-770" y="-654"/>
+            <point key="canvasLocation" x="-596" y="-1457"/>
         </scene>
         <!--Right View Controller - Filters-->
         <scene sceneID="tIZ-Pk-UbL">
@@ -336,7 +336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Pc-Z3-UJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-345" y="-654"/>
+            <point key="canvasLocation" x="-171" y="-1457"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xvz-xp-ISn">
@@ -403,6 +403,72 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5i-2L-MgB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1180" y="-1457"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4c9-Xm-Z1K">
+            <objects>
+                <navigationController storyboardIdentifier="FavoritesViewController" definesPresentationContext="YES" id="bja-z3-jcb" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0bW-8o-Eqo">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AvN-S0-kxX" kind="relationship" relationship="rootViewController" id="Sic-bf-Div"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="czM-xC-RgR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2041" y="-615"/>
+        </scene>
+        <!--Favorites View Controller-->
+        <scene sceneID="che-n9-9wP">
+            <objects>
+                <viewController id="AvN-S0-kxX" customClass="favoritesViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ew5-9Q-Pcd">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" showsUserLocation="YES" id="Zgm-lu-v1M">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="AvN-S0-kxX" id="xoR-xR-hoj"/>
+                                </connections>
+                            </mapView>
+                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p8g-py-CwU">
+                                <rect key="frame" x="0.0" y="93" width="320" height="411"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="AvN-S0-kxX" id="Si2-Cm-Md7"/>
+                                    <outlet property="delegate" destination="AvN-S0-kxX" id="DR3-e8-r4s"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="tGt-I7-nZm">
+                        <barButtonItem key="leftBarButtonItem" image="ButtonMenu.png" id="ZTV-eN-5g1">
+                            <connections>
+                                <action selector="showLeftMenu:" destination="AvN-S0-kxX" id="EsS-T8-DLM"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="ButtonMenu.png" id="oTb-kX-fBp">
+                            <connections>
+                                <action selector="showRightMenu:" destination="AvN-S0-kxX" id="ANa-m9-jn6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="_mapView" destination="Zgm-lu-v1M" id="GyM-zl-1xh"/>
+                        <outlet property="placesTableView" destination="p8g-py-CwU" id="klu-Xh-UF5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Y1-l3-bgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1580" y="-615"/>
         </scene>
     </scenes>
     <resources>

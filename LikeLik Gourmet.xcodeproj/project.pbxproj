@@ -247,6 +247,7 @@
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
 		D00D2D82178578BA00232D7F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = D00D2D81178578BA00232D7F /* LocalizationSystem.m */; };
 		D00D2D8617857A0D00232D7F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00D2D8817857A0D00232D7F /* Localizable.strings */; };
+		D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D054D4D4178E954A00B1356E /* favoritesViewController.m */; };
 		D095AC5E1788207900E49B11 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = D095AC5D1788207900E49B11 /* loading.png */; };
 		D095AC611788336E00E49B11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */; };
 		D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D095AC64178835F800E49B11 /* Accelerate.framework */; };
@@ -554,6 +555,8 @@
 		D00D2D8917857A2F00232D7F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8A17857A3500232D7F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8B17857A3D00232D7F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D054D4D3178E954A00B1356E /* favoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favoritesViewController.h; sourceTree = "<group>"; };
+		D054D4D4178E954A00B1356E /* favoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favoritesViewController.m; sourceTree = "<group>"; };
 		D095AC5D1788207900E49B11 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		D095AC5F1788336E00E49B11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
@@ -1006,6 +1009,8 @@
 				DAD0C3D217207A2C0031B4E0 /* RightViewController.m */,
 				D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */,
 				D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */,
+				D054D4D3178E954A00B1356E /* favoritesViewController.h */,
+				D054D4D4178E954A00B1356E /* favoritesViewController.m */,
 				D00782331758C7D800D4612F /* modalViewController.h */,
 				D00782341758C7D800D4612F /* modalViewController.m */,
 				910E23D71786999D00C94F8A /* MapViewAnnotation.h */,
@@ -1345,6 +1350,7 @@
 				DA953C75148AD3700075A1E2 /* AppDelegate.m in Sources */,
 				DA953C8C148AD61E0075A1E2 /* MKDSlideViewController.m in Sources */,
 				DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */,
+				D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */,
 				DAD0C3D0172079390031B4E0 /* LeftViewController.m in Sources */,
 				DAD0C3D317207A2C0031B4E0 /* RightViewController.m in Sources */,
 				D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */,
