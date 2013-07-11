@@ -86,7 +86,7 @@ static bool REVERSE_ANIM = false;
             [self.imageArray addObject:[NSString stringWithFormat:@"%@", [[favorite objectForKey:key] objectForKey:@"image"]]];
         }
         self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
-        NSLog(@"PLACES IN FAV: %@",self.allPlaces);
+       // NSLog(@"PLACES IN FAV: %@",self.allPlaces);
         PREV_NUM_OF_PLACES = self.array.count;
     }
     if(!self.imageCache)
@@ -223,7 +223,7 @@ static bool REVERSE_ANIM = false;
     
     //Here pict for rating
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
-    NSLog(@"rate: '%@'", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]);
+   // NSLog(@"rate: '%@'", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]);
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
     [button addSubview:imv];
     

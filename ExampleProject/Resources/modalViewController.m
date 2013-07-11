@@ -319,18 +319,18 @@ NSInteger GLOBAL_OFFSET = 0;
 //            }];
             
             if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces" ]){
-                NSLog(@"favourite exists!");
+                //NSLog(@"favourite exists!");
                 NSMutableDictionary *favorite = [[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"];
                 NSMutableDictionary *newDict = [favorite mutableCopy];
-                NSLog(@"dict was: %@", newDict);
+                //NSLog(@"dict was: %@", newDict);
                 NSMutableDictionary *placeToSave = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.placeName, @"name", self.rating, @"rating", self.subway, @"subway", self.paycheck, @"paycheck", self.worktime, @"worktime", self.image, @"image", nil];
                 [newDict setObject:placeToSave forKey:self.placeName];
-                NSLog(@"dict is: %@", newDict);
+                //NSLog(@"dict is: %@", newDict);
                 
                 [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"favoritePlaces"];
             }
             else{
-                NSLog(@"favourite creating!");
+                //NSLog(@"favourite creating!");
                 NSMutableDictionary *placeToSave = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.placeName, @"name", self.rating, @"rating", self.subway, @"subway", self.paycheck, @"paycheck", self.worktime, @"worktime", self.image, @"image", nil];
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:placeToSave, self.placeName, nil];
                 [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"favoritePlaces"];
