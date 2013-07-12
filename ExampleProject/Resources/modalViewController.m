@@ -260,6 +260,7 @@ NSInteger GLOBAL_OFFSET = 0;
 //            //    self.background.image = [UIImage imageWithContentsOfFile:path];
 //            
 //            [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
+
             UIGraphicsBeginImageContext(self.view.bounds.size);
             [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -275,12 +276,12 @@ NSInteger GLOBAL_OFFSET = 0;
             pathAnimation.calculationMode = kCAAnimationPaced;
             pathAnimation.fillMode = kCAFillModeForwards;
             pathAnimation.removedOnCompletion = NO;
-            pathAnimation.duration=0.4;
+            pathAnimation.duration=0.6;
             pathAnimation.delegate=self;
             
             // tab-bar right side item frame-point = end point
           //  CGPoint endPoint = CGPointMake(210+rect.size.width/2, 390+rect.size.height/2);
-            CGPoint endPoint = CGPointMake(-400, 40);
+            CGPoint endPoint = CGPointMake(-40, 40);
 
             CGMutablePathRef curvedPath = CGPathCreateMutable();
             CGPathMoveToPoint(curvedPath, NULL, self.view.frame.size.width / 2, self.view.frame.size.height / 2);
@@ -291,12 +292,12 @@ NSInteger GLOBAL_OFFSET = 0;
             
             // apply transform animation
             CABasicAnimation *basic=[CABasicAnimation animationWithKeyPath:@"transform"];
-            [basic setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 0.1)]];
+            [basic setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.01, 0.01, 0.01)]];
             [basic setAutoreverses:NO];
-            [basic setDuration:0.4];
+            [basic setDuration:0.6];
             [starView.layer addAnimation:pathAnimation forKey:@"curveAnimation"];
             [starView.layer addAnimation:basic forKey:@"transform"];
-            [starView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.4];
+            [starView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.55];
 //            [UIView animateWithDuration:0.5 animations:^{
 //                CGRect frame = starView.frame;
 //                frame.size.height /= 8;

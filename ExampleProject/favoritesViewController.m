@@ -14,7 +14,7 @@
 
 @implementation favoritesViewController
 @synthesize placesTableView;
-
+@synthesize navBar;
 static bool MAP_PRESENTED = false;
 NSInteger PREVIOUS_SECTION = 0;
 NSInteger PREV_NUM_OF_PLACES = 0;
@@ -91,6 +91,7 @@ static bool REVERSE_ANIM = false;
     }
     if(!self.imageCache)
         self.imageCache = [[NSMutableDictionary alloc] init];
+    navBar.title = AMLocalizedString(@"Favorites", Nil);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appToBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appReturnsActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(languageChanged) name:@"LanguageChanged" object:nil];
@@ -109,6 +110,7 @@ static bool REVERSE_ANIM = false;
     //        }
     //        self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];    [self.placesTableView reloadData];
     //    }
+    navBar.title = AMLocalizedString(@"Favorites", Nil);
     [self.placesTableView reloadData];
 }
 
@@ -134,13 +136,21 @@ static bool REVERSE_ANIM = false;
         }
         self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
     }
-    if(PREV_NUM_OF_PLACES != self.array.count){
+    if(PREV_NUM_OF_PLACES > self.array.count){
         [self.placesTableView beginUpdates];
         [self.placesTableView deleteSections:[NSIndexSet indexSetWithIndex:SELECTED_SECTION] withRowAnimation:UITableViewRowAnimationFade];
         [self.placesTableView endUpdates];
         [self.placesTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.array.count)] withRowAnimation:UITableViewRowAnimationNone];
         PREV_NUM_OF_PLACES = self.array.count;
     }
+    else if(PREV_NUM_OF_PLACES < self.array.count){
+        [self.placesTableView beginUpdates];
+        [self.placesTableView insertSections:[NSIndexSet indexSetWithIndex:PREV_NUM_OF_PLACES] withRowAnimation:UITableViewRowAnimationFade];
+        [self.placesTableView endUpdates];
+        [self.placesTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.array.count)] withRowAnimation:UITableViewRowAnimationNone];
+        PREV_NUM_OF_PLACES = self.array.count;
+    }
+
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self action:@selector(openMap:)];

@@ -463,6 +463,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="_mapView" destination="Zgm-lu-v1M" id="GyM-zl-1xh"/>
+                        <outlet property="navBar" destination="tGt-I7-nZm" id="3Wr-kn-4HC"/>
                         <outlet property="placesTableView" destination="p8g-py-CwU" id="klu-Xh-UF5"/>
                     </connections>
                 </viewController>

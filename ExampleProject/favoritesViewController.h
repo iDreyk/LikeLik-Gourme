@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *imageArray;
 @property (nonatomic, strong) NSMutableDictionary *imageCache;
 @property (nonatomic, strong) NSMutableDictionary *allPlaces;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @property (nonatomic, strong) IBOutlet UITableView *placesTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;

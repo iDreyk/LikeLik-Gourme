@@ -51,7 +51,7 @@ static bool REVERSE_ANIM = false;
     if(!self.paycheckArray)
         self.paycheckArray = @[@"1200", @"900", @"1700", @"1300", @"2000", @"1500", @"950", @"2100", @"3000", @"1900"];
     if(!self.workTimeArray)
-        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 23:00", @"9:00 - 21:00", @"10:00 - 24:00", @"9:00 - 03:00", @"10:00 - 22:00", @"11:00 - 00:00", @"10:00 - 01:00", @"8:00 - 20:00", @"11:00 - 23:00"];
+        self.workTimeArray = @[@"10:00 - 23:00", @"12:00 - 03:00", @"09:00 - 21:00", @"10:00 - 00:00", @"09:00 - 01:00", @"10:00 - 22:00", @"11:00 - 23:30", @"10:00 - 22:00", @"08:00 - 20:00", @"18:00 - 06:00"];
     if(!self.rateArray)
         self.rateArray = @[@"2", @"3", @"1", @"4", @"4", @"5", @"4", @"2", @"3", @"4"];
     if(!self.imageArray)
@@ -151,9 +151,50 @@ static bool REVERSE_ANIM = false;
     
 }
 
+
+- (BOOL)isTimeOfDate:(NSDate *)targetDate betweenStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate {
+    if (!targetDate || !startDate || !endDate)
+        return NO;
+    // Compare the target with the start and end dates
+    NSComparisonResult compareTargetToStart = [targetDate compare:startDate];
+    NSComparisonResult compareTargetToEnd = [targetDate compare:endDate];
+    
+    return (compareTargetToStart == NSOrderedDescending && compareTargetToEnd == NSOrderedAscending);
+}
+
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSDate *today = [NSDate date];
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    [dateFormatter2 setDateFormat:@"HH:mm"];
+    NSString *currentTime = [dateFormatter2 stringFromDate:today];
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    
+    NSArray *components = [[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section] componentsSeparatedByString: @" - "];
+//    NSString *string2 = (NSString*) [components objectAtIndex:1];
+//    NSLog(@"%@ : %@", string2, [components objectAtIndex:0]);
+    NSDate *openingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:0]]];
+    NSDate *closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:1]]];
+    NSDate *targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", currentTime]];
+
+    if([openingDate compare:closingDate] == NSOrderedDescending){
+        if([targetDate compare:closingDate] == NSOrderedAscending)
+          targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", currentTime]];
+        closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", [components objectAtIndex:1]]];
+    }
+    
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImageView *restState = [[UIImageView alloc]initWithFrame:CGRectMake(260, 40, 60, 60)];
+    if ([self isTimeOfDate:targetDate betweenStartDate:openingDate andEndDate:closingDate]) {
+        NSLog(@"TARGET IS INSIDE!");
+        restState.image = [UIImage imageNamed:@"opened.png"];
+    }else {
+        NSLog(@"TARGET IS NOT INSIDE!");
+        restState.image = [UIImage imageNamed:@"closed.png"];
+    }
     button.backgroundColor = [UIColor whiteColor];
     button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
     //[button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
@@ -171,6 +212,7 @@ static bool REVERSE_ANIM = false;
     
     imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
     [button addSubview:imv];
+    [button addSubview:restState];
     
     return button;
 }

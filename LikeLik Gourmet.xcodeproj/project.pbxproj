@@ -245,6 +245,8 @@
 		D0059F9117732E4A002FCC64 /* ll57.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9017732E4A002FCC64 /* ll57.png */; };
 		D0059F9317732E71002FCC64 /* ll114.png in Resources */ = {isa = PBXBuildFile; fileRef = D0059F9217732E71002FCC64 /* ll114.png */; };
 		D00782351758C7D800D4612F /* modalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D00782341758C7D800D4612F /* modalViewController.m */; };
+		D00C053617900DE600E689E5 /* opened.png in Resources */ = {isa = PBXBuildFile; fileRef = D00C053417900DE600E689E5 /* opened.png */; };
+		D00C053717900DE600E689E5 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = D00C053517900DE600E689E5 /* closed.png */; };
 		D00D2D82178578BA00232D7F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = D00D2D81178578BA00232D7F /* LocalizationSystem.m */; };
 		D00D2D8617857A0D00232D7F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00D2D8817857A0D00232D7F /* Localizable.strings */; };
 		D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D054D4D4178E954A00B1356E /* favoritesViewController.m */; };
@@ -549,6 +551,8 @@
 		D0059F9217732E71002FCC64 /* ll114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ll114.png; sourceTree = "<group>"; };
 		D00782331758C7D800D4612F /* modalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modalViewController.h; path = Resources/modalViewController.h; sourceTree = "<group>"; };
 		D00782341758C7D800D4612F /* modalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = modalViewController.m; path = Resources/modalViewController.m; sourceTree = "<group>"; };
+		D00C053417900DE600E689E5 /* opened.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened.png; sourceTree = "<group>"; };
+		D00C053517900DE600E689E5 /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed.png; sourceTree = "<group>"; };
 		D00D2D81178578BA00232D7F /* LocalizationSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationSystem.m; sourceTree = "<group>"; };
 		D00D2D83178578C400232D7F /* LocalizationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationSystem.h; sourceTree = "<group>"; };
 		D00D2D8717857A0D00232D7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1028,6 +1032,8 @@
 		DAD0C3D41720872D0031B4E0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D00C053417900DE600E689E5 /* opened.png */,
+				D00C053517900DE600E689E5 /* closed.png */,
 				D095AC5D1788207900E49B11 /* loading.png */,
 				D0C2AC411783F5BC00B42E56 /* 1star.png */,
 				D0C2AC421783F5BC00B42E56 /* 3star.png */,
@@ -1297,6 +1303,7 @@
 				910E25AB1786A12900C94F8A /* check_background_6-568h@2x.png in Resources */,
 				910E25AC1786A12900C94F8A /* check_background_7-568h@2x.png in Resources */,
 				910E25AD1786A12900C94F8A /* check_background_8-568h@2x.png in Resources */,
+				D00C053717900DE600E689E5 /* closed.png in Resources */,
 				910E25AE1786A12900C94F8A /* check_background_9-568h@2x.png in Resources */,
 				910E25AF1786A12900C94F8A /* desktop.ini in Resources */,
 				910E25B01786A12900C94F8A /* done_button@2x.png in Resources */,
@@ -1327,6 +1334,7 @@
 				910E25C91786A12900C94F8A /* segmentbar_middle_right_selected@2x.png in Resources */,
 				910E25CA1786A12900C94F8A /* segmentbar_middle_selected@2x.png in Resources */,
 				910E25CB1786A12900C94F8A /* segmentbar_middle_unselected@2x.png in Resources */,
+				D00C053617900DE600E689E5 /* opened.png in Resources */,
 				910E25CC1786A12900C94F8A /* separator_line.png in Resources */,
 				910E25CD1786A12900C94F8A /* shadow_catalog_label.png in Resources */,
 				910E25CE1786A12900C94F8A /* startscreen_logo@2x.png in Resources */,
