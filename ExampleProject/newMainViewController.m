@@ -187,12 +187,28 @@ static bool REVERSE_ANIM = false;
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImageView *restState = [[UIImageView alloc]initWithFrame:CGRectMake(260, 40, 60, 60)];
+    UIImageView *restState = [[UIImageView alloc]initWithFrame:CGRectMake(250, 30, 70, 65)];
     if ([self isTimeOfDate:targetDate betweenStartDate:openingDate andEndDate:closingDate]) {
-        NSLog(@"TARGET IS INSIDE!");
-        restState.image = [UIImage imageNamed:@"opened.png"];
+       // NSLog(@"TARGET IS INSIDE!");
+        //restState.image = [UIImage imageNamed:@"opened.png"];
+        restState.animationImages = [NSArray arrayWithObjects:
+                                     [UIImage imageNamed:@"opened0.png"],
+                                     [UIImage imageNamed:@"opened1.png"],
+                                     [UIImage imageNamed:@"opened2.png"],
+                                     [UIImage imageNamed:@"opened3.png"],
+                                     [UIImage imageNamed:@"opened4.png"],
+                                     [UIImage imageNamed:@"opened5.png"],
+                                     [UIImage imageNamed:@"opened4.png"],
+                                     [UIImage imageNamed:@"opened3.png"],
+                                     [UIImage imageNamed:@"opened2.png"],
+                                     [UIImage imageNamed:@"opened1.png"],
+                                     nil];
+        restState.animationDuration = 1.55;
+        //forever
+        restState.animationRepeatCount = 0;
+        [restState startAnimating];
     }else {
-        NSLog(@"TARGET IS NOT INSIDE!");
+       // NSLog(@"TARGET IS NOT INSIDE!");
         restState.image = [UIImage imageNamed:@"closed.png"];
     }
     button.backgroundColor = [UIColor whiteColor];
@@ -659,6 +675,8 @@ static bool REVERSE_ANIM = false;
             [self._mapView removeGestureRecognizer:recognizer];
         }
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0 - yOffset);
+     //   [self._mapView setShowsUserLocation:NO];
+        [self._mapView setUserTrackingMode:NO];
     }
     else {
         //To normal state
@@ -667,6 +685,8 @@ static bool REVERSE_ANIM = false;
         tgr.numberOfTapsRequired = 1;
         tgr.numberOfTouchesRequired = 1;
         [self._mapView addGestureRecognizer:tgr];
+       // [self._mapView setShowsUserLocation:YES];
+        [self._mapView setUserTrackingMode:YES];
     }
     self._mapView.contentMode = UIViewContentModeScaleAspectFit;
 }
@@ -717,7 +737,7 @@ static bool REVERSE_ANIM = false;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
-        theFrame.size.height = 140;// + offset;
+        theFrame.size.height = 140 - offset;
         theFrame.origin.y = -44.0;
         frame.origin.y = 96 - offset;
         frame.size.height = self.view.frame.size.height;
@@ -739,6 +759,11 @@ static bool REVERSE_ANIM = false;
         [self._mapView regionThatFits:region];
         
     } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
+        CGRect theFrame = self._mapView.frame;
+        theFrame.size.height = 140;// + offset;
+        //theFrame.origin.y = -44.0;
+        self._mapView.frame = theFrame;
+        
         CGRect frame = self.placesTableView.frame;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;

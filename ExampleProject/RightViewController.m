@@ -16,9 +16,9 @@
 @synthesize filtersTableView;
 @synthesize navBar;
 
-static bool OPENED_CASH = YES;
-static bool OPENED_Cuisine = YES;
-static bool OPENED_MENU = YES;
+static bool OPENED_CASH = NO;
+static bool OPENED_Cuisine = NO;
+static bool OPENED_MENU = NO;
 
 #warning Ф-ии фильтрации центрального списка по NSSet checkedData.
 
@@ -35,11 +35,11 @@ static bool OPENED_MENU = YES;
     self.checkedData = [[NSMutableSet alloc] init];
     self.array = @[[NSString stringWithFormat:@"            %@",AMLocalizedString(@"Reset filters", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Average bill", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Cuisine", nil)], [NSString stringWithFormat:@"            %@",AMLocalizedString(@"Menu", nil)]];
     self.expandArrayCash =[[NSMutableArray alloc] initWithArray:@[@"               300-500", @"               500-1000", @"               1000-1500", @"               1500-2500", @"               2500-4000"]];
-    self.rowCountCash = 5;
+    self.rowCountCash = 0;
     self.expandArrayCuisine = [[NSMutableArray alloc] initWithArray:@[@"               Fusion", @"               Austrian", @"               English", @"               BBQ", @"               Itallian", @"               Spanish", @"               Greek"]];
-    self.rowCountCuisine = 7;
+    self.rowCountCuisine = 0;
     self.expandArrayMenu = [[NSMutableArray alloc] initWithArray:@[@"               Vegeterian", @"               Lenten", @"               Fitnes", @"               Kosher", @"               Children's", @"               Diet", @"               Halal"]];
-    self.rowCountMenu = 7;
+    self.rowCountMenu = 0;
     navBar.title = AMLocalizedString(@"Filters", Nil);
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(languageChanged) name:@"LanguageChanged" object:nil];
 }

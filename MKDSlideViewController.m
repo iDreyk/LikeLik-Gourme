@@ -306,6 +306,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 //    NSLog(@"LOG: swipe detected. offset:%f, %d",xOffset, self.leftSwipe);
     if( xOffset > (dividerPosition-snapThreshold) /*&& !self.leftSwipe*/)
     {
+        _leftPanelView.layer.shadowRadius = 10.0;
+
                // snap to right position
  //       NSLog(@"LOG: swipe from left");
         self.leftSwipe = YES;
@@ -546,8 +548,9 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
 - (void)showLeftViewControllerAnimated:(BOOL)animated
 {
     //Adding removed baggy shadow
-    _leftPanelView.layer.shadowRadius = 10.0;
-    
+//    _leftPanelView.layer.shadowRadius = 10.0;
+    if(_leftPanelView.layer.shadowRadius == 0.0)
+        _leftPanelView.layer.shadowRadius = 10.0;
     self.slidePosition = MKDSlideViewControllerPositionLeft;
     int offset = 10;
     if( [self.delegate respondsToSelector:@selector(slideViewController:willSlideToViewController:)] )

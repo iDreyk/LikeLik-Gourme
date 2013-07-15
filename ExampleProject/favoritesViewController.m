@@ -99,7 +99,6 @@ static bool REVERSE_ANIM = false;
 
 #pragma mark - NSNotification handlers
 -(void)languageChanged{
-#warning здесь станции
     //    self.subwayArray = @[AMLocalizedString(@"Arbatskaya", Nil), @"Tretyakovskaya", @"Puskinskaya", @"Aeroport", @"Komsomolskaya", @"Universitet", @"Dinamo", AMLocalizedString(@"Arbatskaya", Nil), @"Akademicheskaya", @"Leninskiy prospekt"];
     //    self.allPlaces = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.array, @"name", self.rateArray, @"rating", self.subwayArray, @"subway", self.paycheckArray, @"paycheck", self.workTimeArray, @"worktime", self.imageArray, @"image", nil];
     //    if([[NSUserDefaults standardUserDefaults] objectForKey:@"favoritePlaces"]){

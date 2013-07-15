@@ -100,10 +100,11 @@ NSInteger GLOBAL_OFFSET = 0;
     region.center = location;
     
     
-    MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:self.placeName andCoordinate:location andUserinfo:nil andSubtitle:@"Restraunt" AndTag:0];
+    MapViewAnnotation *Annotation = [[MapViewAnnotation alloc] initWithTitle:self.placeName andCoordinate:location andUserinfo:nil andSubtitle:@"Restaurant" AndTag:0];
     [self._mapView addAnnotation:Annotation];
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
+    [self._mapView setUserTrackingMode:NO];
     
     CGRect theFrame = self._mapView.frame;
     theFrame.size.height = 146.0;
@@ -365,7 +366,7 @@ NSInteger GLOBAL_OFFSET = 0;
                                                      }];
     
     VC.view.backgroundColor = [UIColor clearColor];
-#warning Это тоже нужно будет заполнять
+#warning Это тоже нужно будет заполнять (чек)
     VC.PlaceName = self.placeName;
     VC.PlaceCategory = @"PlaceCategory";
     VC.PlaceCity = @"PlaceCity";
