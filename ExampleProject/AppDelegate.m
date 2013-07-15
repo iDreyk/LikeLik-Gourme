@@ -64,10 +64,12 @@
     UIViewController * mainViewController = [storyboard instantiateViewControllerWithIdentifier:@"NewMainViewController"];
     UIViewController * leftViewController = [storyboard instantiateViewControllerWithIdentifier:@"LeftViewController"];
     UIViewController * rightViewController = [storyboard instantiateViewControllerWithIdentifier:@"RightViewController"];
+    UIViewController * blackView = [storyboard instantiateViewControllerWithIdentifier:@"BlackViewController"];
     
     _slideViewController = [[MKDSlideViewController alloc] initWithMainViewController:mainViewController];
     _slideViewController.leftViewController = leftViewController;
     _slideViewController.rightViewController = rightViewController;
+    _slideViewController.blackViewController = blackView;
     
     self.window.rootViewController = self.slideViewController;
     [self.window makeKeyAndVisible];

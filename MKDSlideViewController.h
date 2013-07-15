@@ -17,6 +17,8 @@
 @property (nonatomic, strong) UIViewController * leftViewController;
 @property (nonatomic, strong) UIViewController * rightViewController;
 @property (nonatomic, strong) UIViewController * mainViewController;
+@property (nonatomic, strong) UIViewController * blackViewController;
+@property (nonatomic, strong) UIViewController * backupViewController;
 
 // Status Bar Handling
 @property (nonatomic, assign, getter = isHandlingStatusBarStyleChanges) BOOL handleStatusBarStyleChanges;  // default: YES

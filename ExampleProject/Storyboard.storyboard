@@ -289,6 +289,19 @@
             </objects>
             <point key="canvasLocation" x="-1100" y="-615"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Qy6-N0-TOO">
+            <objects>
+                <viewController storyboardIdentifier="BlackViewController" id="ktm-93-wiy" sceneMemberID="viewController">
+                    <imageView key="view" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Overlay_Long.png" id="9Nw-dM-EOr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </imageView>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vd4-F4-4fz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-367" y="136"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="dG2-Ph-1Ba">
             <objects>
@@ -474,6 +487,7 @@
     </scenes>
     <resources>
         <image name="ButtonMenu.png" width="22" height="22"/>
+        <image name="Overlay_Long.png" width="320" height="1000"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

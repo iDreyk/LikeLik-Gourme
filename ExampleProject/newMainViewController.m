@@ -768,13 +768,12 @@ static bool REVERSE_ANIM = false;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;
         self.placesTableView.frame = frame;
-        
+    }];
         //Remove button
         for (UIView *subView in self._mapView.subviews){
             if (subView.tag == 99)
                 [subView removeFromSuperview];
         }
-    }];
     }];
     
     //To avoid incorrect tap we need to delete gesture recognizer from map
