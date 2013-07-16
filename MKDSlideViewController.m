@@ -346,10 +346,11 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
             CGFloat deltaX = locationInView.x - self.previousLocationInView.x;
             
             // Update view frame
-            CGRect newFrame = self.leftPanelView.frame;
-            newFrame.origin.x +=deltaX;
-            self.leftPanelView.frame = newFrame;
-            
+            if(self.leftPanelView.frame.origin.x < 0){
+                CGRect newFrame = self.leftPanelView.frame;
+                newFrame.origin.x +=deltaX;
+                self.leftPanelView.frame = newFrame;
+            }
             self.previousLocationInView = locationInView;
         }
         else if( (gesture.state == UIGestureRecognizerStateEnded) || (gesture.state == UIGestureRecognizerStateCancelled) )
@@ -719,7 +720,8 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
                 rect.origin.x = CGRectZero.origin.x;
                 self.mainPanelView.frame = rect;
             } completion:^(BOOL finished) {
-                self.rightViewController = self.backupViewController;
+                if(self.backupViewController)
+                    self.rightViewController = self.backupViewController;
             }];
         }
     }
