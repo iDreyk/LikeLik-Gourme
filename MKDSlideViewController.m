@@ -346,7 +346,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
             CGFloat deltaX = locationInView.x - self.previousLocationInView.x;
             
             // Update view frame
-            if(self.leftPanelView.frame.origin.x < 0){
+            if(self.leftPanelView.frame.origin.x < -5 || deltaX < 0){
                 CGRect newFrame = self.leftPanelView.frame;
                 newFrame.origin.x +=deltaX;
                 self.leftPanelView.frame = newFrame;
