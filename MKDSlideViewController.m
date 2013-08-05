@@ -5,7 +5,7 @@
 //  Created by Marcel Dierkes on 03.12.11.
 //  Copyright (c) 2011-2013 Marcel Dierkes. All rights reserved.
 //
-//test
+
 #import "MKDSlideViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIViewController+MKDSlideViewController.h"
