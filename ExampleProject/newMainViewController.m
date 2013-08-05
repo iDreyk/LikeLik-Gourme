@@ -408,8 +408,7 @@ static bool REVERSE_ANIM = false;
     if([cell.contentView.subviews count] > 0)
         [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-#warning 320 на ios7 beta 3 не достает до конца экрана. Сделаем 321
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 321, 250)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
     
     //while loading an image
     //        imv.image = [UIImage imageNamed:@"loading.png"];

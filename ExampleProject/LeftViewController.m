@@ -336,7 +336,7 @@ CGRect tableViewFrame;
         }
         [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"menuSortMethod"];
         NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
-        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
+       // if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
             [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
     else if(row == 5){
@@ -348,7 +348,7 @@ CGRect tableViewFrame;
         }
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"menuSortMethod"];
         NSLog(@"Saved to userdefaults sort: %d (0 -- name, 1 -- distance)",[[NSUserDefaults standardUserDefaults] integerForKey:@"menuSortMethod"]);
-        if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
+       // if( [centerNavigationController.topViewController isKindOfClass:[newMainViewController class]] )
             [self.navigationController.slideViewController showMainViewControllerAnimated:YES];
     }
     //        if( [centerNavigationController.topViewController isKindOfClass:[thirdViewController class]] )
