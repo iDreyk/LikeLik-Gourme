@@ -19,7 +19,7 @@
 @end
 
 @implementation modalViewController
-@synthesize placeTableView;
+@synthesize placeCard;
 @synthesize _mapView;
 @synthesize placeCoordinates;
 @synthesize placeName;
@@ -47,9 +47,9 @@ NSInteger GLOBAL_OFFSET = 0;
         CGRect newImgFrame = self.view.frame;
         newImgFrame.origin.y = 0;
         self.view.frame = newImgFrame;
-        CGRect newTWFrame = self.placeTableView.frame;
+        CGRect newTWFrame = self.placeCard.frame;
         newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
-        self.placeTableView.frame = newTWFrame;
+        self.placeCard.frame = newTWFrame;
     }
     
 #warning Надо заполнить инфу к месту
@@ -110,8 +110,8 @@ NSInteger GLOBAL_OFFSET = 0;
     [self._mapView setUserTrackingMode:NO];
     
     CGRect theFrame = self._mapView.frame;
-    theFrame.size.height = 146.0;
-    theFrame.origin.y = 36.0;
+    theFrame.size.height = 96.0;
+    theFrame.origin.y = 66.0;
     self._mapView.frame = theFrame;
     
     tgr.numberOfTapsRequired = 1;
@@ -341,7 +341,7 @@ NSInteger GLOBAL_OFFSET = 0;
                 [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"favoritePlaces"];
             }
             self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Delete from favorites"];
-            [self.placeTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//            [self.placeCard reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             DELETE_FROM_FAVORITES = YES;
         }
         else{
@@ -350,7 +350,7 @@ NSInteger GLOBAL_OFFSET = 0;
             [newDict removeObjectForKey:self.placeName];
             [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"favoritePlaces"];
             self.array = @[self.subway, @"Address", self.paycheck, self.worktime, @"Add to favorites"];
-            [self.placeTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//            [self.placeCard reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             DELETE_FROM_FAVORITES = NO;
         }
     }
@@ -383,31 +383,31 @@ NSInteger GLOBAL_OFFSET = 0;
 }
 
 #pragma mark - Map's parralax
-- (void)updateOffsets{
-    if(MAP_PRESENTED)
-        return;
-    
-    CGFloat yOffset   = self.placeTableView.contentOffset.y;
-    if (yOffset < 0 || yOffset > 0) {
-        //Paralax handling
-        for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
-            [self._mapView removeGestureRecognizer:recognizer];
-        }
-        self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset);
-    }
-    else {
-        //To normal state
-        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
-                                       initWithTarget:self action:@selector(openMap:)];
-        tgr.numberOfTapsRequired = 1;
-        tgr.numberOfTouchesRequired = 1;
-        [self._mapView addGestureRecognizer:tgr];
-    }
-    self._mapView.contentMode = UIViewContentModeScaleAspectFit;
-}
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self updateOffsets];
-}
+//- (void)updateOffsets{
+//    if(MAP_PRESENTED)
+//        return;
+//    
+//    CGFloat yOffset   = self.placeCard.contentOffset.y;
+//    if (yOffset < 0 || yOffset > 0) {
+//        //Paralax handling
+//        for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
+//            [self._mapView removeGestureRecognizer:recognizer];
+//        }
+//        self._mapView.frame = CGRectMake(0, 36.0, 320.0, 166.0 - yOffset);
+//    }
+//    else {
+//        //To normal state
+//        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
+//                                       initWithTarget:self action:@selector(openMap:)];
+//        tgr.numberOfTapsRequired = 1;
+//        tgr.numberOfTouchesRequired = 1;
+//        [self._mapView addGestureRecognizer:tgr];
+//    }
+//    self._mapView.contentMode = UIViewContentModeScaleAspectFit;
+//}
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    [self updateOffsets];
+//}
 
 #pragma mark - Map's selectors (animation)
 
@@ -418,12 +418,12 @@ NSInteger GLOBAL_OFFSET = 0;
         return;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
-        CGRect frame = self.placeTableView.frame;
+        CGRect frame = self.placeCard.frame;
         theFrame.origin.y = 66 - GLOBAL_OFFSET;
         theFrame.size.height = self.view.frame.size.height;
         frame.origin.y = self.view.frame.size.height;
         self._mapView.frame = theFrame;
-        self.placeTableView.frame = frame;
+        self.placeCard.frame = frame;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
@@ -450,13 +450,13 @@ NSInteger GLOBAL_OFFSET = 0;
     float offset = 30;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
-        CGRect frame = self.placeTableView.frame;
-        theFrame.size.height = 146.0;// + offset;
-        theFrame.origin.y = 52.0 - offset - GLOBAL_OFFSET;
-        frame.origin.y = 166 - offset;
+        CGRect frame = self.placeCard.frame;
+        theFrame.size.height = 96.0;// + offset;
+        theFrame.origin.y = 54.0 - offset - GLOBAL_OFFSET;
+        frame.origin.y = 158 - offset;
         frame.size.height = self.view.frame.size.height;
         self._mapView.frame = theFrame;
-        self.placeTableView.frame = frame;
+        self.placeCard.frame = frame;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
@@ -474,14 +474,14 @@ NSInteger GLOBAL_OFFSET = 0;
         
     } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
         CGRect theFrame = self._mapView.frame;
-        theFrame.size.height = 166.0;
-        theFrame.origin.y = 36;
+        theFrame.origin.y = 66;
+        theFrame.size.height = 96.0;
         self._mapView.frame = theFrame;
         
-        CGRect frame = self.placeTableView.frame;
-        frame.origin.y = 166;
-        frame.size.height = self.view.frame.size.height - 166;
-        self.placeTableView.frame = frame;
+        CGRect frame = self.placeCard.frame;
+        frame.origin.y = 158;
+        frame.size.height = self.view.frame.size.height - 158;
+        self.placeCard.frame = frame;
         
         //Remove button
         for (UIView *subView in self._mapView.subviews){

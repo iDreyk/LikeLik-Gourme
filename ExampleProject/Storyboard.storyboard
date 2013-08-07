@@ -214,7 +214,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" showsUserLocation="YES" id="hma-U2-79w">
-                                <rect key="frame" x="0.0" y="36" width="320" height="146"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="96"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="TVj-Ek-60C" id="WWS-n5-wfA"/>
@@ -242,17 +242,11 @@
                                     <outlet property="delegate" destination="TVj-Ek-60C" id="jLD-LH-Lh6"/>
                                 </connections>
                             </navigationBar>
-                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eAY-Gd-CTd">
-                                <rect key="frame" x="0.0" y="166" width="320" height="382"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.50196081399917603" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <sections/>
-                                <connections>
-                                    <outlet property="dataSource" destination="TVj-Ek-60C" id="5hy-5P-HVD"/>
-                                    <outlet property="delegate" destination="TVj-Ek-60C" id="ZNa-PR-c9q"/>
-                                </connections>
-                            </tableView>
+                            <view contentMode="scaleToFill" id="vjK-rF-yMY">
+                                <rect key="frame" x="0.0" y="158" width="320" height="402"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -282,7 +276,7 @@
                         <outlet property="_mapView" destination="hma-U2-79w" id="cKf-LF-BtH"/>
                         <outlet property="background" destination="uUc-iw-m9V" id="W0m-p2-861"/>
                         <outlet property="navBar" destination="qCh-xd-Fue" id="eVk-Q6-9Ce"/>
-                        <outlet property="placeTableView" destination="eAY-Gd-CTd" id="HMd-gq-r7x"/>
+                        <outlet property="placeCard" destination="vjK-rF-yMY" id="4ZI-Pk-ZiG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5S-zb-gzE" userLabel="First Responder" sceneMemberID="firstResponder"/>
