@@ -85,6 +85,17 @@ NSInteger GLOBAL_OFFSET = 0;
     navBar.topItem.leftBarButtonItem.title =  AMLocalizedString(@"Back", nil);//       [navBar.topItem.leftBarButtonItem setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
 
     //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    
+    
+#warning Код для "новой" карточки места.
+    UITextView *generalInfo = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
+    generalInfo.backgroundColor = [UIColor lightGrayColor];
+    generalInfo.scrollEnabled = NO;
+    generalInfo.editable = NO;
+    generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    [self.placeCard addSubview:generalInfo];
+
+    
 }
 
 #pragma mark - Map handler
