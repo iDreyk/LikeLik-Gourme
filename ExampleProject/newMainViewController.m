@@ -11,6 +11,7 @@
 #import "MKDSlideViewController.h"
 #import "UIViewController+MKDSlideViewController.h"
 #import "modalViewController.h"
+#include <AudioToolbox/AudioToolbox.h>
 
 @implementation newMainViewController
 @synthesize placesTableView;
@@ -107,17 +108,18 @@ static bool REVERSE_ANIM = false;
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     //    NSLog(@"MAP LOG: update");
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.005;
-    span.longitudeDelta = 0.005;
-    CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-    //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
-    region.span = span;
-    region.center = location;
-    [self._mapView setRegion:region animated:YES];
-    [self._mapView regionThatFits:region];
-    
+    if(!MAP_PRESENTED){
+        MKCoordinateRegion region;
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.005;
+        span.longitudeDelta = 0.005;
+        CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
+        //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+        region.span = span;
+        region.center = location;
+        [self._mapView setRegion:region animated:YES];
+        [self._mapView regionThatFits:region];
+    }
 }
 
 #pragma mark - Table view data source
@@ -408,7 +410,7 @@ static bool REVERSE_ANIM = false;
     if([cell.contentView.subviews count] > 0)
         [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 245)];
     
     //while loading an image
     //        imv.image = [UIImage imageNamed:@"loading.png"];
@@ -663,11 +665,21 @@ static bool REVERSE_ANIM = false;
 ////    [scrollView_ setContentOffset:CGPointMake(0, 0) animated:YES];
 ////    [UIView commitAnimations];
 //}
+//- (IBAction) playSystemSound: (id) sender {
+//    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"alert" ofType:@"mp3"];
+//    SystemSoundID soundID;
+//    AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+//    AudioServicesPlaySystemSound (soundID);
+//}
+
 
 #pragma mark - Map's parralax
 - (void)updateOffsets{
-    if(MAP_PRESENTED)
+    if(MAP_PRESENTED){
+        AudioServicesPlaySystemSound(1005);
         return;
+    }
+
     CGFloat yOffset   = self.placesTableView.contentOffset.y;
     if (yOffset < 0) {
         //Paralax handling
@@ -713,7 +725,8 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
-        
+        [self._mapView setUserTrackingMode:NO];
+
 #warning ПЛОХАЯ КНОПКА!
         //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
         //    self.navigationItem.rightBarButtonItem = buttonItem;
@@ -723,7 +736,7 @@ static bool REVERSE_ANIM = false;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
         button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
-        [button setTitle:@"Back" forState:UIControlStateNormal];
+        [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
         button.tag = 99;
@@ -746,6 +759,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
+        [self._mapView setUserTrackingMode:YES];
         
         //Resize and scroll map to current position
         MKCoordinateRegion region;

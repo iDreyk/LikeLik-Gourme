@@ -256,6 +256,7 @@
 		D084634117913A2300ED263A /* opened3.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633B17913A2300ED263A /* opened3.png */; };
 		D084634217913A2300ED263A /* opened4.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633C17913A2300ED263A /* opened4.png */; };
 		D084634317913A2300ED263A /* opened5.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633D17913A2300ED263A /* opened5.png */; };
+		D0918ACC17B23266006221B3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0918ACB17B23266006221B3 /* AudioToolbox.framework */; };
 		D095AC5E1788207900E49B11 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = D095AC5D1788207900E49B11 /* loading.png */; };
 		D095AC611788336E00E49B11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */; };
 		D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D095AC64178835F800E49B11 /* Accelerate.framework */; };
@@ -573,6 +574,7 @@
 		D084633B17913A2300ED263A /* opened3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened3.png; sourceTree = "<group>"; };
 		D084633C17913A2300ED263A /* opened4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened4.png; sourceTree = "<group>"; };
 		D084633D17913A2300ED263A /* opened5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened5.png; sourceTree = "<group>"; };
+		D0918ACB17B23266006221B3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D095AC5D1788207900E49B11 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		D095AC5F1788336E00E49B11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0918ACC17B23266006221B3 /* AudioToolbox.framework in Frameworks */,
 				D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */,
 				910E24371786A0E100C94F8A /* CoreVideo.framework in Frameworks */,
 				910E24351786A0DB00C94F8A /* CoreMedia.framework in Frameworks */,
@@ -942,6 +945,7 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0918ACB17B23266006221B3 /* AudioToolbox.framework */,
 				910E24301786A07C00C94F8A /* libsqlite3.dylib */,
 				910E242E1786A06600C94F8A /* libiconv.dylib */,
 				910E242C1786A04A00C94F8A /* libz.dylib */,

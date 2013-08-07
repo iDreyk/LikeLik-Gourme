@@ -82,6 +82,8 @@ NSInteger GLOBAL_OFFSET = 0;
     //self.background.image = effectImage;
 #warning Надо заполнить имя места
     navBar.topItem.title = self.placeName;
+    navBar.topItem.leftBarButtonItem.title =  AMLocalizedString(@"Back", nil);//       [navBar.topItem.leftBarButtonItem setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
+
     //self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -386,7 +388,7 @@ NSInteger GLOBAL_OFFSET = 0;
         return;
     
     CGFloat yOffset   = self.placeTableView.contentOffset.y;
-    if (yOffset < 0) {
+    if (yOffset < 0 || yOffset > 0) {
         //Paralax handling
         for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
             [self._mapView removeGestureRecognizer:recognizer];
@@ -435,7 +437,7 @@ NSInteger GLOBAL_OFFSET = 0;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
         button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
-        [button setTitle:@"Back" forState:UIControlStateNormal];
+        [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
         button.tag = 99;

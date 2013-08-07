@@ -170,17 +170,19 @@ static bool REVERSE_ANIM = false;
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
-    //    NSLog(@"MAP LOG: update");
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.005;
-    span.longitudeDelta = 0.005;
-    CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-    //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
-    region.span = span;
-    region.center = location;
-    [self._mapView setRegion:region animated:YES];
-    [self._mapView regionThatFits:region];
+    if(!MAP_PRESENTED){
+        //    NSLog(@"MAP LOG: update");
+        MKCoordinateRegion region;
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.005;
+        span.longitudeDelta = 0.005;
+        CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
+        //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+        region.span = span;
+        region.center = location;
+        [self._mapView setRegion:region animated:YES];
+        [self._mapView regionThatFits:region];
+    }
     
 }
 
@@ -716,6 +718,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
+        [self._mapView setUserTrackingMode:NO];
         
 #warning ПЛОХАЯ КНОПКА!
         //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
@@ -726,7 +729,7 @@ static bool REVERSE_ANIM = false;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor blackColor];
         button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
-        [button setTitle:@"Back" forState:UIControlStateNormal];
+        [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
         button.tag = 99;
@@ -749,6 +752,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
+        [self._mapView setUserTrackingMode:YES];
         
         //Resize and scroll map to current position
         MKCoordinateRegion region;
