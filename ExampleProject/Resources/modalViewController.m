@@ -92,6 +92,7 @@ NSInteger GLOBAL_OFFSET = 0;
     generalInfo.backgroundColor = [UIColor lightGrayColor];
     generalInfo.scrollEnabled = NO;
     generalInfo.editable = NO;
+    generalInfo.userInteractionEnabled = NO;
     generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
     [self.placeCard addSubview:generalInfo];
 
@@ -424,13 +425,16 @@ NSInteger GLOBAL_OFFSET = 0;
 
 - (void)openMap:(UIGestureRecognizer *)gestureRecognizer
 {
+    for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
+                [self._mapView removeGestureRecognizer:recognizer];
+    }
     MAP_PRESENTED = true;
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeCard.frame;
-        theFrame.origin.y = 66 - GLOBAL_OFFSET;
+        theFrame.origin.y = 22 - GLOBAL_OFFSET;
         theFrame.size.height = self.view.frame.size.height;
         frame.origin.y = self.view.frame.size.height;
         self._mapView.frame = theFrame;
@@ -446,8 +450,8 @@ NSInteger GLOBAL_OFFSET = 0;
         
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = [UIColor blackColor];
-        button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
+        button.backgroundColor = [UIColor grayColor];
+        button.frame = CGRectMake(200, 25, 80, 40); // position in the parent view and set the size of the button
         [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
@@ -457,7 +461,10 @@ NSInteger GLOBAL_OFFSET = 0;
     }];
 }
 -(void)closeMap:(id)sender{
-    
+   for (UIView *subView in self._mapView.subviews){
+        if (subView.tag == 99)
+            [subView removeFromSuperview];
+    }
     float offset = 30;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect theFrame = self._mapView.frame;
@@ -496,10 +503,10 @@ NSInteger GLOBAL_OFFSET = 0;
         self.placeCard.frame = frame;
         
         //Remove button
-        for (UIView *subView in self._mapView.subviews){
-            if (subView.tag == 99)
-                [subView removeFromSuperview];
-        }
+//        for (UIView *subView in self._mapView.subviews){
+//            if (subView.tag == 99)
+//                [subView removeFromSuperview];
+//        }
     }];
     }];
     
