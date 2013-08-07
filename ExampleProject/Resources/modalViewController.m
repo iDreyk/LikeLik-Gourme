@@ -450,8 +450,10 @@ NSInteger GLOBAL_OFFSET = 0;
         
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = [UIColor grayColor];
-        button.frame = CGRectMake(200, 25, 80, 40); // position in the parent view and set the size of the button
+        //button.backgroundColor = [UIColor grayColor];
+        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        
+        button.frame = CGRectMake(218, 20, 80, 40); // position in the parent view and set the size of the button
         [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
