@@ -27,6 +27,7 @@
 @synthesize subway;
 @synthesize paycheck;
 @synthesize worktime;
+@synthesize FROM_SEARCHBAR;
 static BOOL MAP_PRESENTED = false;
 static BOOL DELETE_FROM_FAVORITES;
 
@@ -355,7 +356,11 @@ NSInteger GLOBAL_OFFSET = 0;
 }
 
 - (IBAction)close:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    //ios7beta5 всегда убирает клаву при открытии viewcontroller из поиска
+    [self dismissViewControllerAnimated:YES completion:^{
+        if(FROM_SEARCHBAR)
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToSearchBar" object:nil];
+    }];
 }
 
 -(IBAction)Check:(id)sender{

@@ -594,6 +594,7 @@ static bool REVERSE_ANIM = false;
     viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:SELECTED_SECTION];
     viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:SELECTED_SECTION];
     viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:SELECTED_SECTION];
+    viewControllerToPresent.FROM_SEARCHBAR = NO;
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
     //

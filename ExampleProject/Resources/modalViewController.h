@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSString *worktime;
 @property (nonatomic, strong) NSString *rating;
 @property (nonatomic, strong) NSString *image;
+@property (nonatomic) BOOL FROM_SEARCHBAR;
 @property (nonatomic, strong) IBOutlet UITableView *placeTableView;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 @property (nonatomic) CLLocationCoordinate2D placeCoordinates;

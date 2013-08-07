@@ -924,14 +924,6 @@
 		DA953C55148AD36F0075A1E2 = {
 			isa = PBXGroup;
 			children = (
-				910E24361786A0E100C94F8A /* CoreVideo.framework */,
-				910E24341786A0DB00C94F8A /* CoreMedia.framework */,
-				910E24321786A08600C94F8A /* AVFoundation.framework */,
-				910E24301786A07C00C94F8A /* libsqlite3.dylib */,
-				910E242E1786A06600C94F8A /* libiconv.dylib */,
-				910E242C1786A04A00C94F8A /* libz.dylib */,
-				910E242A1786A04300C94F8A /* CoreText.framework */,
-				910E24281786A03700C94F8A /* libxml2.dylib */,
 				DA953C84148AD3820075A1E2 /* Slide View Controller */,
 				DA953C6A148AD3700075A1E2 /* Example Project */,
 				DA953C63148AD3700075A1E2 /* Frameworks */,
@@ -950,6 +942,14 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				910E24301786A07C00C94F8A /* libsqlite3.dylib */,
+				910E242E1786A06600C94F8A /* libiconv.dylib */,
+				910E242C1786A04A00C94F8A /* libz.dylib */,
+				910E24281786A03700C94F8A /* libxml2.dylib */,
+				910E24361786A0E100C94F8A /* CoreVideo.framework */,
+				910E24341786A0DB00C94F8A /* CoreMedia.framework */,
+				910E24321786A08600C94F8A /* AVFoundation.framework */,
+				910E242A1786A04300C94F8A /* CoreText.framework */,
 				D095AC64178835F800E49B11 /* Accelerate.framework */,
 				D095AC62178833DE00E49B11 /* XCTest.framework */,
 				D0041B801782EE7C00D7AB74 /* CoreLocation.framework */,

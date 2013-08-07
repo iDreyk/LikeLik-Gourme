@@ -76,6 +76,8 @@ CGRect tableViewFrame;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:@"callingMainView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchBarBecomesFirstResponder:) name:@"backToSearchBar" object:nil];
+
     
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         CGRect newTWFrame = self.catalogueTableView.frame;
@@ -97,6 +99,12 @@ CGRect tableViewFrame;
 }
 
 #pragma mark - Notifications
+-(void)searchBarBecomesFirstResponder:(NSNotification *)note{
+    //ios7beta5 всегда убирает клаву при открытии viewcontroller из поиска
+    KEYBOARD_SHOWN = NO;
+    [self.searchBar becomeFirstResponder];
+}
+
 -(void)hideKeyboard:(NSNotification *)note{
     [self.searchBar setShowsCancelButton:NO];
     [self.searchBar resignFirstResponder];
@@ -133,7 +141,7 @@ CGRect tableViewFrame;
 }
 
 -(void)keyboardHidden:(NSNotification *)note{
-    [UIView animateWithDuration:0.4 animations:^{
+       [UIView animateWithDuration:0.4 animations:^{
         CGRect frame = self.catalogueTableView.frame;
         frame.origin.y = 600;
         self.catalogueTableView.frame = frame;
@@ -495,8 +503,16 @@ CGRect tableViewFrame;
         viewControllerToPresent.worktime = [self.workTimeArray objectAtIndex:ind];
         viewControllerToPresent.rating = [self.rateArray objectAtIndex:ind];
         viewControllerToPresent.image = [self.imageArray objectAtIndex:ind];
+        viewControllerToPresent.FROM_SEARCHBAR = YES;
 
-        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+        [self presentViewController:viewControllerToPresent animated:YES completion:^{
+            //ios7beta5 всегда убирает клаву при открытии viewcontroller из поиска
+            [self.searchBar setShowsCancelButton:NO];
+            [self.searchBar resignFirstResponder];
+            SEARCHING = NO;
+            [self.catalogueTableView reloadData];
+            }];
+        
     }
     else{
         if(indexPath.section == 2){
@@ -609,6 +625,7 @@ CGRect tableViewFrame;
     // self.PlacesArray = Array;
     //[self.SearchTable reloadData];
     SEARCHING = NO;
+    self.searchBar.text = @"";
 //    [self.catalogueTableView reloadData];
     [self.searchBar setShowsCancelButton:NO];
     [self.searchBar resignFirstResponder];

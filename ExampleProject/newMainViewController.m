@@ -586,6 +586,7 @@ static bool REVERSE_ANIM = false;
     viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
     viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
     viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.FROM_SEARCHBAR = NO;
     //viewControllerToPresent.
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
