@@ -438,7 +438,7 @@ NSInteger GLOBAL_OFFSET = 0;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
-        
+        [self.navBar setHidden:YES];
 #warning ПЛОХАЯ КНОПКА!
         //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
         //    self.navigationItem.rightBarButtonItem = buttonItem;
@@ -466,6 +466,7 @@ NSInteger GLOBAL_OFFSET = 0;
         theFrame.origin.y = 54.0 - offset - GLOBAL_OFFSET;
         frame.origin.y = 158 - offset;
         frame.size.height = self.view.frame.size.height;
+        [self.navBar setHidden:NO];
         self._mapView.frame = theFrame;
         self.placeCard.frame = frame;
         [self._mapView setZoomEnabled:NO];
