@@ -122,6 +122,8 @@ NSInteger GLOBAL_OFFSET = 0;
     [generalInfo addGestureRecognizer:singleTap];
     [self.placeCard addSubview:generalInfo];
 
+    //UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 320, 80)];
+    
     
 }
 
