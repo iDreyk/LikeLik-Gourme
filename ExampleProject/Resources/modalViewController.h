@@ -32,3 +32,6 @@
 - (IBAction)Check:(id)sender;
 
 @end
+
+@interface UItextViewWithoutSelection : UITextView;
+@end

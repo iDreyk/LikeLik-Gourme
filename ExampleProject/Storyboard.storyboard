@@ -223,7 +223,7 @@
                             <navigationBar contentMode="scaleToFill" id="qCh-xd-Fue">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.25215106726853442" green="0.0024882636000413631" blue="0.54787149234693877" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.62060234896058208" green="0.0516429067492572" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem id="bec-wt-2sc">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="H9T-Re-nLU">

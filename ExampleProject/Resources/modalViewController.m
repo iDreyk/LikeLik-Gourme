@@ -14,6 +14,17 @@
 #import "AppDelegate.h"
 #import "UIImage+ImageEffects.h"
 
+@interface UItextViewWithoutSelection ()
+@end
+@implementation UItextViewWithoutSelection
+
+- (BOOL)canBecomeFirstResponder
+{
+    return NO;
+}
+
+@end
+
 @interface modalViewController ()
 
 @end
@@ -44,12 +55,24 @@ NSInteger GLOBAL_OFFSET = 0;
         newNav.size.height = 40;
         self.navBar.frame = newNav;
         GLOBAL_OFFSET = 30;
-        CGRect newImgFrame = self.view.frame;
-        newImgFrame.origin.y = 0;
-        self.view.frame = newImgFrame;
-        CGRect newTWFrame = self.placeCard.frame;
-        newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
-        self.placeCard.frame = newTWFrame;
+        
+        
+        CGRect theFrame = self._mapView.frame;
+        theFrame.size.height = 96.0;
+        theFrame.origin.y = 66.0 - GLOBAL_OFFSET;
+        self._mapView.frame = theFrame;
+        
+        theFrame = self.placeCard.frame;
+        theFrame.origin.y -= GLOBAL_OFFSET;
+        theFrame.size.height += GLOBAL_OFFSET;
+        self.placeCard.frame = theFrame;
+
+//        CGRect newImgFrame = self.view.frame;
+//        newImgFrame.origin.y = 0;
+//        self.view.frame = newImgFrame;
+//        CGRect newTWFrame = self.placeCard.frame;
+//        newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
+//        self.placeCard.frame = newTWFrame;
     }
     
 #warning Надо заполнить инфу к месту
@@ -88,17 +111,111 @@ NSInteger GLOBAL_OFFSET = 0;
     
     
 #warning Код для "новой" карточки места.
-    UITextView *generalInfo = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
+    UItextViewWithoutSelection *generalInfo = [[UItextViewWithoutSelection alloc] initWithFrame:CGRectMake(0, 0 , 320, 80)];
     generalInfo.backgroundColor = [UIColor lightGrayColor];
     generalInfo.scrollEnabled = NO;
     generalInfo.editable = NO;
-    generalInfo.userInteractionEnabled = NO;
+    generalInfo.userInteractionEnabled = YES;
+    generalInfo.tag = 101;
     generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
+    [generalInfo addGestureRecognizer:singleTap];
     [self.placeCard addSubview:generalInfo];
 
     
 }
 
+-(void)openGeneralInfo:(UIButton *)Sender{
+    for (UIView *subView in self.placeCard.subviews){
+        if (subView.tag == 101){
+            for (UIGestureRecognizer *recognizer in subView.gestureRecognizers) {
+                [subView removeGestureRecognizer:recognizer];
+            }
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect frame = subView.frame;
+                CGRect viewFrame = self.placeCard.frame;
+                viewFrame.origin.y = 22 - GLOBAL_OFFSET;
+                viewFrame.size.height = self.view.frame.size.height - 22;
+                
+                frame.origin.y = 44;
+                frame.size.height = viewFrame.size.height;//self.view.frame.size.height - 22;
+                
+                subView.frame = frame;
+                self.placeCard.frame = viewFrame;
+                
+                
+                UIColor *color = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+                
+                UILabel *nameOfPlace = [[UILabel alloc] init];
+                nameOfPlace.text = AMLocalizedString(self.placeName, nil);
+                nameOfPlace.frame = CGRectMake(60, 0, 200, 44);
+                nameOfPlace.backgroundColor = color;
+                nameOfPlace.textAlignment = NSTextAlignmentCenter;
+                nameOfPlace.textColor = [UIColor blackColor];
+                nameOfPlace.tag = 98;
+                
+                UILabel *background = [[UILabel alloc] init];
+                background.frame = CGRectMake(260, 0, 60, 44);
+                background.backgroundColor = color;
+                background.tag = 97;
+
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                //button.backgroundColor = [UIColor grayColor];
+                button.backgroundColor = color;
+                
+                button.frame = CGRectMake(0, 0, 60, 44); // position in the parent view and set the size of the button
+                [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
+                button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+                button.titleLabel.textColor = [UIColor blackColor];
+                [button addTarget:self action:@selector(closeGeneralInfo:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
+                button.tag = 99;
+                
+                
+                [self.placeCard addSubview:nameOfPlace];
+                [self.placeCard addSubview:button];
+                [self.placeCard addSubview:background];
+            }];
+            break;
+        }
+    }
+    NSLog(@"TOUCHED!");
+}
+-(void)closeGeneralInfo:(UIButton *)Sender{
+    float offset = 20;
+    for (UIView *subView in self.placeCard.subviews){
+        if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
+            [subView removeFromSuperview];
+        if (subView.tag == 101){
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect viewFrame = self.placeCard.frame;
+                viewFrame.origin.y = 158 - GLOBAL_OFFSET;
+                viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
+                
+                subView.frame = CGRectMake(0, 0 + offset, 320, 80 - 2*offset);
+                
+                self.placeCard.frame = viewFrame;
+
+            }completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    CGRect viewFrame = self.placeCard.frame;
+                    viewFrame.origin.y = 158 - GLOBAL_OFFSET;
+                    viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
+                    
+                    subView.frame = CGRectMake(0, 0, 320, 80);
+                    
+                    self.placeCard.frame = viewFrame;
+                    
+                    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
+                    [subView addGestureRecognizer:singleTap];
+
+                }];
+            }];
+        }
+    }
+
+    NSLog(@"Closed!");
+
+}
 #pragma mark - Map handler
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -121,10 +238,6 @@ NSInteger GLOBAL_OFFSET = 0;
     [self._mapView regionThatFits:region];
     [self._mapView setUserTrackingMode:NO];
     
-    CGRect theFrame = self._mapView.frame;
-    theFrame.size.height = 96.0;
-    theFrame.origin.y = 66.0;
-    self._mapView.frame = theFrame;
     
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
@@ -435,7 +548,7 @@ NSInteger GLOBAL_OFFSET = 0;
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeCard.frame;
         theFrame.origin.y = 22 - GLOBAL_OFFSET;
-        theFrame.size.height = self.view.frame.size.height;
+        theFrame.size.height = self.view.frame.size.height + GLOBAL_OFFSET;
         frame.origin.y = self.view.frame.size.height;
         self._mapView.frame = theFrame;
         self.placeCard.frame = frame;
@@ -472,8 +585,8 @@ NSInteger GLOBAL_OFFSET = 0;
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeCard.frame;
         theFrame.size.height = 96.0;// + offset;
-        theFrame.origin.y = 54.0 - offset - GLOBAL_OFFSET;
-        frame.origin.y = 158 - offset;
+        theFrame.origin.y = 66 - offset - GLOBAL_OFFSET;
+        frame.origin.y = 158 - offset - GLOBAL_OFFSET;
         frame.size.height = self.view.frame.size.height;
         [self.navBar setHidden:NO];
         self._mapView.frame = theFrame;
@@ -495,13 +608,13 @@ NSInteger GLOBAL_OFFSET = 0;
         
     } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
         CGRect theFrame = self._mapView.frame;
-        theFrame.origin.y = 66;
+        theFrame.origin.y = 66 - GLOBAL_OFFSET;
         theFrame.size.height = 96.0;
         self._mapView.frame = theFrame;
         
         CGRect frame = self.placeCard.frame;
-        frame.origin.y = 158;
-        frame.size.height = self.view.frame.size.height - 158;
+        frame.origin.y = 158 - GLOBAL_OFFSET;
+        frame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
         self.placeCard.frame = frame;
         
         //Remove button
