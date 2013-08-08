@@ -104,7 +104,9 @@ static bool REVERSE_ANIM = false;
     region.center = location;
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
-    //[self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+    
+    [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+    NSLog(@"Tracking mode changed");
 }
 
 - (void)appToBackground{
@@ -698,8 +700,10 @@ static bool REVERSE_ANIM = false;
         }
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0 - yOffset);
      //   [self._mapView setShowsUserLocation:NO];
-        [self._mapView setUserTrackingMode:NO];
-          //  [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+        
+        //[self._mapView setUserTrackingMode:NO];
+        
+        //  [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     }
     else {
         //To normal state
@@ -709,7 +713,9 @@ static bool REVERSE_ANIM = false;
         tgr.numberOfTouchesRequired = 1;
         [self._mapView addGestureRecognizer:tgr];
        // [self._mapView setShowsUserLocation:YES];
-        [self._mapView setUserTrackingMode:YES];
+       
+        //[self._mapView setUserTrackingMode:YES];
+        
         //[self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     }
     self._mapView.contentMode = UIViewContentModeScaleAspectFit;
@@ -737,7 +743,8 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
-        //[self._mapView setUserTrackingMode:NO];
+        
+        // [self._mapView setUserTrackingMode:NO];
         // [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
         
 #warning ПЛОХАЯ КНОПКА!
@@ -772,7 +779,10 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
-        //[self._mapView setUserTrackingMode:YES];
+        
+        // [self._mapView setUserTrackingMode:YES];
+        
+        // [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
         
         //Resize and scroll map to current position
         MKCoordinateRegion region;
