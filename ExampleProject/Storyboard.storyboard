@@ -231,9 +231,9 @@
                                                 <action selector="close:" destination="TVj-Ek-60C" id="i0Y-Ay-XWw"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="CHECK" id="y3A-q0-rv5">
+                                        <barButtonItem key="rightBarButtonItem" title="Favourite" id="y3A-q0-rv5">
                                             <connections>
-                                                <action selector="Check:" destination="TVj-Ek-60C" id="ocA-6W-eFr"/>
+                                                <action selector="favourites:" destination="TVj-Ek-60C" id="thP-6a-c3h"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -243,8 +243,13 @@
                                 </connections>
                             </navigationBar>
                             <view contentMode="scaleToFill" id="vjK-rF-yMY">
-                                <rect key="frame" x="0.0" y="158" width="320" height="402"/>
+                                <rect key="frame" x="0.0" y="158" width="320" height="410"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="eg3-tf-BuJ">
+                                <rect key="frame" x="0.0" y="83" width="320" height="402"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -275,6 +280,7 @@
                     <connections>
                         <outlet property="_mapView" destination="hma-U2-79w" id="cKf-LF-BtH"/>
                         <outlet property="background" destination="uUc-iw-m9V" id="W0m-p2-861"/>
+                        <outlet property="infoCard" destination="eg3-tf-BuJ" id="wBL-hg-w93"/>
                         <outlet property="navBar" destination="qCh-xd-Fue" id="eVk-Q6-9Ce"/>
                         <outlet property="placeCard" destination="vjK-rF-yMY" id="4ZI-Pk-ZiG"/>
                     </connections>

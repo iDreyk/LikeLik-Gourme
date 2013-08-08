@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL FROM_SEARCHBAR;
 //@property (nonatomic, strong) IBOutlet UITableView *placeTableView;
 @property (nonatomic, strong) IBOutlet UIView *placeCard;
+@property (nonatomic, strong) IBOutlet UIView *infoCard;
 @property (nonatomic, strong) IBOutlet MKMapView *_mapView;
 @property (nonatomic) CLLocationCoordinate2D placeCoordinates;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
