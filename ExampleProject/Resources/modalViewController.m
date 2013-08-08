@@ -120,11 +120,41 @@ NSInteger GLOBAL_OFFSET = 0;
     generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
+
+    UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 320, 60)];
+    LikeLikButton.backgroundColor = [UIColor grayColor];
+    [LikeLikButton setTitle:@"LikeLik check" forState:UIControlStateNormal];
+    [self.placeCard addSubview:LikeLikButton];
+    
+    UIButton *infoButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 140, 160, 40)];
+    infoButton.backgroundColor = [UIColor lightGrayColor];
+    [infoButton setTitle:@"info" forState:UIControlStateNormal];
+    [self.placeCard addSubview:infoButton];
+
+    
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 140, 160, 40)];
+    shareButton.backgroundColor = [UIColor lightGrayColor];
+    [shareButton setTitle:@"share" forState:UIControlStateNormal];
+    [self.placeCard addSubview:shareButton];
+    
+    
+    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 180, 160, 40)];
+    menuButton.backgroundColor = [UIColor grayColor];
+    [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
+    [self.placeCard addSubview:menuButton];
+    
+    UIButton *reserveButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 180, 160, 40)];
+    reserveButton.backgroundColor = [UIColor grayColor];
+    [reserveButton setTitle:@"Reserve" forState:UIControlStateNormal];
+    [self.placeCard addSubview:reserveButton];
+    
+    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(0, 220, 320, 100)];
+    photo.backgroundColor = [UIColor blueColor];
+    [photo setTitle:@"Reserve" forState:UIControlStateNormal];
+    [self.placeCard addSubview:photo];
+    
     [self.placeCard addSubview:generalInfo];
 
-    //UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 320, 80)];
-    
-    
 }
 
 -(void)openGeneralInfo:(UIButton *)Sender{
