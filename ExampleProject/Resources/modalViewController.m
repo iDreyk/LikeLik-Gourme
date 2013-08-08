@@ -169,8 +169,9 @@ NSInteger GLOBAL_OFFSET = 0;
     [photo setTitle:@"Photos" forState:UIControlStateNormal];
     [menu addSubview:photo];
     
-    [self.placeCard addSubview:generalInfo];
+    
     [self.placeCard addSubview:menu];
+    [self.placeCard addSubview:generalInfo];
     
     
     
