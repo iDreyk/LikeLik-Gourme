@@ -728,7 +728,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
-        [self._mapView setUserTrackingMode:NO];
+        //[self._mapView setUserTrackingMode:NO];
         
 #warning ПЛОХАЯ КНОПКА!
         //      MKUserTrackingBarButtonItem *buttonItem = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self._mapView];
@@ -762,7 +762,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
-        [self._mapView setUserTrackingMode:YES];
+       // [self._mapView setUserTrackingMode:YES];
         
         //Resize and scroll map to current position
         MKCoordinateRegion region;

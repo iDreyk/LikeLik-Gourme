@@ -93,7 +93,7 @@ static bool REVERSE_ANIM = false;
     tgr.numberOfTapsRequired = 1;
     tgr.numberOfTouchesRequired = 1;
     [self._mapView addGestureRecognizer:tgr];
-    self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0);
+    self._mapView.frame = CGRectMake(0, -44.0, 320, 140.0);
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     span.latitudeDelta = 0.005;
@@ -105,7 +105,7 @@ static bool REVERSE_ANIM = false;
     [self._mapView setRegion:region animated:YES];
     [self._mapView regionThatFits:region];
     
-    [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+   // [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     NSLog(@"Tracking mode changed");
 }
 
@@ -120,18 +120,18 @@ static bool REVERSE_ANIM = false;
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     //    NSLog(@"MAP LOG: update");
-    if(!MAP_PRESENTED){
-        MKCoordinateRegion region;
-        MKCoordinateSpan span;
-        span.latitudeDelta = 0.005;
-        span.longitudeDelta = 0.005;
-        CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-        //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
-        region.span = span;
-        region.center = location;
-        [self._mapView setRegion:region animated:YES];
-        [self._mapView regionThatFits:region];
-    }
+//    if(!MAP_PRESENTED){
+//        MKCoordinateRegion region;
+//        MKCoordinateSpan span;
+//        span.latitudeDelta = 0.005;
+//        span.longitudeDelta = 0.005;
+//        CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
+//        //    NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+//        region.span = span;
+//        region.center = location;
+//        [self._mapView setRegion:region animated:YES];
+//        [self._mapView regionThatFits:region];
+//    }
 }
 
 #pragma mark - Table view data source
@@ -782,7 +782,7 @@ static bool REVERSE_ANIM = false;
         
         // [self._mapView setUserTrackingMode:YES];
         
-        // [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
+        //[self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
         
         //Resize and scroll map to current position
         MKCoordinateRegion region;

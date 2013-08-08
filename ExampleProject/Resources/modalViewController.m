@@ -40,8 +40,9 @@
 @synthesize paycheck;
 @synthesize worktime;
 @synthesize FROM_SEARCHBAR;
-static BOOL MAP_PRESENTED = false;
+static BOOL MAP_PRESENTED = NO;
 static BOOL DELETE_FROM_FAVORITES;
+static BOOL INFO_OPENED = NO;
 
 NSInteger GLOBAL_OFFSET = 0;
 
@@ -122,50 +123,54 @@ NSInteger GLOBAL_OFFSET = 0;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
 
-    UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 81, 320, 60)];
+    
+    UIView *menu = [[UIView alloc] init];
+    CGRect frame = self.placeCard.frame;
+    frame.origin.y = 80;
+    frame.size.height -= 80;
+    menu.frame = frame;
+    
+    UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     LikeLikButton.backgroundColor = [UIColor grayColor];
     [LikeLikButton setTitle:@"LikeLik check" forState:UIControlStateNormal];
     [LikeLikButton addTarget:self action:@selector(Check:) forControlEvents:UIControlEventTouchDown];
-    [self.placeCard addSubview:LikeLikButton];
+    [menu addSubview:LikeLikButton];
     
-    UIButton *infoButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 142, 160, 40)];
-    infoButton.backgroundColor = [UIColor grayColor];
-    [infoButton setTitle:@"info" forState:UIControlStateNormal];
-    UITapGestureRecognizer *openInfo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openInfo:)];
-    [infoButton addGestureRecognizer:openInfo];
-
-    [self.placeCard addSubview:infoButton];
-
-    
-    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 142, 159, 40)];
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 61, 160, 40)];
     shareButton.backgroundColor = [UIColor grayColor];
     [shareButton setTitle:@"share" forState:UIControlStateNormal];
     shareButton.titleLabel.textColor = [UIColor lightGrayColor];
     shareButton.userInteractionEnabled = NO;
-    [self.placeCard addSubview:shareButton];
+    [menu addSubview:shareButton];
     
+    UIButton *infoButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 61, 159, 40)];
+    infoButton.backgroundColor = [UIColor grayColor];
+    [infoButton setTitle:@"info" forState:UIControlStateNormal];
+    UITapGestureRecognizer *openInfo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openInfo:)];
+    [infoButton addGestureRecognizer:openInfo];
+    [menu addSubview:infoButton];
     
-    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 183, 160, 40)];
+    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 102, 160, 40)];
     menuButton.backgroundColor = [UIColor grayColor];
     [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
     menuButton.titleLabel.textColor = [UIColor lightGrayColor];
     menuButton.userInteractionEnabled = NO;
-    [self.placeCard addSubview:menuButton];
+    [menu addSubview:menuButton];
     
-    UIButton *reserveButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 183, 159, 40)];
+    UIButton *reserveButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 102, 159, 40)];
     reserveButton.backgroundColor = [UIColor grayColor];
     [reserveButton setTitle:@"Reserve" forState:UIControlStateNormal];
     reserveButton.titleLabel.textColor = [UIColor lightGrayColor];
     reserveButton.userInteractionEnabled = NO;
-    [self.placeCard addSubview:reserveButton];
+    [menu addSubview:reserveButton];
     
-    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(0, 224, 320, 100)];
+    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(0, 143, 320, 100)];
     photo.backgroundColor = [UIColor blueColor];
     [photo setTitle:@"Photos" forState:UIControlStateNormal];
-    [self.placeCard addSubview:photo];
+    [menu addSubview:photo];
     
     [self.placeCard addSubview:generalInfo];
-
+    [self.placeCard addSubview:menu];
     
     
     
@@ -186,8 +191,10 @@ NSInteger GLOBAL_OFFSET = 0;
         openedFrame.origin.x = 0;
         self.infoCard.frame = openedFrame;
     }];
+    INFO_OPENED = YES;
     }
 -(void)closeInfo:(UIButton *)Sender{
+     INFO_OPENED = NO;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect closedFrame = self.infoCard.frame;
         closedFrame.origin.x = 320;
@@ -257,16 +264,26 @@ NSInteger GLOBAL_OFFSET = 0;
             [subView removeFromSuperview];
         if (subView.tag == 101){
             [UIView animateWithDuration:0.3 animations:^{
+                CGRect theFrame = self._mapView.frame;
+                theFrame.origin.y = 66 - GLOBAL_OFFSET;
+                theFrame.size.height = 96.0 + 2*offset;
+                self._mapView.frame = theFrame;
+                
                 CGRect viewFrame = self.placeCard.frame;
-                viewFrame.origin.y = 158 - GLOBAL_OFFSET;
+                viewFrame.origin.y = 158 - GLOBAL_OFFSET + 2*offset;
                 viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
                 
-                subView.frame = CGRectMake(0, 0 + offset, 320, 80 - 2*offset);
+                subView.frame = CGRectMake(0, 0, 320, 80 - 2*offset);
                 
                 self.placeCard.frame = viewFrame;
 
             }completion:^(BOOL finished) {
                 [UIView animateWithDuration:0.2 animations:^{
+                    CGRect theFrame = self._mapView.frame;
+                    theFrame.origin.y = 66 - GLOBAL_OFFSET;
+                    theFrame.size.height = 96.0;
+                    self._mapView.frame = theFrame;
+                    
                     CGRect viewFrame = self.placeCard.frame;
                     viewFrame.origin.y = 158 - GLOBAL_OFFSET;
                     viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
@@ -648,6 +665,9 @@ NSInteger GLOBAL_OFFSET = 0;
         frame.origin.y = self.view.frame.size.height;
         self._mapView.frame = theFrame;
         self.placeCard.frame = frame;
+        if(INFO_OPENED)
+            self.infoCard.frame = frame;
+        
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
@@ -687,6 +707,8 @@ NSInteger GLOBAL_OFFSET = 0;
         [self.navBar setHidden:NO];
         self._mapView.frame = theFrame;
         self.placeCard.frame = frame;
+        if(INFO_OPENED)
+            self.infoCard.frame = frame;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
@@ -712,6 +734,8 @@ NSInteger GLOBAL_OFFSET = 0;
         frame.origin.y = 158 - GLOBAL_OFFSET;
         frame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
         self.placeCard.frame = frame;
+        if(INFO_OPENED)
+            self.infoCard.frame = frame;
         
         //Remove button
 //        for (UIView *subView in self._mapView.subviews){
