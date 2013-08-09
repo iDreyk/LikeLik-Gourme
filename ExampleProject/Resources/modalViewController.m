@@ -46,11 +46,22 @@ static BOOL INFO_OPENED = NO;
 
 NSInteger GLOBAL_OFFSET = 0;
 
+#define menuTag 102
+#define generalInfoTag 101
+#define generalInfoTextTag 103
+#define backgroundTag 97
+#define nameOfPlaceTag 98
+#define buttonTag 99
+
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+    NSLog(@"%f", self.view.bounds.size.height);
+    CGRect theFrame = self._mapView.frame;
+    theFrame.size.height = 96.0;
+    theFrame.origin.y = 66.0 - GLOBAL_OFFSET;
+    self._mapView.frame = theFrame;
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         CGRect newNav = self.navBar.frame;
         newNav.origin.y = 0;
@@ -113,23 +124,28 @@ NSInteger GLOBAL_OFFSET = 0;
     
     
 #warning Код для "новой" карточки места.
-    UItextViewWithoutSelection *generalInfo = [[UItextViewWithoutSelection alloc] initWithFrame:CGRectMake(0, 0 , 320, 80)];
-    generalInfo.backgroundColor = [UIColor lightGrayColor];
-    generalInfo.scrollEnabled = NO;
-    generalInfo.editable = NO;
-    generalInfo.userInteractionEnabled = YES;
-    generalInfo.tag = 101;
-    generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    UIView *generalInfo = [[UIView alloc] initWithFrame:CGRectMake(0, 0 , 320, 80)];
+    generalInfo.tag = generalInfoTag;
+
+    
+    UItextViewWithoutSelection *generalInfoText = [[UItextViewWithoutSelection alloc] initWithFrame:CGRectMake(0, 0 , 320, self.view.frame.size.height)];
+    generalInfoText.backgroundColor = [UIColor lightGrayColor];
+    generalInfoText.scrollEnabled = NO;
+    generalInfoText.editable = NO;
+    generalInfoText.userInteractionEnabled = YES;
+    generalInfoText.tag = generalInfoTextTag;
+    generalInfoText.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
-
+    [generalInfo addSubview:generalInfoText];
     
     UIView *menu = [[UIView alloc] init];
     CGRect frame = self.placeCard.frame;
+    menu.backgroundColor = [UIColor whiteColor];
     frame.origin.y = 80;
-    frame.size.height -= 80;
+    //frame.size.height -= 80;
     menu.frame = frame;
-    menu.tag = 102;
+    menu.tag = menuTag;
     
     UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     LikeLikButton.backgroundColor = [UIColor grayColor];
@@ -171,9 +187,9 @@ NSInteger GLOBAL_OFFSET = 0;
     [menu addSubview:photo];
     
     
-    [self.placeCard addSubview:menu];
     [self.placeCard addSubview:generalInfo];
-    
+    [self.placeCard addSubview:menu];
+
     
     
     self.infoCard.frame = self.placeCard.frame;
@@ -206,7 +222,7 @@ NSInteger GLOBAL_OFFSET = 0;
 
 -(void)openGeneralInfo:(UIButton *)Sender{
     for (UIView *subView in self.placeCard.subviews){
-        if (subView.tag == 101){
+        if (subView.tag == generalInfoTag){
             for (UIGestureRecognizer *recognizer in subView.gestureRecognizers) {
                 [subView removeGestureRecognizer:recognizer];
             }
@@ -231,12 +247,12 @@ NSInteger GLOBAL_OFFSET = 0;
                 nameOfPlace.backgroundColor = color;
                 nameOfPlace.textAlignment = NSTextAlignmentCenter;
                 nameOfPlace.textColor = [UIColor blackColor];
-                nameOfPlace.tag = 98;
+                nameOfPlace.tag = nameOfPlaceTag;
                 
                 UILabel *background = [[UILabel alloc] init];
                 background.frame = CGRectMake(260, 0, 60, 44);
                 background.backgroundColor = color;
-                background.tag = 97;
+                background.tag = backgroundTag;
 
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 //button.backgroundColor = [UIColor grayColor];
@@ -247,11 +263,23 @@ NSInteger GLOBAL_OFFSET = 0;
                 button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
                 button.titleLabel.textColor = [UIColor blackColor];
                 [button addTarget:self action:@selector(closeGeneralInfo:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
-                button.tag = 99;
+                button.tag = buttonTag;
                 
                 [self.placeCard addSubview:nameOfPlace];
                 [self.placeCard addSubview:button];
                 [self.placeCard addSubview:background];
+                
+                for (UIView *subView in self.placeCard.subviews){
+                    if (subView.tag == menuTag) {
+                        CGRect frame = subView.frame;
+                        frame.origin.y = self.view.frame.size.height;
+                        subView.frame = frame;
+                        break;
+                    }
+                }
+                CGRect mapFrame = self._mapView.frame;
+                mapFrame.size.height = 0;
+                self._mapView.frame = mapFrame;
             }];
             break;
         }
@@ -259,12 +287,17 @@ NSInteger GLOBAL_OFFSET = 0;
     NSLog(@"TOUCHED!");
 }
 -(void)closeGeneralInfo:(UIButton *)Sender{
-    float offset = 10;
+    float offset = 20;
     for (UIView *subView in self.placeCard.subviews){
-        if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
-            [subView removeFromSuperview];
-        if (subView.tag == 101){
-            [UIView animateWithDuration:0.3 animations:^{
+//        if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
+//            [subView removeFromSuperview];
+        if (subView.tag == generalInfoTag){
+            [self.placeCard bringSubviewToFront:subView];
+            for (UIView *menu in self.placeCard.subviews){
+                if (menu.tag == menuTag)
+                    [self.placeCard bringSubviewToFront:menu];
+                }
+            [UIView animateWithDuration:0.4 animations:^{
                 CGRect theFrame = self._mapView.frame;
                 theFrame.origin.y = 66 - GLOBAL_OFFSET;
                 theFrame.size.height = 96.0 + offset;
@@ -279,7 +312,7 @@ NSInteger GLOBAL_OFFSET = 0;
                 self.placeCard.frame = viewFrame;
                 
                 for (UIView *subView in self.placeCard.subviews){
-                    if (subView.tag == 102) {
+                    if (subView.tag == menuTag) {
                         CGRect frame = subView.frame;
                         frame.origin.y = 80 - 2*offset;
 //                        frame.size.height += 80 - 2 * offset;
@@ -289,7 +322,11 @@ NSInteger GLOBAL_OFFSET = 0;
                 }
 
             }completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 animations:^{
+                [UIView animateWithDuration:0.4 animations:^{
+                    for (UIView *subView in self.placeCard.subviews){
+                        if(subView.tag == backgroundTag || subView.tag == buttonTag || subView.tag == nameOfPlaceTag)
+                            [subView removeFromSuperview];
+                    }
                     CGRect theFrame = self._mapView.frame;
                     theFrame.origin.y = 66 - GLOBAL_OFFSET;
                     theFrame.size.height = 96.0;
@@ -303,10 +340,10 @@ NSInteger GLOBAL_OFFSET = 0;
                     
                     self.placeCard.frame = viewFrame;
                     for (UIView *subView in self.placeCard.subviews){
-                        if (subView.tag == 102) {
+                        if (subView.tag == menuTag) {
                             CGRect frame = self.placeCard.frame;
                             frame.origin.y = 80;
-                            frame.size.height -= 80;
+                        //    frame.size.height -= 80;
                             subView.frame = frame;
                             break;
                         }
@@ -706,14 +743,14 @@ NSInteger GLOBAL_OFFSET = 0;
         [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [button addTarget:self action:@selector(closeMap:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
-        button.tag = 99;
+        button.tag = buttonTag;
         [self._mapView addSubview:button];
         
     }];
 }
 -(void)closeMap:(id)sender{
    for (UIView *subView in self._mapView.subviews){
-        if (subView.tag == 99)
+        if (subView.tag == buttonTag)
             [subView removeFromSuperview];
     }
     float offset = 30;
