@@ -129,6 +129,7 @@ NSInteger GLOBAL_OFFSET = 0;
     frame.origin.y = 80;
     frame.size.height -= 80;
     menu.frame = frame;
+    menu.tag = 102;
     
     UIButton *LikeLikButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     LikeLikButton.backgroundColor = [UIColor grayColor];
@@ -248,7 +249,6 @@ NSInteger GLOBAL_OFFSET = 0;
                 [button addTarget:self action:@selector(closeGeneralInfo:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
                 button.tag = 99;
                 
-                
                 [self.placeCard addSubview:nameOfPlace];
                 [self.placeCard addSubview:button];
                 [self.placeCard addSubview:background];
@@ -259,7 +259,7 @@ NSInteger GLOBAL_OFFSET = 0;
     NSLog(@"TOUCHED!");
 }
 -(void)closeGeneralInfo:(UIButton *)Sender{
-    float offset = 20;
+    float offset = 10;
     for (UIView *subView in self.placeCard.subviews){
         if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
             [subView removeFromSuperview];
@@ -267,16 +267,26 @@ NSInteger GLOBAL_OFFSET = 0;
             [UIView animateWithDuration:0.3 animations:^{
                 CGRect theFrame = self._mapView.frame;
                 theFrame.origin.y = 66 - GLOBAL_OFFSET;
-                theFrame.size.height = 96.0 + 2*offset;
+                theFrame.size.height = 96.0 + offset;
                 self._mapView.frame = theFrame;
                 
                 CGRect viewFrame = self.placeCard.frame;
-                viewFrame.origin.y = 158 - GLOBAL_OFFSET + 2*offset;
+                viewFrame.origin.y = 158 - GLOBAL_OFFSET + offset;
                 viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
                 
                 subView.frame = CGRectMake(0, 0, 320, 80 - 2*offset);
                 
                 self.placeCard.frame = viewFrame;
+                
+                for (UIView *subView in self.placeCard.subviews){
+                    if (subView.tag == 102) {
+                        CGRect frame = subView.frame;
+                        frame.origin.y = 80 - 2*offset;
+//                        frame.size.height += 80 - 2 * offset;
+                        subView.frame = frame;
+                        break;
+                    }
+                }
 
             }completion:^(BOOL finished) {
                 [UIView animateWithDuration:0.2 animations:^{
@@ -292,7 +302,16 @@ NSInteger GLOBAL_OFFSET = 0;
                     subView.frame = CGRectMake(0, 0, 320, 80);
                     
                     self.placeCard.frame = viewFrame;
-                    
+                    for (UIView *subView in self.placeCard.subviews){
+                        if (subView.tag == 102) {
+                            CGRect frame = self.placeCard.frame;
+                            frame.origin.y = 80;
+                            frame.size.height -= 80;
+                            subView.frame = frame;
+                            break;
+                        }
+                    }
+
                     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
                     [subView addGestureRecognizer:singleTap];
 

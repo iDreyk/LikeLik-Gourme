@@ -715,6 +715,9 @@ static bool REVERSE_ANIM = false;
 - (void)openMap:(UIGestureRecognizer *)gestureRecognizer
 {
     MAP_PRESENTED = true;
+    for (UIGestureRecognizer *recognizer in self._mapView.gestureRecognizers) {
+        [self._mapView removeGestureRecognizer:recognizer];
+    }
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
     [UIView animateWithDuration:0.3 animations:^{
