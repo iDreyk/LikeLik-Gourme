@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "CheckViewController.h"
+#import "LAAnimatedGrid.h"
 @interface modalViewController : UIViewController{
     CheckViewController *VC;
 }

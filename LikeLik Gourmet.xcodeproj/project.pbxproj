@@ -284,6 +284,9 @@
 		DAD0C3E6172088010031B4E0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD0C3E5172088010031B4E0 /* Icon.png */; };
 		DAF5A79D171D45F8007D143C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF5A79C171D45F8007D143C /* Storyboard.storyboard */; };
 		DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF5A79F171D537E007D143C /* UIViewController+MKDSlideViewController.m */; };
+		FA24B8F917B53BF90016D8A5 /* LAAnimatedGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */; };
+		FA24B8FA17B53BF90016D8A5 /* LAAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */; };
+		FA24B8FC17B53C090016D8A5 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FA24B8FB17B53C090016D8A5 /* images.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -613,6 +616,11 @@
 		DAF5A79C171D45F8007D143C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		DAF5A79E171D537E007D143C /* UIViewController+MKDSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MKDSlideViewController.h"; sourceTree = "<group>"; };
 		DAF5A79F171D537E007D143C /* UIViewController+MKDSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MKDSlideViewController.m"; sourceTree = "<group>"; };
+		FA24B8F517B53BF90016D8A5 /* LAAnimatedGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAAnimatedGrid.h; sourceTree = "<group>"; };
+		FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedGrid.m; sourceTree = "<group>"; };
+		FA24B8F717B53BF90016D8A5 /* LAAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAAnimatedView.h; sourceTree = "<group>"; };
+		FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedView.m; sourceTree = "<group>"; };
+		FA24B8FB17B53C090016D8A5 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -927,6 +935,8 @@
 		DA953C55148AD36F0075A1E2 = {
 			isa = PBXGroup;
 			children = (
+				FA24B8FB17B53C090016D8A5 /* images.bundle */,
+				FA24B8F417B53BF90016D8A5 /* LAAnimatedGrid */,
 				DA953C84148AD3820075A1E2 /* Slide View Controller */,
 				DA953C6A148AD3700075A1E2 /* Example Project */,
 				DA953C63148AD3700075A1E2 /* Frameworks */,
@@ -1077,6 +1087,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		FA24B8F417B53BF90016D8A5 /* LAAnimatedGrid */ = {
+			isa = PBXGroup;
+			children = (
+				FA24B8F517B53BF90016D8A5 /* LAAnimatedGrid.h */,
+				FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */,
+				FA24B8F717B53BF90016D8A5 /* LAAnimatedView.h */,
+				FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */,
+			);
+			path = LAAnimatedGrid;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1179,6 +1200,7 @@
 				910E25181786A12900C94F8A /* 212_100 Tabitem_place_3_2use_normal@2x.png in Resources */,
 				910E25191786A12900C94F8A /* 212_100 Tabitem_place_3_2use_selected@2x.png in Resources */,
 				910E251A1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_normal@2x.png in Resources */,
+				FA24B8FC17B53C090016D8A5 /* images.bundle in Resources */,
 				910E251B1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_selected@2x.png in Resources */,
 				910E251C1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_normal@2x.png in Resources */,
 				910E251D1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_selected@2x.png in Resources */,
@@ -1388,7 +1410,9 @@
 				DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */,
 				D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */,
 				DAD0C3D0172079390031B4E0 /* LeftViewController.m in Sources */,
+				FA24B8FA17B53BF90016D8A5 /* LAAnimatedView.m in Sources */,
 				DAD0C3D317207A2C0031B4E0 /* RightViewController.m in Sources */,
+				FA24B8F917B53BF90016D8A5 /* LAAnimatedGrid.m in Sources */,
 				D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */,
 				D00782351758C7D800D4612F /* modalViewController.m in Sources */,
 				D00D2D82178578BA00232D7F /* LocalizationSystem.m in Sources */,

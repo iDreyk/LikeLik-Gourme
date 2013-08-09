@@ -119,6 +119,7 @@ NSInteger GLOBAL_OFFSET = 0;
     generalInfo.editable = NO;
     generalInfo.userInteractionEnabled = YES;
     generalInfo.tag = 101;
+    
     generalInfo.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
@@ -165,11 +166,27 @@ NSInteger GLOBAL_OFFSET = 0;
     reserveButton.userInteractionEnabled = NO;
     [menu addSubview:reserveButton];
     
-    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(0, 143, 320, 100)];
-    photo.backgroundColor = [UIColor blueColor];
-    [photo setTitle:@"Photos" forState:UIControlStateNormal];
-    [menu addSubview:photo];
+//    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(0, 143, 320, 100)];
+//    photo.backgroundColor = [UIColor blueColor];
+//    [photo setTitle:@"Photos" forState:UIControlStateNormal];
+//    [menu addSubview:photo];
     
+    LAAnimatedGrid *photo;
+    NSMutableArray *arrImages = [NSMutableArray array];
+    for (int i=1; i<11; i++)
+    {
+        [arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpeg", i]]];
+    }
+    
+    
+    // LAAnimatedGrid
+    photo = [[LAAnimatedGrid alloc] initWithFrame:CGRectMake(0, 143, 320, 100)];
+    [photo setArrImages:arrImages];
+    [photo setLaagOrientation:LAAGOrientationHorizontal];
+    [photo setLaagBorderColor:[UIColor whiteColor]];
+    [photo setLaagBackGroundColor:[UIColor whiteColor]];
+    [menu addSubview:photo];
+
     
     [self.placeCard addSubview:menu];
     [self.placeCard addSubview:generalInfo];
@@ -264,7 +281,9 @@ NSInteger GLOBAL_OFFSET = 0;
         if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
             [subView removeFromSuperview];
         if (subView.tag == 101){
-            [UIView animateWithDuration:0.3 animations:^{
+            NSLog(@"animating initiated");
+            [UIView animateWithDuration:5.3 animations:^{
+                NSLog(@"animating started");
                 CGRect theFrame = self._mapView.frame;
                 theFrame.origin.y = 66 - GLOBAL_OFFSET;
                 theFrame.size.height = 96.0 + offset;
@@ -287,9 +306,11 @@ NSInteger GLOBAL_OFFSET = 0;
                         break;
                     }
                 }
+                NSLog(@"animating done");
 
             }completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 animations:^{
+                 NSLog(@"animating finished");
+                [UIView animateWithDuration:5.2 animations:^{
                     CGRect theFrame = self._mapView.frame;
                     theFrame.origin.y = 66 - GLOBAL_OFFSET;
                     theFrame.size.height = 96.0;
