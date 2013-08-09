@@ -188,6 +188,7 @@ NSInteger GLOBAL_OFFSET = 0;
     
     LAAnimatedGrid *photo;
     NSMutableArray *arrImages = [NSMutableArray array];
+    //[arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios6.jpeg"]]];
     for (int i=1; i<11; i++)
     {
         [arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpg", i]]];

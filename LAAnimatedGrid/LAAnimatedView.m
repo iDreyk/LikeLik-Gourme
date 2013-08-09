@@ -317,7 +317,7 @@ typedef enum
 
 - (int)giveRandomNumAnimation
 {
-    return arc4random() % [_animations count];
+    return arc4random() % 3;//[_animations count];
 }
 
 @end

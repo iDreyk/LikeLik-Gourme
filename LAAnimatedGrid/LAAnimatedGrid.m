@@ -23,7 +23,7 @@
 #import "LAAnimatedView.h"
 
 #define MAX_RANDOM_SEC          5
-#define MARGIN                  5
+#define MARGIN                  1
 #define ANIMATION_DURATION      5.0f
 #define GRID_ANIMATION_DELAY    10.0f
 

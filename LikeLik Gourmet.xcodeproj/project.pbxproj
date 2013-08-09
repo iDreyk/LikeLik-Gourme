@@ -267,7 +267,7 @@
 		D0C2AC4A1783F5BC00B42E56 /* 5star.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C2AC451783F5BC00B42E56 /* 5star.png */; };
 		D0E7E9A4174B6C1500BE51D3 /* contB.png in Resources */ = {isa = PBXBuildFile; fileRef = D0E7E9A3174B6C1500BE51D3 /* contB.png */; };
 		D0E7E9AD174B812000BE51D3 /* newMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */; };
-		D0FBAAFA17B5412700A643D7 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0FBAAF917B5412700A643D7 /* images.bundle */; };
+		D0FBAB2817B5524B00A643D7 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0FBAB2717B5524B00A643D7 /* images.bundle */; };
 		DA953C65148AD3700075A1E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C64148AD3700075A1E2 /* UIKit.framework */; };
 		DA953C67148AD3700075A1E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C66148AD3700075A1E2 /* Foundation.framework */; };
 		DA953C69148AD3700075A1E2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA953C68148AD3700075A1E2 /* CoreGraphics.framework */; };
@@ -591,7 +591,7 @@
 		D0E7E9A3174B6C1500BE51D3 /* contB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contB.png; sourceTree = "<group>"; };
 		D0E7E9AB174B811F00BE51D3 /* newMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newMainViewController.h; sourceTree = "<group>"; };
 		D0E7E9AC174B811F00BE51D3 /* newMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newMainViewController.m; sourceTree = "<group>"; };
-		D0FBAAF917B5412700A643D7 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
+		D0FBAB2717B5524B00A643D7 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 		DA953C60148AD3700075A1E2 /* LikeLik Gourmet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LikeLik Gourmet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA953C64148AD3700075A1E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DA953C66148AD3700075A1E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -935,7 +935,7 @@
 		DA953C55148AD36F0075A1E2 = {
 			isa = PBXGroup;
 			children = (
-				D0FBAAF917B5412700A643D7 /* images.bundle */,
+				D0FBAB2717B5524B00A643D7 /* images.bundle */,
 				FA24B8F417B53BF90016D8A5 /* LAAnimatedGrid */,
 				DA953C84148AD3820075A1E2 /* Slide View Controller */,
 				DA953C6A148AD3700075A1E2 /* Example Project */,
@@ -1200,7 +1200,7 @@
 				910E25181786A12900C94F8A /* 212_100 Tabitem_place_3_2use_normal@2x.png in Resources */,
 				910E25191786A12900C94F8A /* 212_100 Tabitem_place_3_2use_selected@2x.png in Resources */,
 				910E251A1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_normal@2x.png in Resources */,
-				D0FBAAFA17B5412700A643D7 /* images.bundle in Resources */,
+				D0FBAB2817B5524B00A643D7 /* images.bundle in Resources */,
 				910E251B1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_selected@2x.png in Resources */,
 				910E251C1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_normal@2x.png in Resources */,
 				910E251D1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_selected@2x.png in Resources */,
