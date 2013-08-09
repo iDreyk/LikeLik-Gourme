@@ -190,7 +190,7 @@ NSInteger GLOBAL_OFFSET = 0;
     NSMutableArray *arrImages = [NSMutableArray array];
     for (int i=1; i<11; i++)
     {
-        [arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpeg", i]]];
+        [arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpg", i]]];
     }
     
     
@@ -306,12 +306,15 @@ NSInteger GLOBAL_OFFSET = 0;
 -(void)closeGeneralInfo:(UIButton *)Sender{
     float offset = 20;
     for (UIView *subView in self.placeCard.subviews){
-        if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
-            [subView removeFromSuperview];
-        if (subView.tag == 101){
-            NSLog(@"animating initiated");
-            [UIView animateWithDuration:5.3 animations:^{
-                NSLog(@"animating started");
+//        if(subView.tag == 97 || subView.tag == 98 || subView.tag == 99)
+//            [subView removeFromSuperview];
+        if (subView.tag == generalInfoTag){
+            [self.placeCard bringSubviewToFront:subView];
+            for (UIView *menu in self.placeCard.subviews){
+                if (menu.tag == menuTag)
+                    [self.placeCard bringSubviewToFront:menu];
+                }
+            [UIView animateWithDuration:0.4 animations:^{
                 CGRect theFrame = self._mapView.frame;
                 theFrame.origin.y = 66 - GLOBAL_OFFSET;
                 theFrame.size.height = 96.0 + offset;
@@ -337,8 +340,11 @@ NSInteger GLOBAL_OFFSET = 0;
                 NSLog(@"animating done");
 
             }completion:^(BOOL finished) {
-                 NSLog(@"animating finished");
-                [UIView animateWithDuration:5.2 animations:^{
+                [UIView animateWithDuration:0.4 animations:^{
+                    for (UIView *subView in self.placeCard.subviews){
+                        if(subView.tag == backgroundTag || subView.tag == buttonTag || subView.tag == nameOfPlaceTag)
+                            [subView removeFromSuperview];
+                    }
                     CGRect theFrame = self._mapView.frame;
                     theFrame.origin.y = 66 - GLOBAL_OFFSET;
                     theFrame.size.height = 96.0;
