@@ -126,7 +126,7 @@ static bool REVERSE_ANIM = false;
         span.latitudeDelta = 0.005;
         span.longitudeDelta = 0.005;
         CLLocationCoordinate2D location = self._mapView.userLocation.coordinate;
-        NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
+//        NSLog(@"MAP LOG: coordinates: %f, %f", location.latitude, location.longitude);
         region.span = span;
         region.center = location;
         [self._mapView setRegion:region animated:YES];

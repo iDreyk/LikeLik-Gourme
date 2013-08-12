@@ -128,13 +128,16 @@ NSInteger GLOBAL_OFFSET = 0;
     generalInfo.tag = generalInfoTag;
 
     
-    UItextViewWithoutSelection *generalInfoText = [[UItextViewWithoutSelection alloc] initWithFrame:CGRectMake(0, 0 , 320, self.view.frame.size.height)];
+    UItextViewWithoutSelection *generalInfoText = [[UItextViewWithoutSelection alloc] initWithFrame:CGRectMake(0, 0 , 320, self.view.frame.size.height - 66 + GLOBAL_OFFSET)];
     generalInfoText.backgroundColor = [UIColor lightGrayColor];
     generalInfoText.scrollEnabled = NO;
     generalInfoText.editable = NO;
     generalInfoText.userInteractionEnabled = YES;
     generalInfoText.tag = generalInfoTextTag;
-    generalInfoText.text = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    [generalInfoText setFont:[UIFont systemFontOfSize:12]];
+
+    NSString *test = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    generalInfoText.text = [NSString stringWithFormat:@"The nearest metro station is %@.\nThe average bill is %@ rubles.\nWorking hours: %@.\n\n%@", self.subway, self.paycheck, self.worktime, test];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
     [generalInfo addSubview:generalInfoText];
@@ -153,28 +156,28 @@ NSInteger GLOBAL_OFFSET = 0;
     [LikeLikButton addTarget:self action:@selector(Check:) forControlEvents:UIControlEventTouchDown];
     [menu addSubview:LikeLikButton];
     
-    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 61, 160, 40)];
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 162, 160, 40)];
     shareButton.backgroundColor = [UIColor grayColor];
     [shareButton setTitle:@"share" forState:UIControlStateNormal];
     shareButton.titleLabel.textColor = [UIColor lightGrayColor];
     shareButton.userInteractionEnabled = NO;
     [menu addSubview:shareButton];
     
-    UIButton *infoButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 61, 159, 40)];
+    UIButton *infoButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 162, 159, 40)];
     infoButton.backgroundColor = [UIColor grayColor];
     [infoButton setTitle:@"info" forState:UIControlStateNormal];
     UITapGestureRecognizer *openInfo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openInfo:)];
     [infoButton addGestureRecognizer:openInfo];
     [menu addSubview:infoButton];
     
-    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 102, 160, 40)];
+    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 203, 160, 40)];
     menuButton.backgroundColor = [UIColor grayColor];
     [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
     menuButton.titleLabel.textColor = [UIColor lightGrayColor];
     menuButton.userInteractionEnabled = NO;
     [menu addSubview:menuButton];
     
-    UIButton *reserveButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 102, 159, 40)];
+    UIButton *reserveButton = [[UIButton alloc] initWithFrame:CGRectMake(161, 203, 159, 40)];
     reserveButton.backgroundColor = [UIColor grayColor];
     [reserveButton setTitle:@"Reserve" forState:UIControlStateNormal];
     reserveButton.titleLabel.textColor = [UIColor lightGrayColor];
@@ -196,7 +199,7 @@ NSInteger GLOBAL_OFFSET = 0;
     
     
     // LAAnimatedGrid
-    photo = [[LAAnimatedGrid alloc] initWithFrame:CGRectMake(0, 143, 320, 100)];
+    photo = [[LAAnimatedGrid alloc] initWithFrame:CGRectMake(0, 61, 320, 100)];
     [photo setArrImages:arrImages];
     [photo setLaagOrientation:LAAGOrientationHorizontal];
     [photo setLaagBorderColor:[UIColor whiteColor]];
@@ -248,11 +251,17 @@ NSInteger GLOBAL_OFFSET = 0;
                 CGRect frame = subView.frame;
                 CGRect viewFrame = self.placeCard.frame;
                 viewFrame.origin.y = 22 - GLOBAL_OFFSET;
-                viewFrame.size.height = self.view.frame.size.height - 22;
+                viewFrame.size.height = self.view.frame.size.height - 22 + GLOBAL_OFFSET;
                 
                 frame.origin.y = 44;
                 frame.size.height = viewFrame.size.height;//self.view.frame.size.height - 22;
                 
+                for (UItextViewWithoutSelection *sb in subView.subviews){
+                    if (sb.tag == generalInfoTextTag){
+                        [sb setFont:[UIFont systemFontOfSize:16]];
+                        sb.scrollEnabled = YES;
+                    }
+                }
                 subView.frame = frame;
                 self.placeCard.frame = viewFrame;
                 
@@ -290,7 +299,7 @@ NSInteger GLOBAL_OFFSET = 0;
                 for (UIView *subView in self.placeCard.subviews){
                     if (subView.tag == menuTag) {
                         CGRect frame = subView.frame;
-                        frame.origin.y = self.view.frame.size.height;
+                        frame.origin.y = self.view.frame.size.height + GLOBAL_OFFSET;
                         subView.frame = frame;
                         break;
                     }
@@ -326,7 +335,12 @@ NSInteger GLOBAL_OFFSET = 0;
                 viewFrame.size.height = self.view.frame.size.height - 158 + GLOBAL_OFFSET;
                 
                 subView.frame = CGRectMake(0, 0, 320, 80 - 2*offset);
-                
+                for (UItextViewWithoutSelection *sb in subView.subviews){
+                    if (sb.tag == generalInfoTextTag){
+                        [sb setFont:[UIFont systemFontOfSize:12]];
+                        sb.scrollEnabled = NO;
+                    }
+                }
                 self.placeCard.frame = viewFrame;
                 
                 for (UIView *subView in self.placeCard.subviews){
