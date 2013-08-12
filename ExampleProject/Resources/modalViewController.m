@@ -43,9 +43,9 @@
 static BOOL MAP_PRESENTED = NO;
 static BOOL DELETE_FROM_FAVORITES;
 static BOOL INFO_OPENED = NO;
-
 NSInteger GLOBAL_OFFSET = 0;
 
+#pragma mark - Tags
 #define menuTag 102
 #define generalInfoTag 101
 #define generalInfoTextTag 103
@@ -197,8 +197,8 @@ NSInteger GLOBAL_OFFSET = 0;
     {
         
         CGSize size;
-        size.height = 355;
-        size.width = 200;
+        size.height = 443;
+        size.width = 250;
         UIImage * obj = [UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios_%d.jpg", i]];
         UIGraphicsBeginImageContext(size);
         [obj drawInRect:CGRectMake(0, 0, size.width, size.height)];
@@ -234,6 +234,8 @@ NSInteger GLOBAL_OFFSET = 0;
     [self.infoCard addGestureRecognizer:swipeToClose];
 
 }
+
+#pragma mark - Animation
 
 -(void)openInfo:(UIButton *)Sender{
     [UIView animateWithDuration:0.3 animations:^{
