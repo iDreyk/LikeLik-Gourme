@@ -25,7 +25,7 @@
 
 
 #define FADE_DURATION           0.4f
-#define ANIMATION_DURATION      5.0f
+#define ANIMATION_DURATION      4.0f
 
 typedef enum
 {
@@ -135,7 +135,7 @@ typedef enum
     [_scrollView sendSubviewToBack:_imgView];
     
     // adjust image
-    //[self adjustImage];
+    [self adjustImage];
 }
 
 - (void)setScrollBackGroundColor:(UIColor *)aColor
@@ -187,9 +187,8 @@ typedef enum
     {
         // set the image in the UIImageView
         [self changeImage];
-        _imgView.frame = (CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=_image.size};
-        
-        
+        //_imgView.frame = (CGRect){.origin=CGPointMake(0.0f, 0.0f), .size=_image.size};
+        _imgView.frame = CGRectMake(0, 0, _image.size.width, _image.size.height);
         // ContentSize and ZoomScale
         _scrollView.contentSize         = _image.size;
         CGRect scrollViewFrame          = _scrollView.frame;
@@ -317,7 +316,7 @@ typedef enum
 
 - (int)giveRandomNumAnimation
 {
-    return arc4random() % 3;//[_animations count];
+    return arc4random() % 2;//[_animations count];
 }
 
 @end
