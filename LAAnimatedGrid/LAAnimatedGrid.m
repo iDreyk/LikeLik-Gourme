@@ -76,6 +76,8 @@ typedef enum
     return self;
 }
 
+
+
 - (void)dealloc
 {
     if (imageTimer)
@@ -277,6 +279,10 @@ typedef enum
     imageTimer = [NSTimer scheduledTimerWithTimeInterval:[self giveRandomSeconds] target:self selector:@selector(randomizeImage) userInfo:nil repeats:NO];
     gridTimer  = [NSTimer scheduledTimerWithTimeInterval:GRID_ANIMATION_DELAY target:self selector:@selector(animateGrids) userInfo:nil repeats:YES];
 }
+
+
+
+
 
 - (void)randomizeImage
 {

@@ -55,6 +55,7 @@ NSInteger GLOBAL_OFFSET = 0;
 
 #pragma mark - Table view delegate
 
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     NSLog(@"%f", self.view.bounds.size.height);
@@ -191,7 +192,17 @@ NSInteger GLOBAL_OFFSET = 0;
     //[arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios6.jpeg"]]];
     for (int i=1; i<11; i++)
     {
-        [arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpg", i]]];
+        
+        CGSize size;
+        size.height = 355;
+        size.width = 200;
+        UIImage * obj = [UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios_%d.jpg", i]];
+        UIGraphicsBeginImageContext(size);
+        [obj drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        [arrImages addObject:image];
     }
     
     

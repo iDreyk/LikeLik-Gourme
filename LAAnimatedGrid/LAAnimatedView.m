@@ -270,10 +270,10 @@ typedef enum
 - (void)zoomInAnimation
 {
     CGRect contentsFrame        = _imgView.frame;
-    contentsFrame.origin.x     -= (contentsFrame.size.width*0.2)/2;
-    contentsFrame.origin.y     -= (contentsFrame.size.height*0.2)/2;
-    contentsFrame.size.width   -= contentsFrame.size.width*0.2;
-    contentsFrame.size.height  -= contentsFrame.size.height*0.2;
+    contentsFrame.origin.x     -= 0.1*(contentsFrame.size.width*0.2)/2;
+    contentsFrame.origin.y     -= 0.1*(contentsFrame.size.height*0.2)/2;
+    contentsFrame.size.width   -= 0.1*contentsFrame.size.width*0.2;
+    contentsFrame.size.height  -= 0.1*contentsFrame.size.height*0.2;
     
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         _imgView.frame = contentsFrame;
@@ -283,10 +283,10 @@ typedef enum
 - (void)zoomOutAnimation
 {
     CGRect contentsFrame        = _imgView.frame;
-    contentsFrame.origin.x     += (contentsFrame.size.width*0.2)/2;
-    contentsFrame.origin.y     += (contentsFrame.size.height*0.2)/2;
-    contentsFrame.size.width   += contentsFrame.size.width*0.2;
-    contentsFrame.size.height  += contentsFrame.size.height*0.2;
+    contentsFrame.origin.x     += 0.1*(contentsFrame.size.width*0.2)/2;
+    contentsFrame.origin.y     += 0.1*(contentsFrame.size.height*0.2)/2;
+    contentsFrame.size.width   += 0.1*contentsFrame.size.width*0.2/10;
+    contentsFrame.size.height  += 0.1*contentsFrame.size.height*0.2;
     
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         _imgView.frame = contentsFrame;
@@ -316,7 +316,7 @@ typedef enum
 
 - (int)giveRandomNumAnimation
 {
-    return arc4random() % 2;//[_animations count];
+    return arc4random() % 4;//[_animations count];
 }
 
 @end
