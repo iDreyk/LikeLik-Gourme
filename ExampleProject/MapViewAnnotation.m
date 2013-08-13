@@ -25,7 +25,5 @@
     return title;
 }
 
-- (void)dealloc {
-}
 
 @end

@@ -68,11 +68,11 @@ typedef enum
 // placeholderImage  -> The placeholder image to show when the images are URLs
 
 @property (nonatomic, assign) LAAGOrientation laagOrientation;
-@property (nonatomic, retain) NSMutableArray *arrImages;
-@property (nonatomic, retain) UIImage *placeholderImage;
+@property (nonatomic, strong) NSMutableArray *arrImages;
+@property (nonatomic, strong) UIImage *placeholderImage;
 @property (nonatomic, assign) int margin;
-@property (nonatomic, retain) UIColor *laagBorderColor;
-@property (nonatomic, retain) UIColor *laagBackGroundColor;
+@property (nonatomic, strong) UIColor *laagBorderColor;
+@property (nonatomic, strong) UIColor *laagBackGroundColor;
 
 
 

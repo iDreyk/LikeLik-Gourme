@@ -46,7 +46,7 @@ typedef enum
     LAAVAnimation animation;
 }
 
-@property (nonatomic, retain) UIColor *laagBackGroundColor;
+@property (nonatomic, strong) UIColor *laagBackGroundColor;
 
 @end
 
