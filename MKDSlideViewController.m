@@ -296,11 +296,15 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
         (gesture.state == UIGestureRecognizerStateEnded))
     {
         CGPoint velocity = [gesture velocityInView:self.view];
-        
-        if (fabs(velocity.y > 0) && fabs(velocity.x) < 30 && !self.leftSwipe && !self.rightSwipe)   // panning down or up
+        NSLog(@"LOG: swipe detected. Velocity:%f, %f",velocity.x, velocity.y);
+
+        if (fabs(velocity.y) > 0 && fabs(velocity.x) < 30 /*&& !self.leftSwipe && !self.rightSwipe*/)   // panning down or up
         {
             gesture.enabled = NO;
             gesture.enabled = YES;
+            NSLog(@"LOG: UP-DOWN SWIPE! EXIT!");
+
+            return;
         }
     }
     
@@ -308,13 +312,13 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     CGFloat snapThreshold = 0.0f;
     CGFloat dividerPosition = 0.0f;
     //    UIApplication * app = [UIApplication sharedApplication];
-    //    NSLog(@"LOG: swipe detected. offset:%f, %d",xOffset, self.leftSwipe);
+    NSLog(@"LOG: swipe detected. offset:%f, %d",xOffset, self.leftSwipe);
     if( xOffset > (dividerPosition-snapThreshold) /*&& !self.leftSwipe*/)
     {
         _leftPanelView.layer.shadowRadius = 10.0;
         
         // snap to right position
-        //       NSLog(@"LOG: swipe from left");
+        NSLog(@"LOG: swipe from left");
         self.leftSwipe = YES;
         self.rightSwipe = NO;
         CGRect newFrame = self.mainPanelView.frame;
@@ -362,7 +366,7 @@ typedef NS_ENUM(NSInteger, MKDSlideViewControllerPositionType) {
     }
     
     else if(xOffset <= (dividerPosition-snapThreshold)){
-        //        NSLog(@"LOG: swipe from right");
+        NSLog(@"LOG: swipe from right");
         self.leftSwipe = NO;
         self.rightSwipe = YES;
         

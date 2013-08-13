@@ -419,6 +419,7 @@ static bool REVERSE_ANIM = false;
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if([cell.contentView.subviews count] > 0)
         [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
@@ -735,7 +736,7 @@ static bool REVERSE_ANIM = false;
     }
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
         theFrame.origin.y = 0;
@@ -770,7 +771,7 @@ static bool REVERSE_ANIM = false;
 -(void)closeMap:(id)sender{
     
     float offset = 30;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
         theFrame.size.height = 140 - offset;
@@ -798,7 +799,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setRegion:region animated:YES];
         [self._mapView regionThatFits:region];
         
-    } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
+    } completion:^(BOOL finished) {[UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         theFrame.size.height = 140;// + offset;
         //theFrame.origin.y = -44.0;

@@ -257,6 +257,7 @@
 		D084634217913A2300ED263A /* opened4.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633C17913A2300ED263A /* opened4.png */; };
 		D084634317913A2300ED263A /* opened5.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633D17913A2300ED263A /* opened5.png */; };
 		D0918ACC17B23266006221B3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0918ACB17B23266006221B3 /* AudioToolbox.framework */; };
+		D094627C17B8F74E005C77CA /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D094627B17B8F74E005C77CA /* images.bundle */; };
 		D095AC5E1788207900E49B11 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = D095AC5D1788207900E49B11 /* loading.png */; };
 		D095AC611788336E00E49B11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */; };
 		D095AC65178835F800E49B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D095AC64178835F800E49B11 /* Accelerate.framework */; };
@@ -286,7 +287,6 @@
 		DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF5A79F171D537E007D143C /* UIViewController+MKDSlideViewController.m */; };
 		FA24B8F917B53BF90016D8A5 /* LAAnimatedGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */; };
 		FA24B8FA17B53BF90016D8A5 /* LAAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */; };
-		FA24B8FE17B8CE7A0016D8A5 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FA24B8FD17B8CE7A0016D8A5 /* images.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -578,6 +578,7 @@
 		D084633C17913A2300ED263A /* opened4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened4.png; sourceTree = "<group>"; };
 		D084633D17913A2300ED263A /* opened5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened5.png; sourceTree = "<group>"; };
 		D0918ACB17B23266006221B3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D094627B17B8F74E005C77CA /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 		D095AC5D1788207900E49B11 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		D095AC5F1788336E00E49B11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D095AC601788336E00E49B11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
@@ -620,7 +621,6 @@
 		FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedGrid.m; sourceTree = "<group>"; };
 		FA24B8F717B53BF90016D8A5 /* LAAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAAnimatedView.h; sourceTree = "<group>"; };
 		FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedView.m; sourceTree = "<group>"; };
-		FA24B8FD17B8CE7A0016D8A5 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -935,7 +935,7 @@
 		DA953C55148AD36F0075A1E2 = {
 			isa = PBXGroup;
 			children = (
-				FA24B8FD17B8CE7A0016D8A5 /* images.bundle */,
+				D094627B17B8F74E005C77CA /* images.bundle */,
 				FA24B8F417B53BF90016D8A5 /* LAAnimatedGrid */,
 				DA953C84148AD3820075A1E2 /* Slide View Controller */,
 				DA953C6A148AD3700075A1E2 /* Example Project */,
@@ -1200,7 +1200,7 @@
 				910E25181786A12900C94F8A /* 212_100 Tabitem_place_3_2use_normal@2x.png in Resources */,
 				910E25191786A12900C94F8A /* 212_100 Tabitem_place_3_2use_selected@2x.png in Resources */,
 				910E251A1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_normal@2x.png in Resources */,
-				FA24B8FE17B8CE7A0016D8A5 /* images.bundle in Resources */,
+				D094627C17B8F74E005C77CA /* images.bundle in Resources */,
 				910E251B1786A12900C94F8A /* 212_100 Tabitem_place_4_2use_selected@2x.png in Resources */,
 				910E251C1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_normal@2x.png in Resources */,
 				910E251D1786A12900C94F8A /* 212_100 Tabitem_place_5_2use_selected@2x.png in Resources */,

@@ -423,11 +423,11 @@ static bool REVERSE_ANIM = false;
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if([cell.contentView.subviews count] > 0)
         [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-#warning 320 на ios7 beta 3 не достает до конца экрана. Сделаем 321
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 321, 250)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 250)];
     
     //while loading an image
     //        imv.image = [UIImage imageNamed:@"loading.png"];
@@ -720,7 +720,7 @@ static bool REVERSE_ANIM = false;
     }
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
         theFrame.origin.y = 0;
@@ -753,7 +753,7 @@ static bool REVERSE_ANIM = false;
 -(void)closeMap:(id)sender{
     
     float offset = 30;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placesTableView.frame;
         theFrame.size.height = 140;// + offset;
@@ -778,7 +778,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setRegion:region animated:YES];
         [self._mapView regionThatFits:region];
         
-    } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
+    } completion:^(BOOL finished) {[UIView animateWithDuration:0.4 animations:^{
         CGRect frame = self.placesTableView.frame;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;

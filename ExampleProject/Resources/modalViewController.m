@@ -137,7 +137,7 @@ NSInteger GLOBAL_OFFSET = 0;
     generalInfoText.tag = generalInfoTextTag;
     [generalInfoText setFont:[UIFont systemFontOfSize:12]];
 
-    NSString *test = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
+    NSString *test = @"TestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestTextTestText";
     generalInfoText.text = [NSString stringWithFormat:@"The nearest metro station is %@.\nThe average bill is %@ rubles.\nWorking hours: %@.\n\n%@", self.subway, self.paycheck, self.worktime, test];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openGeneralInfo:)];
     [generalInfo addGestureRecognizer:singleTap];
@@ -191,15 +191,13 @@ NSInteger GLOBAL_OFFSET = 0;
 //    [menu addSubview:photo];
     
     LAAnimatedGrid *photo;
+    CGSize size;
+    size.height = 443;
+    size.width = 250;
     NSMutableArray *arrImages = [NSMutableArray array];
     //[arrImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios6.jpeg"]]];
-    for (int i=1; i<11; i++)
-    {
-        
-        CGSize size;
-        size.height = 443;
-        size.width = 250;
-        UIImage * obj = [UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios_%d.jpg", i]];
+    for (int i=1; i<11; i++){
+        UIImage * obj = [UIImage imageNamed:[NSString stringWithFormat:@"images.bundle/ios%d.jpg", i]];
         UIGraphicsBeginImageContext(size);
         [obj drawInRect:CGRectMake(0, 0, size.width, size.height)];
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -351,7 +349,7 @@ NSInteger GLOBAL_OFFSET = 0;
                 for (UItextViewWithoutSelection *sb in subView.subviews){
                     if (sb.tag == generalInfoTextTag){
                         [sb setFont:[UIFont systemFontOfSize:12]];
-                        sb.scrollEnabled = NO;
+                       sb.scrollEnabled = NO;
                     }
                 }
                 self.placeCard.frame = viewFrame;
@@ -498,59 +496,6 @@ NSInteger GLOBAL_OFFSET = 0;
 - (void)appReturnsActive{
     NSLog(@"MW MAP LOG: app returns active");
     [self._mapView setShowsUserLocation:YES];
-}
-
-#pragma mark - Table view data source
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.array count];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;//[self.array count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 50;
-}
-
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = [UIColor darkGrayColor];
-    // [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
-    [button setTitle:self.placeName forState:UIControlStateNormal];
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    // add targets and actions
-    [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTag:section];
-    return button;
-}
-
--(void)pusher:(UIButton *)Sender{
-    
-}
-
-#pragma mark - Cell and sections settings
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = nil;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.textLabel.text = AMLocalizedString([self.array objectAtIndex:[indexPath row]], nil);
-    }
-    return cell;
 }
 #pragma mark - Favourites
 -(IBAction)favourites:(id)sender{
@@ -760,7 +705,7 @@ NSInteger GLOBAL_OFFSET = 0;
     MAP_PRESENTED = true;
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeCard.frame;
         theFrame.origin.y = 22 - GLOBAL_OFFSET;
@@ -800,7 +745,7 @@ NSInteger GLOBAL_OFFSET = 0;
             [subView removeFromSuperview];
     }
     float offset = 30;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         CGRect frame = self.placeCard.frame;
         theFrame.size.height = 96.0;// + offset;
@@ -827,7 +772,7 @@ NSInteger GLOBAL_OFFSET = 0;
         [self._mapView setRegion:region animated:YES];
         [self._mapView regionThatFits:region];
         
-    } completion:^(BOOL finished) {[UIView animateWithDuration:0.2 animations:^{
+    } completion:^(BOOL finished) {[UIView animateWithDuration:0.4 animations:^{
         CGRect theFrame = self._mapView.frame;
         theFrame.origin.y = 66 - GLOBAL_OFFSET;
         theFrame.size.height = 96.0;

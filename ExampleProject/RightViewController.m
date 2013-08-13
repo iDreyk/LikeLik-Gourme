@@ -229,6 +229,7 @@ static bool OPENED_MENU = NO;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor blackColor];
         cell.textLabel.textColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.section == 1)
             cell.textLabel.text = [self.expandArrayCash objectAtIndex:[indexPath row]];
         else if (indexPath.section == 2)
