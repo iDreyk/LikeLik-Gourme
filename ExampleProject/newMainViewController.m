@@ -457,7 +457,6 @@ static bool REVERSE_ANIM = false;
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
         UIImageViewWithPlaceSelection *imv = [[UIImageViewWithPlaceSelection alloc]initWithFrame:CGRectMake(5,5, 310, 240)];
         imv.tag = imageTag;
-        imv.sectionNumber = section;
         imv.backgroundColor = [UIColor whiteColor];
         //while loading an image
         //        imv.image = [UIImage imageNamed:@"loading.png"];
@@ -499,7 +498,8 @@ static bool REVERSE_ANIM = false;
        //    imv.image = [UIImage imageNamed:@"icon.png"];
     [self downloadImageWithURL:[NSURL URLWithString:[[self.allPlaces objectForKey:@"image"] objectAtIndex:section]] completionBlock:^(BOOL succeeded, UIImage *image) {
         if (succeeded) {
-            UIImageView *imv = (UIImageView *)[cell viewWithTag:imageTag];
+            UIImageViewWithPlaceSelection *imv = (UIImageViewWithPlaceSelection *)[cell viewWithTag:imageTag];
+            imv.sectionNumber = section;
             imv.image = image;
             //                       if([cell.contentView.subviews count] > 0)
             //                           [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
