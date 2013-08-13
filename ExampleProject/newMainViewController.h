@@ -25,3 +25,7 @@
 - (IBAction)showRightMenu:(id)sender;
 
 @end
+
+@interface UIImageViewWithPlaceSelection : UIImageView
+@property(nonatomic) NSInteger sectionNumber;
+@end

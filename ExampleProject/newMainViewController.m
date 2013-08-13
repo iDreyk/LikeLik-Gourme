@@ -13,6 +13,19 @@
 #import "modalViewController.h"
 #include <AudioToolbox/AudioToolbox.h>
 
+
+#define subwayTag 1
+#define workTimeTag 2
+#define paycheckTag 3
+#define imageTag 4
+
+@interface UIImageViewWithPlaceSelection ()
+@end
+@implementation UIImageViewWithPlaceSelection
+
+@end
+
+
 @implementation newMainViewController
 @synthesize placesTableView;
 
@@ -412,71 +425,96 @@ static bool REVERSE_ANIM = false;
  
  
  */
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
+   
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
+        UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 110, 20)];
+        UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 110, 20)];
+        
+        //Here is subway station
+        subway.textColor = [UIColor whiteColor];
+        subway.backgroundColor = [UIColor clearColor];
+        subway.tag = subwayTag;
+        //Here is avg paycheck
+        paycheck.textColor = [UIColor whiteColor];
+        paycheck.backgroundColor = [UIColor clearColor];
+        paycheck.tag = paycheckTag;
+        //Here is work time
+        workTime.textColor = [UIColor whiteColor];
+        workTime.backgroundColor = [UIColor clearColor];
+        workTime.tag = workTimeTag;
+        
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+        UIImageViewWithPlaceSelection *imv = [[UIImageViewWithPlaceSelection alloc]initWithFrame:CGRectMake(5,5, 310, 240)];
+        imv.tag = imageTag;
+        imv.sectionNumber = section;
+        imv.backgroundColor = [UIColor whiteColor];
+        //while loading an image
+        //        imv.image = [UIImage imageNamed:@"loading.png"];
+        //        [cell.contentView addSubview:imv];
+        CALayer * imgLayer = imv.layer;
+        
+        [imgLayer setBorderColor: [[UIColor whiteColor] CGColor]];
+        [imgLayer setBorderWidth:0.5f];
+        [imgLayer setShadowColor: [[UIColor blackColor] CGColor]];
+        [imgLayer setShadowOpacity:0.9f];
+        [imgLayer setShadowOffset: CGSizeMake(0, 1)];
+        [imgLayer setShadowRadius:3.0];
+        imgLayer.shouldRasterize = YES;
+        
+        // This tell QuartzCore where to draw the shadow so it doesn't have to work it out each time
+        [imgLayer setShadowPath:[UIBezierPath bezierPathWithRect:imgLayer.bounds].CGPath];
+        
+        // This tells QuartzCore to render it as a bitmap
+        [imgLayer setRasterizationScale:[UIScreen mainScreen].scale];
+        
+        imv.clipsToBounds = NO;
+        
+        [imv addGestureRecognizer:singleTap];
+        [imv setUserInteractionEnabled:YES];
+
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 195, 310, 40)];
+        line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        [imv addSubview:line];
+
+        [cell.contentView addSubview:imv];
+        [cell.contentView addSubview:subway];
+        [cell.contentView addSubview:paycheck];
+        [cell.contentView addSubview:workTime];
+
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if([cell.contentView.subviews count] > 0)
-        [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 320, 245)];
     
-    //while loading an image
-    //        imv.image = [UIImage imageNamed:@"loading.png"];
-    //        [cell.contentView addSubview:imv];
-    imv.tag = section;
-    [imv addGestureRecognizer:singleTap];
-    [imv setUserInteractionEnabled:YES];
-    //    imv.image = [UIImage imageNamed:@"icon.png"];
+//    if([cell.contentView.subviews count] > 0)
+//        [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
+       //    imv.image = [UIImage imageNamed:@"icon.png"];
     [self downloadImageWithURL:[NSURL URLWithString:[[self.allPlaces objectForKey:@"image"] objectAtIndex:section]] completionBlock:^(BOOL succeeded, UIImage *image) {
         if (succeeded) {
+            UIImageView *imv = (UIImageView *)[cell viewWithTag:imageTag];
             imv.image = image;
             //                       if([cell.contentView.subviews count] > 0)
             //                           [[cell.contentView.subviews objectAtIndex:0] removeFromSuperview];
-            [cell.contentView addSubview:imv];
         }
     }];
     
-    
     //Here is line
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];
-    line.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    [imv addSubview:line];
     
-    //Here is subway station
-    UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
-    subway.textColor = [UIColor whiteColor];
-    subway.backgroundColor = [UIColor clearColor];
+    UILabel *subway = (UILabel*)[cell viewWithTag:subwayTag];
+    UILabel *paycheck = (UILabel*)[cell viewWithTag:paycheckTag];
+    UILabel *workTime = (UILabel*)[cell viewWithTag:workTimeTag];
+
     [subway setText:AMLocalizedString([[self.allPlaces objectForKey:@"subway"] objectAtIndex:section], nil)];
-    [imv addSubview:subway];
-    
-    //Here is avg paycheck
-    UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 120, 20)];
-    paycheck.textColor = [UIColor whiteColor];
-    paycheck.backgroundColor = [UIColor clearColor];
     [paycheck setText:[[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:section]];
-    [imv addSubview:paycheck];
-    
-    //Here is work time
-    UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 120, 20)];
-    workTime.textColor = [UIColor whiteColor];
-    workTime.backgroundColor = [UIColor clearColor];
     [workTime setText:[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section]];
-    [imv addSubview:workTime];
-    
-    //        [cell.contentView addSubview:imv];
-    cell.backgroundColor = [UIColor whiteColor];
-    //        }
-    //    int r = arc4random() % 2;
-    //    if(r)
-    //        [cell setFrame:CGRectMake(-320, 560, cell.frame.size.width, cell.frame.size.height)];
-    //    else
-    //        [cell setFrame:CGRectMake(320, 560, cell.frame.size.width, cell.frame.size.height)];
-    //
     
     if(PREV_SECTION > section)
         REVERSE_ANIM = true;
@@ -595,12 +633,12 @@ static bool REVERSE_ANIM = false;
 //        [[NSUserDefaults standardUserDefaults] setObject:databasePath forKey:@"bckg"];
     modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"ModalViewController"];
     //modalViewController *view = [[modalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
-    viewControllerToPresent.placeName = [[self.allPlaces objectForKey:@"name"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.rating = [[self.allPlaces objectForKey:@"rating"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.subway = [[self.allPlaces objectForKey:@"subway"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
-    viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:[(UIGestureRecognizer *)Sender view].tag];
+    viewControllerToPresent.placeName = [[self.allPlaces objectForKey:@"name"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
+    viewControllerToPresent.rating = [[self.allPlaces objectForKey:@"rating"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
+    viewControllerToPresent.subway = [[self.allPlaces objectForKey:@"subway"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
+    viewControllerToPresent.paycheck = [[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
+    viewControllerToPresent.worktime = [[self.allPlaces objectForKey:@"worktime"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
+    viewControllerToPresent.image = [[self.allPlaces objectForKey:@"image"] objectAtIndex:((UIImageViewWithPlaceSelection *)[(UIGestureRecognizer *)Sender view]).sectionNumber];
     viewControllerToPresent.FROM_SEARCHBAR = NO;
     //viewControllerToPresent.
     //[self presentTLModalViewController:viewControllerToPresent animated:YES completion:^{}];
