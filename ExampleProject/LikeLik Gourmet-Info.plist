@@ -30,7 +30,11 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2000</string>
+	<string>1.0</string>
+	<key>FacebookAppID</key>
+	<string>555498611181102</string>
+	<key>FacebookDisplayName</key>
+	<string>LikeLik Gourmet</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -62,6 +66,15 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>URL Types</key>
+	<array>
+		<dict>
+			<key>URL Schemes</key>
+			<array>
+				<string>fb555498611181102</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

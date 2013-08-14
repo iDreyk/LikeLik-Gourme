@@ -287,6 +287,7 @@
 		DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF5A79F171D537E007D143C /* UIViewController+MKDSlideViewController.m */; };
 		FA24B8F917B53BF90016D8A5 /* LAAnimatedGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */; };
 		FA24B8FA17B53BF90016D8A5 /* LAAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */; };
+		FADA458D17BB528600AAC6FC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADA458C17BB528600AAC6FC /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -621,6 +622,7 @@
 		FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedGrid.m; sourceTree = "<group>"; };
 		FA24B8F717B53BF90016D8A5 /* LAAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAAnimatedView.h; sourceTree = "<group>"; };
 		FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedView.m; sourceTree = "<group>"; };
+		FADA458C17BB528600AAC6FC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -633,6 +635,7 @@
 				910E24371786A0E100C94F8A /* CoreVideo.framework in Frameworks */,
 				910E24351786A0DB00C94F8A /* CoreMedia.framework in Frameworks */,
 				910E24331786A08600C94F8A /* AVFoundation.framework in Frameworks */,
+				FADA458D17BB528600AAC6FC /* FacebookSDK.framework in Frameworks */,
 				910E24311786A07D00C94F8A /* libsqlite3.dylib in Frameworks */,
 				DA953C9E148AE7240075A1E2 /* QuartzCore.framework in Frameworks */,
 				910E242F1786A06600C94F8A /* libiconv.dylib in Frameworks */,
@@ -955,6 +958,7 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FADA458C17BB528600AAC6FC /* FacebookSDK.framework */,
 				D0918ACB17B23266006221B3 /* AudioToolbox.framework */,
 				910E24301786A07C00C94F8A /* libsqlite3.dylib */,
 				910E242E1786A06600C94F8A /* libiconv.dylib */,
@@ -1514,6 +1518,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+					"/Users/alex/Desktop/LikeLik-Gourme",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
@@ -1537,6 +1542,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+					"/Users/alex/Desktop/LikeLik-Gourme",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
