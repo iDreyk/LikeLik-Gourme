@@ -13,6 +13,7 @@
 #import "UIViewController+KNSemiModal.h"
 #import "AppDelegate.h"
 #import "UIImage+ImageEffects.h"
+#import "StartViewController.h"
 
 @interface UItextViewWithoutSelection ()
 @end
@@ -652,20 +653,25 @@ NSInteger GLOBAL_OFFSET = 0;
 }
 
 -(IBAction)Check:(id)sender{
-    [self presentSemiViewController:VC withOptions:@{
-                                                     KNSemiModalOptionKeys.pushParentBack    : @(YES),
-                                                     KNSemiModalOptionKeys.animationDuration : @(0.5),
-                                                     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
-                                                     }];
+    modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"Registration"];
+    NSLog(@"view contr: %@", viewControllerToPresent);
+    [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+    NSLog(@"HERE");
     
-    VC.view.backgroundColor = [UIColor clearColor];
-#warning Это тоже нужно будет заполнять (чек)
-    VC.PlaceName = self.placeName;
-    VC.PlaceCategory = @"PlaceCategory";
-    VC.PlaceCity = @"PlaceCity";
-    VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
-    //    _labelonPhoto.hidden = NO;
-    //    _background.hidden = NO;
+//    [self presentSemiViewController:VC withOptions:@{
+//                                                     KNSemiModalOptionKeys.pushParentBack    : @(YES),
+//                                                     KNSemiModalOptionKeys.animationDuration : @(0.5),
+//                                                     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
+//                                                     }];
+//    
+//    VC.view.backgroundColor = [UIColor clearColor];
+//#warning Это тоже нужно будет заполнять (чек)
+//    VC.PlaceName = self.placeName;
+//    VC.PlaceCategory = @"PlaceCategory";
+//    VC.PlaceCity = @"PlaceCity";
+//    VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
+//    //    _labelonPhoto.hidden = NO;
+//    //    _background.hidden = NO;
 }
 
 #pragma mark - Map's parralax

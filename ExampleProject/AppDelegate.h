@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @class MKDSlideViewController;
 
@@ -19,5 +20,6 @@
 +(UIFont *)OpenSansRegular:(CGFloat)size;
 +(UIFont *)OpenSansSemiBold:(CGFloat)size;
 +(UIFont *)OpenSansBoldwithSize:(CGFloat)size;
+@property (strong, nonatomic) FBSession *session;
 
 @end
