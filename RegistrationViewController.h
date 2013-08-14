@@ -56,6 +56,7 @@
 -(void)SendRegistration:(NSString *)RegistrationWay;
 -(void)SendLogin:(NSString *)RegistrationWay;
 -(NSDictionary * )POSTRequestLogin:(NSString *)Way;
+-(void) dismissView:(id)Sender;
 
 @end
 

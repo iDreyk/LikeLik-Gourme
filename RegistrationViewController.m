@@ -265,13 +265,16 @@ static BOOL getLocation = NO;
     
 }
 
+-(void) dismissView:(id)Sender{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
 -(IBAction)SocialClicked:(UIButton *)sender{
-//    [self.HUDfade show:YES];
-//    [self.HUDfade hide:YES afterDelay:5];
+    [self.HUDfade show:YES];
+    [self.HUDfade hide:YES afterDelay:2];
    // [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     if (sender.tag == 0) {
         // NSLog(@"Fb");
-  //      [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         loadingView.hidden = NO;
         
 //        [SCFacebook loginCallBack:^(BOOL success, id result) {
@@ -295,6 +298,7 @@ static BOOL getLocation = NO;
         } else {
             if (appDelegate.session.state != FBSessionStateCreated) {
                 // Create a new, logged out session.
+                [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
                 NSLog(@"1");
                 appDelegate.session = [[FBSession alloc] init];
                                 NSLog(@"2");
@@ -305,19 +309,23 @@ static BOOL getLocation = NO;
                                                              FBSessionState status,
                                                              NSError *error) {
                                 NSLog(@"3");
+                [FBSession setActiveSession: session];
                 // and here we make sure to update our UX according to the new session state
                 if(status == FBSessionStateClosedLoginFailed){
                     NSLog(@"FB LOG: status is %d", status);
                     NSLog(@"FBSessionStateClosedLoginFailed");
-                    [self HUDgoeswrong];
                 }
                 else{
                     NSLog(@"FB LOG: status is %d", status);
                     [self getUserInfo];
-                    NSLog(@"LOGGED IN WITH FB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    //NSLog(@"LOGGED IN WITH FB! ActiveSession: %@", [FBSession activeSession]);
+                    [FBSession setActiveSession:session];
+                    [self.HUDdone show:YES];
+                    [self.HUDdone hide:YES afterDelay:1];
+                    [self performSelector:@selector(dismissView:) withObject:nil afterDelay:1.0];
                 }
                 NSLog(@"4");
-
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             }];
         }
 
@@ -353,6 +361,9 @@ static BOOL getLocation = NO;
 //        }
 //    }
 }
+
+
+
 
 -(void)Done{
     [Password resignFirstResponder];
@@ -870,6 +881,7 @@ static BOOL getLocation = NO;
 
 - (void)getUserInfo
 {
+//    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     loadingView.hidden = NO;
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForMe] startWithCompletionHandler:
@@ -877,7 +889,11 @@ static BOOL getLocation = NO;
            NSDictionary<FBGraphUser> *user,
            NSError *error) {
              if (!error) {
-                 NSLog(@"FB LOG: name: %@\n\t id: %@\n\t last name: %@",user.name, user.id, user.last_name);
+                 NSLog(@"FB LOG: userInfo:\n\tname: %@\n\t id: %@\n\t last name: %@",user.name, user.id, user.last_name);
+                 [[NSUserDefaults standardUserDefaults] setValue:@"ok" forKey:@"Registration"];
+             }
+             else{
+                 NSLog(@"FB LOG: getUserInfo error! %@", error);
              }
          }];
     }

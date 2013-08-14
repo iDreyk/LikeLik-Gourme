@@ -653,25 +653,27 @@ NSInteger GLOBAL_OFFSET = 0;
 }
 
 -(IBAction)Check:(id)sender{
-    modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"Registration"];
-    NSLog(@"view contr: %@", viewControllerToPresent);
-    [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
-    NSLog(@"HERE");
-    
-//    [self presentSemiViewController:VC withOptions:@{
-//                                                     KNSemiModalOptionKeys.pushParentBack    : @(YES),
-//                                                     KNSemiModalOptionKeys.animationDuration : @(0.5),
-//                                                     KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
-//                                                     }];
-//    
-//    VC.view.backgroundColor = [UIColor clearColor];
-//#warning Это тоже нужно будет заполнять (чек)
-//    VC.PlaceName = self.placeName;
-//    VC.PlaceCategory = @"PlaceCategory";
-//    VC.PlaceCity = @"PlaceCity";
-//    VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
-//    //    _labelonPhoto.hidden = NO;
-//    //    _background.hidden = NO;
+//    NSString *reg = [[NSUserDefaults standardUserDefaults] valueForKey:@"Registration"];
+//    if([reg isEqualToString:@"ok"]){
+//            [self presentSemiViewController:VC withOptions:@{
+//                                                             KNSemiModalOptionKeys.pushParentBack    : @(YES),
+//                                                             KNSemiModalOptionKeys.animationDuration : @(0.5),
+//                                                             KNSemiModalOptionKeys.shadowOpacity     : @(0.3),
+//                                                             }];
+//        
+//            VC.view.backgroundColor = [UIColor clearColor];
+//        #warning Это тоже нужно будет заполнять (чек)
+//            VC.PlaceName = self.placeName;
+//            VC.PlaceCategory = @"PlaceCategory";
+//            VC.PlaceCity = @"PlaceCity";
+//            VC.color = [UIColor colorWithRed:184.0/255.0 green:6.0/255.0 blue:6.0/255.0 alpha:1];
+//            //    _labelonPhoto.hidden = NO;
+//            //    _background.hidden = NO;
+//    }
+//    else{
+        modalViewController *viewControllerToPresent = [self.storyboard instantiateViewControllerWithIdentifier:@"Registration"];
+        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+//    }
 }
 
 #pragma mark - Map's parralax
