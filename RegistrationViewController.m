@@ -122,13 +122,13 @@ static BOOL getLocation = NO;
 
     if (currSysVer >= 7.0) {
         CGRect newFrame = self.RegistrationTable.frame;
-        newFrame.origin.y = 22;
+        newFrame.origin.y = 32;
         self.RegistrationTable.frame = newFrame;
         newFrame = self.Switch.frame;
-        newFrame.origin.y += 34;
+        newFrame.origin.y += 42;
         self.Switch.frame = newFrame;
         newFrame = self.SurpriseText.frame;
-        newFrame.origin.y += 34;
+        newFrame.origin.y += 42;
         self.SurpriseText.frame = newFrame;
         newFrame = self.BirthDayPicker.frame;
         newFrame.origin.y += 20;
