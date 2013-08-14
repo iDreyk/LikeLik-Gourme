@@ -249,6 +249,7 @@
 		D00C053717900DE600E689E5 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = D00C053517900DE600E689E5 /* closed.png */; };
 		D00D2D82178578BA00232D7F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = D00D2D81178578BA00232D7F /* LocalizationSystem.m */; };
 		D00D2D8617857A0D00232D7F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00D2D8817857A0D00232D7F /* Localizable.strings */; };
+		D0510E7E17BB8913004C132B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0510E7D17BB8913004C132B /* FacebookSDK.framework */; };
 		D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D054D4D4178E954A00B1356E /* favoritesViewController.m */; };
 		D084633E17913A2300ED263A /* opened0.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633817913A2300ED263A /* opened0.png */; };
 		D084633F17913A2300ED263A /* opened1.png in Resources */ = {isa = PBXBuildFile; fileRef = D084633917913A2300ED263A /* opened1.png */; };
@@ -287,7 +288,6 @@
 		DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF5A79F171D537E007D143C /* UIViewController+MKDSlideViewController.m */; };
 		FA24B8F917B53BF90016D8A5 /* LAAnimatedGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */; };
 		FA24B8FA17B53BF90016D8A5 /* LAAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */; };
-		FA6720E417BB5F46000993E0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6720E317BB5F46000993E0 /* FacebookSDK.framework */; };
 		FA6720EA17BB60A8000993E0 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6720E717BB60A8000993E0 /* Account.m */; };
 		FA6720EB17BB60A8000993E0 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6720E917BB60A8000993E0 /* RegistrationViewController.m */; };
 		FA67210017BB629A000993E0 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6720EE17BB629A000993E0 /* AFHTTPClient.m */; };
@@ -582,6 +582,7 @@
 		D00D2D8917857A2F00232D7F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8A17857A3500232D7F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D00D2D8B17857A3D00232D7F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0510E7D17BB8913004C132B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		D054D4D3178E954A00B1356E /* favoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favoritesViewController.h; sourceTree = "<group>"; };
 		D054D4D4178E954A00B1356E /* favoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favoritesViewController.m; sourceTree = "<group>"; };
 		D084633817913A2300ED263A /* opened0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opened0.png; sourceTree = "<group>"; };
@@ -634,7 +635,6 @@
 		FA24B8F617B53BF90016D8A5 /* LAAnimatedGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedGrid.m; sourceTree = "<group>"; };
 		FA24B8F717B53BF90016D8A5 /* LAAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAAnimatedView.h; sourceTree = "<group>"; };
 		FA24B8F817B53BF90016D8A5 /* LAAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAAnimatedView.m; sourceTree = "<group>"; };
-		FA6720E317BB5F46000993E0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		FA6720E617BB60A8000993E0 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
 		FA6720E717BB60A8000993E0 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		FA6720E817BB60A8000993E0 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
@@ -672,7 +672,7 @@
 				910E24371786A0E100C94F8A /* CoreVideo.framework in Frameworks */,
 				910E24351786A0DB00C94F8A /* CoreMedia.framework in Frameworks */,
 				910E24331786A08600C94F8A /* AVFoundation.framework in Frameworks */,
-				FA6720E417BB5F46000993E0 /* FacebookSDK.framework in Frameworks */,
+				D0510E7E17BB8913004C132B /* FacebookSDK.framework in Frameworks */,
 				910E24311786A07D00C94F8A /* libsqlite3.dylib in Frameworks */,
 				DA953C9E148AE7240075A1E2 /* QuartzCore.framework in Frameworks */,
 				910E242F1786A06600C94F8A /* libiconv.dylib in Frameworks */,
@@ -996,8 +996,8 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0510E7D17BB8913004C132B /* FacebookSDK.framework */,
 				FA6720EC17BB629A000993E0 /* AFNetworking */,
-				FA6720E317BB5F46000993E0 /* FacebookSDK.framework */,
 				D0918ACB17B23266006221B3 /* AudioToolbox.framework */,
 				910E24301786A07C00C94F8A /* libsqlite3.dylib */,
 				910E242E1786A06600C94F8A /* libiconv.dylib */,
@@ -1609,6 +1609,7 @@
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
 					"/Users/alex/Desktop/LikeLik-Gourme",
+					"/Users/MacBookAir/Programming/iOS/LikeLik\\ Gourme",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
@@ -1633,6 +1634,7 @@
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
 					"/Users/alex/Desktop/LikeLik-Gourme",
+					"/Users/MacBookAir/Programming/iOS/LikeLik\\ Gourme",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleProject/LikeLik Gourmet-Prefix.pch";
