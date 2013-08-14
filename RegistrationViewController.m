@@ -280,6 +280,7 @@ static BOOL getLocation = NO;
                 if(status == FBSessionStateClosedLoginFailed){
                     NSLog(@"FB LOG: status is %d", status);
                     NSLog(@"FBSessionStateClosedLoginFailed");
+                    [self HUDgoeswrong];
                 }
                 else{
                     NSLog(@"FB LOG: status is %d", status);
