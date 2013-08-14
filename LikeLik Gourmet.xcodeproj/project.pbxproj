@@ -300,6 +300,9 @@
 		FA67210717BB629A000993E0 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6720FD17BB629A000993E0 /* AFXMLRequestOperation.m */; };
 		FA67210817BB629A000993E0 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6720FF17BB629A000993E0 /* UIImageView+AFNetworking.m */; };
 		FA67210B17BB6CE8000993E0 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA67210A17BB6CE8000993E0 /* StartViewController.m */; };
+		FA9F8A1E17BBC3E600C01B27 /* NSString+Gender.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9F8A1917BBC3E600C01B27 /* NSString+Gender.m */; };
+		FA9F8A1F17BBC3E600C01B27 /* Vkontakte.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9F8A1B17BBC3E600C01B27 /* Vkontakte.m */; };
+		FA9F8A2017BBC3E600C01B27 /* VkontakteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9F8A1D17BBC3E600C01B27 /* VkontakteViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -660,6 +663,12 @@
 		FA6720FF17BB629A000993E0 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		FA67210917BB6CE8000993E0 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		FA67210A17BB6CE8000993E0 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		FA9F8A1817BBC3E600C01B27 /* NSString+Gender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Gender.h"; sourceTree = "<group>"; };
+		FA9F8A1917BBC3E600C01B27 /* NSString+Gender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Gender.m"; sourceTree = "<group>"; };
+		FA9F8A1A17BBC3E600C01B27 /* Vkontakte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vkontakte.h; sourceTree = "<group>"; };
+		FA9F8A1B17BBC3E600C01B27 /* Vkontakte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vkontakte.m; sourceTree = "<group>"; };
+		FA9F8A1C17BBC3E600C01B27 /* VkontakteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VkontakteViewController.h; sourceTree = "<group>"; };
+		FA9F8A1D17BBC3E600C01B27 /* VkontakteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VkontakteViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -996,6 +1005,7 @@
 		DA953C63148AD3700075A1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA9F8A1717BBC3E600C01B27 /* Vkontakte */,
 				D0510E7D17BB8913004C132B /* FacebookSDK.framework */,
 				FA6720EC17BB629A000993E0 /* AFNetworking */,
 				D0918ACB17B23266006221B3 /* AudioToolbox.framework */,
@@ -1178,6 +1188,19 @@
 				FA6720FF17BB629A000993E0 /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		FA9F8A1717BBC3E600C01B27 /* Vkontakte */ = {
+			isa = PBXGroup;
+			children = (
+				FA9F8A1817BBC3E600C01B27 /* NSString+Gender.h */,
+				FA9F8A1917BBC3E600C01B27 /* NSString+Gender.m */,
+				FA9F8A1A17BBC3E600C01B27 /* Vkontakte.h */,
+				FA9F8A1B17BBC3E600C01B27 /* Vkontakte.m */,
+				FA9F8A1C17BBC3E600C01B27 /* VkontakteViewController.h */,
+				FA9F8A1D17BBC3E600C01B27 /* VkontakteViewController.m */,
+			);
+			path = Vkontakte;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1487,6 +1510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA67210817BB629A000993E0 /* UIImageView+AFNetworking.m in Sources */,
+				FA9F8A1E17BBC3E600C01B27 /* NSString+Gender.m in Sources */,
 				DA953C71148AD3700075A1E2 /* main.m in Sources */,
 				DA953C75148AD3700075A1E2 /* AppDelegate.m in Sources */,
 				FA67210017BB629A000993E0 /* AFHTTPClient.m in Sources */,
@@ -1494,6 +1518,7 @@
 				FA67210317BB629A000993E0 /* AFJSONRequestOperation.m in Sources */,
 				FA67210617BB629A000993E0 /* AFURLConnectionOperation.m in Sources */,
 				FA6720EB17BB60A8000993E0 /* RegistrationViewController.m in Sources */,
+				FA9F8A1F17BBC3E600C01B27 /* Vkontakte.m in Sources */,
 				DAF5A7A0171D537E007D143C /* UIViewController+MKDSlideViewController.m in Sources */,
 				D054D4D5178E954A00B1356E /* favoritesViewController.m in Sources */,
 				FA67210417BB629A000993E0 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1514,6 +1539,7 @@
 				FA67210517BB629A000993E0 /* AFPropertyListRequestOperation.m in Sources */,
 				910E241C17869DE500C94F8A /* MBProgressHUD.m in Sources */,
 				910E242717869F7100C94F8A /* InterfaceFunctions.m in Sources */,
+				FA9F8A2017BBC3E600C01B27 /* VkontakteViewController.m in Sources */,
 				FA6720EA17BB60A8000993E0 /* Account.m in Sources */,
 				FA67210B17BB6CE8000993E0 /* StartViewController.m in Sources */,
 				910E25D71786B0B000C94F8A /* CheckViewController.m in Sources */,

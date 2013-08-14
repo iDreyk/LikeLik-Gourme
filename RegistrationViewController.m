@@ -101,9 +101,9 @@ static BOOL getLocation = NO;
     month = @"1";
     year = @"1912";
     
-//    _vkontakte = [Vkontakte sharedInstance];
-//    _vkontakte.delegate = self;
-//    
+    _vkontakte = [Vkontakte sharedInstance];
+    _vkontakte.delegate = self;
+    
     
     
     [self HUDemailincorrect];
@@ -298,9 +298,9 @@ static BOOL getLocation = NO;
 
         
     }
-//    if (sender.tag == 1) {
-//        [self loginPressed:sender];
-//    }
+    if (sender.tag == 1) {
+        [self loginPressed:sender];
+    }
 //    if (sender.tag == 2) {
 //        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 //        self.Parent = @"Social";
@@ -724,85 +724,86 @@ static BOOL getLocation = NO;
 
 
 #pragma mark - Vkontakte
-//- (void)refreshButtonState
-//{
-//    if (![_vkontakte isAuthorized])
-//    {
-//        [_loginB setTitle:@"Login"
-//                 forState:UIControlStateNormal];
-//        // [self hideControls:YES];
-//    }
-//    else
-//    {
-//        [_loginB setTitle:@"Logout"
-//                 forState:UIControlStateNormal];
-//        [_vkontakte getUserInfo];
-//        
-//    }
-//}
-//
-//
-//- (IBAction)loginPressed:(id)sender
-//{
-//    if (![_vkontakte isAuthorized])
-//    {
-//        [_vkontakte authenticate];
-//    }
-//    else
-//    {
-//        [_vkontakte logout];
-//    }
-//}
-//
+- (void)refreshButtonState
+{
+    if (![_vkontakte isAuthorized])
+    {
+        [_loginB setTitle:@"Login"
+                 forState:UIControlStateNormal];
+        // [self hideControls:YES];
+    }
+    else
+    {
+        [_loginB setTitle:@"Logout"
+                 forState:UIControlStateNormal];
+        [_vkontakte getUserInfo];
+        
+    }
+}
+
+
+- (IBAction)loginPressed:(id)sender
+{
+    if (![_vkontakte isAuthorized])
+    {
+        [_vkontakte authenticate];
+    }
+    else
+    {
+        [_vkontakte logout];
+    }
+}
+
 
 #pragma mark - VkontakteDelegate
-//
-//- (void)vkontakteDidFailedWithError:(NSError *)error
-//{
-//    [self dismissViewControllerAnimated:YES completion:^{}];
-//}
-//
-//- (void)showVkontakteAuthController:(UIViewController *)controller
-//{
-//      //  [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//    {
-//        controller.modalPresentationStyle = UIModalPresentationFormSheet;
-//    }
-//    self.Parent = @"social";
-//    [self presentViewController:controller animated:YES completion:^{/*[[UIApplication sharedApplication] endIgnoringInteractionEvents];*/}];
-//}
-//
-//- (void)vkontakteAuthControllerDidCancelled
-//{
-//    [self dismissViewControllerAnimated:YES completion:^{}];
-//}
-//
-//- (void)vkontakteDidFinishLogin:(Vkontakte *)vkontakte
-//{
-//    [self dismissViewControllerAnimated:YES completion:^{[[UIApplication sharedApplication] beginIgnoringInteractionEvents];}];
-//    [self refreshButtonState];
-//}
-//
-//- (void)vkontakteDidFinishLogOut:(Vkontakte *)vkontakte
-//{
-//    [self refreshButtonState];
-//}
-//
-//- (void)vkontakteDidFinishGettinUserInfo:(NSDictionary *)info
-//{
-////    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-//    self.VkontakteUserInfo = info;
-//    NSLog(@"%@",self.VkontakteUserInfo);
-//    NSArray *components = [[info objectForKey:@"bdate"] componentsSeparatedByString:@"."];
-//    if ([components count] == 1)
-//    day = [components objectAtIndex:0];
-//    if ([components count] == 2)
-//        month = [components objectAtIndex:1];
-//    if ([components count] == 3)
-//        year  = [components objectAtIndex:2];
-//   [self SendRegistration:@"VK"];
-//}
+
+- (void)vkontakteDidFailedWithError:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)showVkontakteAuthController:(UIViewController *)controller
+{
+      //  [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        controller.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    self.Parent = @"social";
+    [self presentViewController:controller animated:YES completion:^{/*[[UIApplication sharedApplication] endIgnoringInteractionEvents];*/}];
+}
+
+- (void)vkontakteAuthControllerDidCancelled
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)vkontakteDidFinishLogin:(Vkontakte *)vkontakte
+{
+    [self dismissViewControllerAnimated:YES completion:^{[[UIApplication sharedApplication] beginIgnoringInteractionEvents];}];
+    [self refreshButtonState];
+}
+
+- (void)vkontakteDidFinishLogOut:(Vkontakte *)vkontakte
+{
+    [self refreshButtonState];
+}
+
+- (void)vkontakteDidFinishGettinUserInfo:(NSDictionary *)info
+{
+//    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    self.VkontakteUserInfo = info;
+    NSLog(@"%@",self.VkontakteUserInfo);
+    NSArray *components = [[info objectForKey:@"bdate"] componentsSeparatedByString:@"."];
+    if ([components count] == 1)
+    day = [components objectAtIndex:0];
+    if ([components count] == 2)
+        month = [components objectAtIndex:1];
+    if ([components count] == 3)
+        year  = [components objectAtIndex:2];
+   [self SendRegistration:@"VK"];
+}
+
 //
 //#pragma mark SA_OAuthTwitterEngineDelegate
 //- (void) storeCachedTwitterOAuthData: (NSString *) data forUsername: (NSString *) username {
