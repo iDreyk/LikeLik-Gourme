@@ -121,71 +121,38 @@ static BOOL getLocation = NO;
     float currSysVer = [[UIDevice currentDevice] systemVersion].floatValue;
 
     if (currSysVer >= 7.0) {
-        NSLayoutConstraint * topMarginForTable  =[NSLayoutConstraint
-                                                  constraintWithItem:self.RegistrationTable
-                                                  attribute:NSLayoutAttributeTop
-                                                  relatedBy:NSLayoutRelationEqual
-                                                  toItem:self.view
-                                                  attribute:NSLayoutAttributeTop
-                                                  multiplier:1.0
-                                                  constant:22];
-        
-        [self.view addConstraint:topMarginForTable];
-        
-        NSLayoutConstraint * topMarginForSurprise =[NSLayoutConstraint
-                                                    constraintWithItem:self.SurpriseText
-                                                    attribute:NSLayoutAttributeTop
-                                                    relatedBy:NSLayoutRelationEqual
-                                                    toItem:self.view
-                                                    attribute:NSLayoutAttributeTop
-                                                    multiplier:1.0
-                                                    constant:240];
-        
-        [self.view addConstraint:topMarginForSurprise];
-        NSLayoutConstraint * topMarginForSwitch =[NSLayoutConstraint
-                                                  constraintWithItem:self.Switch
-                                                  attribute:NSLayoutAttributeTop
-                                                  relatedBy:NSLayoutRelationEqual
-                                                  toItem:self.view
-                                                  attribute:NSLayoutAttributeTop
-                                                  multiplier:1.0
-                                                  constant:248];
-        
-        [self.view addConstraint:topMarginForSwitch];
+        CGRect newFrame = self.RegistrationTable.frame;
+        newFrame.origin.y = 22;
+        self.RegistrationTable.frame = newFrame;
+        newFrame = self.Switch.frame;
+        newFrame.origin.y += 34;
+        self.Switch.frame = newFrame;
+        newFrame = self.SurpriseText.frame;
+        newFrame.origin.y += 34;
+        self.SurpriseText.frame = newFrame;
+        newFrame = self.BirthDayPicker.frame;
+        newFrame.origin.y += 20;
+        self.BirthDayPicker.frame = newFrame;
     }
     else {
-        NSLayoutConstraint * topMarginForTable  =[NSLayoutConstraint
-                                                  constraintWithItem:self.RegistrationTable
-                                                  attribute:NSLayoutAttributeTop
-                                                  relatedBy:NSLayoutRelationEqual
-                                                  toItem:self.view
-                                                  attribute:NSLayoutAttributeTop
-                                                  multiplier:1.0
-                                                  constant:0];
-        
-        [self.view addConstraint:topMarginForTable];
-        
-        NSLayoutConstraint * topMarginForSurprise =[NSLayoutConstraint
-                                                    constraintWithItem:self.SurpriseText
-                                                    attribute:NSLayoutAttributeTop
-                                                    relatedBy:NSLayoutRelationEqual
-                                                    toItem:self.view
-                                                    attribute:NSLayoutAttributeTop
-                                                    multiplier:1.0
-                                                    constant:218];
-        
-        [self.view addConstraint:topMarginForSurprise];
-        NSLayoutConstraint * topMarginForSwitch =[NSLayoutConstraint
-                                                  constraintWithItem:self.Switch
-                                                  attribute:NSLayoutAttributeTop
-                                                  relatedBy:NSLayoutRelationEqual
-                                                  toItem:self.view
-                                                  attribute:NSLayoutAttributeTop
-                                                  multiplier:1.0
-                                                  constant:226];
-        
-        [self.view addConstraint:topMarginForSwitch];
-  
+        CGRect newFrame = self.RegistrationTable.frame;
+        newFrame.origin.y = -8;
+        self.RegistrationTable.frame = newFrame;
+        newFrame = self.Switch.frame;
+        newFrame.origin.x += 20;
+        newFrame.origin.y += 8;
+        self.Switch.frame = newFrame;
+        newFrame = self.SurpriseText.frame;
+        newFrame.origin.y += 8;
+        self.SurpriseText.frame = newFrame;
+
+        newFrame = self.BirthDayPicker.frame;
+        if (self.view.bounds.size.height == 460)
+            newFrame.origin.y = 270;
+        else
+            newFrame.origin.y = 332;
+        self.BirthDayPicker.frame = newFrame;
+
     }
     self.Switch.tintColor = [UIColor whiteColor];
     if (currSysVer >= 7.0) {
@@ -226,7 +193,6 @@ static BOOL getLocation = NO;
         if ((currSysVer == 7.0) || (currSysVer > 7.0)) {
             [UIView animateWithDuration:0.3 animations:^{
                 CGRect frame = self.BirthDayPicker.frame;
-                frame.origin.y += 20;
                 _switchfix.frame = frame;
             }completion:^(BOOL finished){
                 [self.view bringSubviewToFront:self.BirthDayPicker];
