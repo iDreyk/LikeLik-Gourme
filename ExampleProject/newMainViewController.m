@@ -18,6 +18,9 @@
 #define workTimeTag 2
 #define paycheckTag 3
 #define imageTag 4
+#define placeNameTag 5
+#define ratingTag  6
+#define shadowTag 7
 
 @interface UIImageViewWithPlaceSelection ()
 @end
@@ -47,7 +50,6 @@ static bool REVERSE_ANIM = false;
 #pragma mark - Table view delegate
 
 #warning Ф-ия фильтрация списка!
-
 - (void)viewDidLoad{
     if(self.view.bounds.size.height == 460.0 || self.view.bounds.size.height == 548.0){
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 170.0);
@@ -55,7 +57,25 @@ static bool REVERSE_ANIM = false;
         newTWFrame.size.height = self.view.bounds.size.height - newTWFrame.origin.y;
         self.placesTableView.frame = newTWFrame;
     }
+    UIView *shadow = [[UIView alloc] initWithFrame:CGRectMake(0.0, self.placesTableView.frame.origin.y, 320.0, 10.0)];
+    shadow.backgroundColor = [UIColor clearColor];
+    shadow.tag = shadowTag;
+    CALayer *shadowLayer = shadow.layer;
+    [shadowLayer setShadowColor: [[UIColor blackColor] CGColor]];
+    [shadowLayer setShadowOpacity:0.5f];
+    [shadowLayer setShadowOffset: CGSizeMake(0, -5)];
+    [shadowLayer setShadowRadius:4.0];
+    //        [imgLayer setCornerRadius:4];
+    shadowLayer.shouldRasterize = YES;
     
+    // This tell QuartzCore where to draw the shadow so it doesn't have to work it out each time
+    [shadowLayer setShadowPath:[UIBezierPath bezierPathWithRect:shadowLayer.bounds].CGPath];
+    
+    // This tells QuartzCore to render it as a bitmap
+    [shadowLayer setRasterizationScale:[UIScreen mainScreen].scale];
+
+    [self.view addSubview:shadow];
+    [self.view bringSubviewToFront:self._mapView];
 #warning Ф-ии загрузки данных с сервера во все массивы + куда-то грузить фотки
 #warning все заполнять
     if(!self.array)
@@ -152,31 +172,31 @@ static bool REVERSE_ANIM = false;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.array.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 50;
+    return 0;
 }
 
-- (void)reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation{
-    UIView *myView = [[self.placesTableView subviews] objectAtIndex:0];
-    CALayer *layer = myView.layer;
-    
-    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
-    layer.transform = rotationAndPerspectiveTransform;
-    
-    
-    [UIView beginAnimations:NULL context:nil];
-    [UIView setAnimationDuration:0.8];
-    //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
-    layer.transform = rotationAndPerspectiveTransform;
-    [UIView commitAnimations];
-    
-}
+//- (void)reloadSections:(NSIndexSet *)sections withRowAnimation:(UITableViewRowAnimation)animation{
+//    UIView *myView = [[self.placesTableView subviews] objectAtIndex:0];
+//    CALayer *layer = myView.layer;
+//    
+//    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+//    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+//    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
+//    layer.transform = rotationAndPerspectiveTransform;
+//    
+//    
+//    [UIView beginAnimations:NULL context:nil];
+//    [UIView setAnimationDuration:0.8];
+//    //[cell setFrame:CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)];
+//    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -90.0f * M_PI / 180.0f, 1.0f, 1.0f, 0.0f);
+//    layer.transform = rotationAndPerspectiveTransform;
+//    [UIView commitAnimations];
+//    
+//}
 
 
 - (BOOL)isTimeOfDate:(NSDate *)targetDate betweenStartDate:(NSDate *)startDate andEndDate:(NSDate *)endDate {
@@ -189,76 +209,76 @@ static bool REVERSE_ANIM = false;
     return (compareTargetToStart == NSOrderedDescending && compareTargetToEnd == NSOrderedAscending);
 }
 
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    NSDate *today = [NSDate date];
-    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
-    [dateFormatter2 setDateFormat:@"HH:mm"];
-    NSString *currentTime = [dateFormatter2 stringFromDate:today];
-
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-    
-    NSArray *components = [[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section] componentsSeparatedByString: @" - "];
-//    NSString *string2 = (NSString*) [components objectAtIndex:1];
-//    NSLog(@"%@ : %@", string2, [components objectAtIndex:0]);
-    NSDate *openingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:0]]];
-    NSDate *closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:1]]];
-    NSDate *targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", currentTime]];
-
-    if([openingDate compare:closingDate] == NSOrderedDescending){
-        if([targetDate compare:closingDate] == NSOrderedAscending)
-          targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", currentTime]];
-        closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", [components objectAtIndex:1]]];
-    }
-    
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImageView *restState = [[UIImageView alloc]initWithFrame:CGRectMake(250, 30, 70, 65)];
-    if ([self isTimeOfDate:targetDate betweenStartDate:openingDate andEndDate:closingDate]) {
-       // NSLog(@"TARGET IS INSIDE!");
-        //restState.image = [UIImage imageNamed:@"opened.png"];
-        restState.animationImages = [NSArray arrayWithObjects:
-                                     [UIImage imageNamed:@"opened0.png"],
-                                     [UIImage imageNamed:@"opened1.png"],
-                                     [UIImage imageNamed:@"opened2.png"],
-                                     [UIImage imageNamed:@"opened3.png"],
-                                     [UIImage imageNamed:@"opened4.png"],
-                                     [UIImage imageNamed:@"opened5.png"],
-                                     [UIImage imageNamed:@"opened4.png"],
-                                     [UIImage imageNamed:@"opened3.png"],
-                                     [UIImage imageNamed:@"opened2.png"],
-                                     [UIImage imageNamed:@"opened1.png"],
-                                     nil];
-        restState.animationDuration = 1.55;
-        //forever
-        restState.animationRepeatCount = 0;
-        [restState startAnimating];
-    }else {
-       // NSLog(@"TARGET IS NOT INSIDE!");
-        restState.image = [UIImage imageNamed:@"closed.png"];
-    }
-    button.backgroundColor = [UIColor whiteColor];
-    button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
-    //[button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
-    //[button setTitle:[[self.allPlaces objectForKey:@"name"] objectAtIndex:section] forState:UIControlStateNormal];
-    [button setTitle:[NSString stringWithFormat:@" %@",[[self.allPlaces objectForKey:@"name"] objectAtIndex:section]] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    // add targets and actions
-    [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTag:section];
-    
-    
-    //Here pict for rating
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
-    
-    imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
-    [button addSubview:imv];
-    [button addSubview:restState];
-    
-    return button;
-}
+//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    NSDate *today = [NSDate date];
+//    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+//    [dateFormatter2 setDateFormat:@"HH:mm"];
+//    NSString *currentTime = [dateFormatter2 stringFromDate:today];
+//
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+//    
+//    NSArray *components = [[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section] componentsSeparatedByString: @" - "];
+////    NSString *string2 = (NSString*) [components objectAtIndex:1];
+////    NSLog(@"%@ : %@", string2, [components objectAtIndex:0]);
+//    NSDate *openingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:0]]];
+//    NSDate *closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", [components objectAtIndex:1]]];
+//    NSDate *targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:12 %@:00", currentTime]];
+//
+//    if([openingDate compare:closingDate] == NSOrderedDescending){
+//        if([targetDate compare:closingDate] == NSOrderedAscending)
+//          targetDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", currentTime]];
+//        closingDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"2013:07:13 %@:00", [components objectAtIndex:1]]];
+//    }
+//    
+//    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImageView *restState = [[UIImageView alloc]initWithFrame:CGRectMake(250, 30, 70, 65)];
+//    if ([self isTimeOfDate:targetDate betweenStartDate:openingDate andEndDate:closingDate]) {
+//       // NSLog(@"TARGET IS INSIDE!");
+//        //restState.image = [UIImage imageNamed:@"opened.png"];
+//        restState.animationImages = [NSArray arrayWithObjects:
+//                                     [UIImage imageNamed:@"opened0.png"],
+//                                     [UIImage imageNamed:@"opened1.png"],
+//                                     [UIImage imageNamed:@"opened2.png"],
+//                                     [UIImage imageNamed:@"opened3.png"],
+//                                     [UIImage imageNamed:@"opened4.png"],
+//                                     [UIImage imageNamed:@"opened5.png"],
+//                                     [UIImage imageNamed:@"opened4.png"],
+//                                     [UIImage imageNamed:@"opened3.png"],
+//                                     [UIImage imageNamed:@"opened2.png"],
+//                                     [UIImage imageNamed:@"opened1.png"],
+//                                     nil];
+//        restState.animationDuration = 1.55;
+//        //forever
+//        restState.animationRepeatCount = 0;
+//        [restState startAnimating];
+//    }else {
+//       // NSLog(@"TARGET IS NOT INSIDE!");
+//        restState.image = [UIImage imageNamed:@"closed.png"];
+//    }
+//    button.backgroundColor = [UIColor whiteColor];
+//    button.frame = CGRectMake(10, 20, 200, 50); // position in the parent view and set the size of the button
+//    //[button setTitle:[self.array objectAtIndex:section] forState:UIControlStateNormal];
+//    //[button setTitle:[[self.allPlaces objectForKey:@"name"] objectAtIndex:section] forState:UIControlStateNormal];
+//    [button setTitle:[NSString stringWithFormat:@" %@",[[self.allPlaces objectForKey:@"name"] objectAtIndex:section]] forState:UIControlStateNormal];
+//    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    // add targets and actions
+//    [button addTarget:self action:@selector(pusher:) forControlEvents:UIControlEventTouchUpInside];
+//    [button setTag:section];
+//    
+//    
+//    //Here pict for rating
+//    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(220, 15, 100, 20)];
+//    
+//    imv.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
+//    [button addSubview:imv];
+//    [button addSubview:restState];
+//    
+//    return button;
+//}
 
 -(void)pusher:(UIButton *)Sender{
     //        UIViewController * fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FourthViewController"];
@@ -357,11 +377,11 @@ static bool REVERSE_ANIM = false;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.array count];
+    return 1;//[self.array count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 250;
+    return 290;
 }
 
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
@@ -427,18 +447,28 @@ static bool REVERSE_ANIM = false;
  */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger section = indexPath.section;
+    NSInteger section = indexPath.row;
     static NSString *SimpleTableIdentifier = @"placesTableView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: SimpleTableIdentifier];
    
     if (cell == nil) { cell = [[UITableViewCell alloc]
                                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
         
-        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 220, 190, 20)];
-        UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 200, 110, 20)];
-        UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 220, 110, 20)];
+        UILabel *subway = [[UILabel alloc] initWithFrame:CGRectMake(10, 260, 190, 20)];
+        UILabel *paycheck = [[UILabel alloc] initWithFrame:CGRectMake(200, 240, 110, 20)];
+        UILabel *workTime = [[UILabel alloc] initWithFrame:CGRectMake(200, 260, 110, 20)];
+        UILabel *placeName = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 185, 35)];
+        
+        //Here pict for rating
+        UIImageView *rate = [[UIImageView alloc]initWithFrame:CGRectMake(215, 15, 100, 20)];
+        rate.backgroundColor = [UIColor clearColor];
+        rate.tag = ratingTag;
+        
+        placeName.textColor = [UIColor blackColor];
+        placeName.backgroundColor = [UIColor clearColor];
+        placeName.tag = placeNameTag;
         
         //Here is subway station
         subway.textColor = [UIColor whiteColor];
@@ -455,7 +485,7 @@ static bool REVERSE_ANIM = false;
         
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
-        UIImageViewWithPlaceSelection *imv = [[UIImageViewWithPlaceSelection alloc]initWithFrame:CGRectMake(5,5, 310, 240)];
+        UIImageViewWithPlaceSelection *imv = [[UIImageViewWithPlaceSelection alloc]initWithFrame:CGRectMake(5,45, 310, 240)];
         imv.tag = imageTag;
         imv.backgroundColor = [UIColor whiteColor];
         //while loading an image
@@ -491,7 +521,8 @@ static bool REVERSE_ANIM = false;
         [cell.contentView addSubview:subway];
         [cell.contentView addSubview:paycheck];
         [cell.contentView addSubview:workTime];
-
+        [cell.contentView addSubview:placeName];
+        [cell.contentView addSubview:rate];
     }
     
 //    if([cell.contentView.subviews count] > 0)
@@ -508,14 +539,17 @@ static bool REVERSE_ANIM = false;
     }];
     
     //Here is line
-    
+    UILabel *placeName = (UILabel*)[cell viewWithTag:placeNameTag];
     UILabel *subway = (UILabel*)[cell viewWithTag:subwayTag];
     UILabel *paycheck = (UILabel*)[cell viewWithTag:paycheckTag];
     UILabel *workTime = (UILabel*)[cell viewWithTag:workTimeTag];
-
+    UIImageView *rating = (UIImageView*)[cell viewWithTag:ratingTag];
+    
+    [placeName setText:AMLocalizedString([[self.allPlaces objectForKey:@"name"] objectAtIndex:section], nil)];
     [subway setText:AMLocalizedString([[self.allPlaces objectForKey:@"subway"] objectAtIndex:section], nil)];
     [paycheck setText:[[self.allPlaces objectForKey:@"paycheck"] objectAtIndex:section]];
     [workTime setText:[[self.allPlaces objectForKey:@"worktime"] objectAtIndex:section]];
+    rating.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@star.png", [[self.allPlaces objectForKey:@"rating"] objectAtIndex:section]]];
     
     if(PREV_SECTION > section)
         REVERSE_ANIM = true;
@@ -727,11 +761,6 @@ static bool REVERSE_ANIM = false;
 
 #pragma mark - Map's parralax
 - (void)updateOffsets{
-    if(MAP_PRESENTED){
-        AudioServicesPlaySystemSound(1001);
-        return;
-    }
-
     CGFloat yOffset   = self.placesTableView.contentOffset.y;
     if (yOffset < 0) {
         //Paralax handling
@@ -739,6 +768,13 @@ static bool REVERSE_ANIM = false;
             [self._mapView removeGestureRecognizer:recognizer];
         }
         self._mapView.frame = CGRectMake(0, -44.0, 320.0, 140.0 - yOffset);
+        for (UIView *shadow in self.view.subviews) {
+            if(shadow.tag == shadowTag){
+                CGRect frame = shadow.frame;
+                frame.origin.y = self.placesTableView.frame.origin.y - yOffset;
+                shadow.frame = frame;
+            }
+        }
      //   [self._mapView setShowsUserLocation:NO];
         
         //[self._mapView setUserTrackingMode:NO];
@@ -746,6 +782,15 @@ static bool REVERSE_ANIM = false;
         //  [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     }
     else {
+        self._mapView.frame = CGRectMake(0, -44.0, 320, 140.0);
+        for (UIView *shadow in self.view.subviews) {
+            if(shadow.tag == shadowTag){
+                CGRect frame = shadow.frame;
+                frame.origin.y = self.placesTableView.frame.origin.y;
+                shadow.frame = frame;
+            }
+        }
+
         //To normal state
         UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc]
                                        initWithTarget:self action:@selector(openMap:)];
@@ -819,6 +864,14 @@ static bool REVERSE_ANIM = false;
         frame.size.height = self.view.frame.size.height;
         self._mapView.frame = theFrame;
         self.placesTableView.frame = frame;
+        for (UIView *shadow in self.view.subviews) {
+            if(shadow.tag == shadowTag){
+                CGRect frame = shadow.frame;
+                frame.origin.y = self.placesTableView.frame.origin.y;
+                shadow.frame = frame;
+            }
+        }
+
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
@@ -848,6 +901,14 @@ static bool REVERSE_ANIM = false;
         frame.origin.y = 96;
         frame.size.height = self.view.frame.size.height - 96;
         self.placesTableView.frame = frame;
+        for (UIView *shadow in self.view.subviews) {
+            if(shadow.tag == shadowTag){
+                CGRect frame = shadow.frame;
+                frame.origin.y = self.placesTableView.frame.origin.y;
+                shadow.frame = frame;
+            }
+        }
+
     }];
         //Remove button
         for (UIView *subView in self._mapView.subviews){
