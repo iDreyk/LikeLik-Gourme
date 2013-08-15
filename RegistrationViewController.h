@@ -9,18 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "Vkontakte.h"
-//#import "SA_OAuthTwitterController.h"
+#import "SA_OAuthTwitterController.h"
 #import <CoreLocation/CoreLocation.h>
-//@interface RegistrationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,SA_OAuthTwitterControllerDelegate,VkontakteDelegate,MBProgressHUDDelegate,CLLocationManagerDelegate>{
-@interface RegistrationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,VkontakteDelegate,MBProgressHUDDelegate,CLLocationManagerDelegate>{
-
+@interface RegistrationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,SA_OAuthTwitterControllerDelegate,VkontakteDelegate,MBProgressHUDDelegate,CLLocationManagerDelegate>{
     NSArray *array;
     NSString *day;
     NSString *month;
     NSString *year;
     IBOutlet UIButton *_loginB;
     Vkontakte *_vkontakte;
-  //  SA_OAuthTwitterEngine				*_engine;
+    SA_OAuthTwitterEngine				*_engine;
     CLLocationManager *locationManager;
     
 }
@@ -46,6 +44,10 @@
 @property (nonatomic,retain)NSString *twitterid;
 @property (nonatomic,retain)id FacebookUserInfo;
 @property (nonatomic, retain) NSDictionary *VkontakteUserInfo;
+
+@property (strong, nonatomic) IBOutlet UIButton *facebookButton;
+@property (strong, nonatomic) IBOutlet UIButton *twitterButton;
+@property (strong, nonatomic) IBOutlet UIButton *vkButton;
 
 
 -(IBAction)switchtoPicker:(id)sender;

@@ -590,6 +590,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="RegistrationTable" destination="CvB-XN-pG2" id="6U8-L9-cPi"/>
                         <outlet property="SurpriseText" destination="ef4-ll-uQ9" id="3Eq-fF-W7b"/>
                         <outlet property="Switch" destination="0ge-BG-E8y" id="egW-lP-M4e"/>
+                        <outlet property="facebookButton" destination="4Mg-dL-mrD" id="Vjr-9a-73O"/>
+                        <outlet property="twitterButton" destination="vei-pF-Ag6" id="7yd-CW-nxi"/>
+                        <outlet property="vkButton" destination="UvN-AH-Wv0" id="f6q-io-9Dc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkt-Ve-VQb" userLabel="First Responder" sceneMemberID="firstResponder"/>

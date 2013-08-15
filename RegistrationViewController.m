@@ -11,7 +11,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "AFHTTPClient.h"
-//#import "SA_OAuthTwitterEngine.h"
+#import "SA_OAuthTwitterEngine.h"
 #import "AFJSONRequestOperation.h"
 #import "RegistrationViewController.h"
 
@@ -301,32 +301,32 @@ static BOOL getLocation = NO;
     if (sender.tag == 1) {
         [self loginPressed:sender];
     }
-//    if (sender.tag == 2) {
-//        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-//        self.Parent = @"Social";
-//        if (_engine){
-//            [[NSUserDefaults standardUserDefaults] setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"screen_name="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"tw_name"];
-//            [[NSUserDefaults standardUserDefaults] setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"tw_id"];
-//            [self SendRegistration:@"TW"];
-//            return;
-//            
-//        }
-//        
-//        _engine = [[SA_OAuthTwitterEngine alloc] initOAuthWithDelegate: self];
-//        _engine.consumerKey = kOAuthConsumerKey;
-//        _engine.consumerSecret = kOAuthConsumerSecret;
-//        UIViewController			*controller = [SA_OAuthTwitterController controllerToEnterCredentialsWithTwitterEngine: _engine delegate: self];
-//        if (controller){
-//        //    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-//            [self presentViewController:controller animated:YES completion:^{[[UIApplication sharedApplication] endIgnoringInteractionEvents];}];
-//        }
-//        else{
-//            self.twitterName = [[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"screen_name="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
-//            
-//            self.twitterid =[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
-//            [self SendRegistration:@"TW"];
-//        }
-//    }
+    if (sender.tag == 2) {
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        self.Parent = @"Social";
+        if (_engine){
+            [[NSUserDefaults standardUserDefaults] setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"screen_name="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"tw_name"];
+            [[NSUserDefaults standardUserDefaults] setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"tw_id"];
+            [self SendRegistration:@"TW"];
+            return;
+            
+        }
+        
+        _engine = [[SA_OAuthTwitterEngine alloc] initOAuthWithDelegate: self];
+        _engine.consumerKey = kOAuthConsumerKey;
+        _engine.consumerSecret = kOAuthConsumerSecret;
+        UIViewController			*controller = [SA_OAuthTwitterController controllerToEnterCredentialsWithTwitterEngine: _engine delegate: self];
+        if (controller){
+        //    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+            [self presentViewController:controller animated:YES completion:^{[[UIApplication sharedApplication] endIgnoringInteractionEvents];}];
+        }
+        else{
+            self.twitterName = [[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"screen_name="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
+            
+            self.twitterid =[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
+            [self SendRegistration:@"TW"];
+        }
+    }
 }
 
 
@@ -804,47 +804,47 @@ static BOOL getLocation = NO;
    [self SendRegistration:@"VK"];
 }
 
-//
-//#pragma mark SA_OAuthTwitterEngineDelegate
-//- (void) storeCachedTwitterOAuthData: (NSString *) data forUsername: (NSString *) username {
-//	NSUserDefaults			*defaults = [NSUserDefaults standardUserDefaults];
-//    
-//	[defaults setObject: data forKey: @"authData"];
-//    [defaults setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"uid"];
-//    
-//	[defaults synchronize];
-//}
-//
-//- (NSString *) cachedTwitterOAuthDataForUsername: (NSString *) username {
-//	return [[NSUserDefaults standardUserDefaults] objectForKey: @"authData"];
-//}
-//
-//#pragma mark SA_OAuthTwitterControllerDelegate
-//- (void) OAuthTwitterController: (SA_OAuthTwitterController *) controller authenticatedWithUsername: (NSString *) username {
-//    self.twitterName = username;
-//    self.twitterid =[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
-//    [self SendRegistration:@"TW"];
-//}
-//
-//- (void) OAuthTwitterControllerFailed: (SA_OAuthTwitterController *) controller {
-//    NSLog(@"Authentication Failed!");
-//}
-//
-//- (void) OAuthTwitterControllerCanceled: (SA_OAuthTwitterController *) controller {
-//    NSLog(@"Authentication Canceled.");
-//}
-//
-//#pragma mark TwitterEngineDelegate
-//- (void) requestSucceeded: (NSString *) requestIdentifier {
-//	// NSLog(@"Request %@ succeeded", requestIdentifier);
-//    
-//}
-//
-//- (void) requestFailed: (NSString *) requestIdentifier withError: (NSError *) error {
-//	// NSLog(@"Request %@ failed with error: %@", requestIdentifier, error);
-//}
-//
-//
+
+#pragma mark SA_OAuthTwitterEngineDelegate
+- (void) storeCachedTwitterOAuthData: (NSString *) data forUsername: (NSString *) username {
+	NSUserDefaults			*defaults = [NSUserDefaults standardUserDefaults];
+    
+	[defaults setObject: data forKey: @"authData"];
+    [defaults setObject:[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0] forKey:@"uid"];
+    
+	[defaults synchronize];
+}
+
+- (NSString *) cachedTwitterOAuthDataForUsername: (NSString *) username {
+	return [[NSUserDefaults standardUserDefaults] objectForKey: @"authData"];
+}
+
+#pragma mark SA_OAuthTwitterControllerDelegate
+- (void) OAuthTwitterController: (SA_OAuthTwitterController *) controller authenticatedWithUsername: (NSString *) username {
+    self.twitterName = username;
+    self.twitterid =[[[[[[NSUserDefaults standardUserDefaults] objectForKey: @"authData"] componentsSeparatedByString:@"user_id="]objectAtIndex:1] componentsSeparatedByString:@"&"]objectAtIndex:0];
+    [self SendRegistration:@"TW"];
+}
+
+- (void) OAuthTwitterControllerFailed: (SA_OAuthTwitterController *) controller {
+    NSLog(@"Authentication Failed!");
+}
+
+- (void) OAuthTwitterControllerCanceled: (SA_OAuthTwitterController *) controller {
+    NSLog(@"Authentication Canceled.");
+}
+
+#pragma mark TwitterEngineDelegate
+- (void) requestSucceeded: (NSString *) requestIdentifier {
+	// NSLog(@"Request %@ succeeded", requestIdentifier);
+    
+}
+
+- (void) requestFailed: (NSString *) requestIdentifier withError: (NSError *) error {
+	// NSLog(@"Request %@ failed with error: %@", requestIdentifier, error);
+}
+
+
 #pragma mark - Facebook
 
 - (void)getUserInfo
