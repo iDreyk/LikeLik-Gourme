@@ -831,7 +831,7 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
-        
+        self.navigationItem.leftBarButtonItem.enabled = NO;
         // [self._mapView setUserTrackingMode:NO];
         // [self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
         
@@ -842,7 +842,7 @@ static bool REVERSE_ANIM = false;
         
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = [UIColor blackColor];
+        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
         [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -875,7 +875,8 @@ static bool REVERSE_ANIM = false;
         [self._mapView setZoomEnabled:NO];
         [self._mapView setMultipleTouchEnabled:NO];
         [self._mapView setScrollEnabled:NO];
-        
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+
         // [self._mapView setUserTrackingMode:YES];
         
         //[self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];

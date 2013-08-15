@@ -740,7 +740,7 @@ static bool REVERSE_ANIM = false;
         
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = [UIColor blackColor];
+        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
         button.frame = CGRectMake(00, 00, 320, 40); // position in the parent view and set the size of the button
         [button setTitle:AMLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
