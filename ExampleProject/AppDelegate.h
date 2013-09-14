@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "GAI.h"
 @class MKDSlideViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+@property(nonatomic, strong) id<GAITracker> tracker;
 @property (nonatomic, strong) UIWindow * window;
 @property (nonatomic, strong) MKDSlideViewController * slideViewController;
 +(BOOL)isiPhone5;

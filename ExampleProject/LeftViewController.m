@@ -31,6 +31,8 @@ CGRect tableViewFrame;
 #pragma mark - Table view delegate
 
 - (void)viewDidLoad{
+    self.title = @"left bar" ;
+    self.screenName = @"Gourme";
 #warning placesArray -- это все наши места. Заполянем массивы также, как и в newMainViewController
     if(!self.subwayArray)
         self.placesArray = @[@"1st place",@"2nd place",@"3rd place",@"4th place",@"5th place",@"6th place",@"7th place",@"8th place", @"9th place", @"10th place"];

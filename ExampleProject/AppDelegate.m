@@ -79,6 +79,21 @@
     
     self.window.rootViewController = self.slideViewController;
     [self.window makeKeyAndVisible];
+    
+    NSDictionary *appDefaults = @{@"allowTracking": @(YES)};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    // User must be able to opt out of tracking
+    [GAI sharedInstance].optOut =
+    ![[NSUserDefaults standardUserDefaults] boolForKey:@"allowTracking"];
+    // Initialize Google Analytics with a 120-second dispatch interval. There is a
+    // tradeoff between battery usage and timely dispatch.
+    [GAI sharedInstance].dispatchInterval = 5;
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    self.tracker = [[GAI sharedInstance] trackerWithName:@"Gourme"
+                                              trackingId:@"UA-44026994-2"];
+    
+    
+    
     return YES;
 }
 
@@ -97,7 +112,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [FBAppEvents activateApp];
-    
+    [GAI sharedInstance].optOut =
+    ![[NSUserDefaults standardUserDefaults] boolForKey:@"allowTracking"];
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */

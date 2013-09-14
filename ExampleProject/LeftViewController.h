@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAI.h"
 
-@interface LeftViewController : UIViewController <UISearchBarDelegate>
+@interface LeftViewController : GAITrackedViewController <UISearchBarDelegate>
 @property (nonatomic, strong) NSArray *array;
 @property (nonatomic, strong) NSArray *placesArray;
 @property (nonatomic, strong) NSArray *subwayArray;
