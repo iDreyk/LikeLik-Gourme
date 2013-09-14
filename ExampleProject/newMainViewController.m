@@ -611,7 +611,6 @@ static bool REVERSE_ANIM = false;
     }
     layer.transform = rotationAndPerspectiveTransform;
     [UIView commitAnimations];
-    
     return cell;
 }
 
@@ -803,12 +802,26 @@ static bool REVERSE_ANIM = false;
         
         //[self._mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     }
-    self._mapView.contentMode = UIViewContentModeScaleAspectFit;
+    //self._mapView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self updateOffsets];
+    if(!MAP_PRESENTED)
+        [self updateOffsets];
 }
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+//    NSLog(@"TRUE");
+//    //[self.filtersTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:section]
+//    //                             atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//    
+//    NSInteger cellToPresent;
+//    if(!REVERSE_ANIM)
+//        cellToPresent = PREV_SECTION ;
+//    else
+//        cellToPresent = PREV_SECTION;
+//    [self.placesTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:cellToPresent inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//    [self.placesTableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:cellToPresent inSection:0] animated:NO];
+//}
 
 #pragma mark - Map's selectors (animation)
 
@@ -826,8 +839,17 @@ static bool REVERSE_ANIM = false;
         theFrame.origin.y = 0;
         theFrame.size.height = self.view.frame.size.height;
         frame.origin.y = self.view.frame.size.height;
+       // self.placesTableView.frame = frame;
         self._mapView.frame = theFrame;
-        self.placesTableView.frame = frame;
+
+//                for (UIView *shadow in self.view.subviews) {
+//                    if(shadow.tag == shadowTag){
+//                        CGRect frame = shadow.frame;
+//                        frame.origin.y = 568;//self.placesTableView.frame.origin.y;
+//                        shadow.frame = frame;
+//                    }
+//                }
+
         [self._mapView setZoomEnabled:YES];
         [self._mapView setMultipleTouchEnabled:YES];
         [self._mapView setScrollEnabled:YES];
